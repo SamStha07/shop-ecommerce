@@ -15,6 +15,7 @@ const connectDB = require('./config/db');
 const GlobalErrorHandler = require('./controllers/errorController');
 const AppError = require('./utils/appError');
 const userRoute = require('./routes/userRoutes');
+const categoryRoute = require('./routes/categoryRoute');
 
 const app = express();
 
@@ -36,6 +37,7 @@ app.use(compression());
 
 //routes
 app.use('/api/users', userRoute);
+app.use('/api/category', categoryRoute);
 
 // Global error handling Middleware
 app.all('*', (req, res, next) => {

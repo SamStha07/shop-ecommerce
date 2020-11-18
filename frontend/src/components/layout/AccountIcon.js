@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Toolbar, IconButton, MenuItem, Menu } from '@material-ui/core';
+import { Toolbar, Button, MenuItem, Menu } from '@material-ui/core';
 import { AccountCircle } from '@material-ui/icons';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -29,28 +29,28 @@ const AccountIcon = (props) => {
 
   return (
     <div>
-      <IconButton
+      <Button
         edge="end"
-        aria-label="account of current user"
-        aria-controls="menu-appbar"
+        // aria-label="account of current user"
+        aria-controls="simple-menu"
         aria-haspopup="true"
         onClick={handleMenu}
         color="inherit"
       >
         <AccountCircle />
-      </IconButton>
+      </Button>
       <Menu
-        id="menu-appbar"
+        id="simple-menu"
         anchorEl={anchorEl}
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
+        // anchorOrigin={{
+        //   vertical: 'top',
+        //   horizontal: 'right',
+        // }}
         keepMounted
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
+        // transformOrigin={{
+        //   vertical: 'top',
+        //   horizontal: 'right',
+        // }}
         open={open}
         onClose={handleClose}
       >

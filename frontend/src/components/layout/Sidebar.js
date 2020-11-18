@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import {
   CssBaseline,
@@ -10,22 +10,13 @@ import {
   Toolbar,
   Typography,
   MenuList,
-  MenuItem,
 } from '@material-ui/core';
 import { Menu as MenuIcon } from '@material-ui/icons';
-import {
-  MDBContainer,
-  MDBCol,
-  MDBTreeview,
-  MDBTreeviewList,
-  MDBTreeviewItem,
-} from 'mdbreact';
 
 import AccountIcon from './AccountIcon';
-import TreeView from './TreeView';
 import TreeViewSide from './TreeView';
 
-const drawerWidth = 240;
+const drawerWidth = 200;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -67,11 +58,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function ResponsiveDrawer(props) {
-  const {
-    window,
-    children,
-    location: { pathname },
-  } = props;
+  const { window, children } = props;
 
   const classes = useStyles();
   const theme = useTheme();
