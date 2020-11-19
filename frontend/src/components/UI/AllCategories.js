@@ -3,7 +3,11 @@ import { MDBTable, MDBTableBody, MDBTableHead, MDBIcon } from 'mdbreact';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllCategories } from '../../redux/actions/categoryActions';
+// import { getAllCategories } from '../../redux/actions/categoryActions';
+import {
+  createCategory,
+  getAllCategories,
+} from '../../redux/actions/categoryActions';
 
 const useStyles = makeStyles({
   editBtn: {
@@ -31,18 +35,23 @@ const useStyles = makeStyles({
   },
 });
 
-const AllCategoriesTable = () => {
+const AllCategoriesTable = ({ history }) => {
   const classes = useStyles();
 
   const dispatch = useDispatch();
 
-  const allCategories = useSelector((state) => state.getAllCategory);
+  const createCat = useSelector((state) => state.createCategory);
+  const { success } = createCat;
 
-  const { category } = allCategories;
+  const getAllCategory = useSelector((state) => state.getAllCategory);
+  //   console.log(getAllCategory);
+  const { category, loading } = getAllCategory;
 
   useEffect(() => {
-    dispatch(getAllCategories());
-  }, [dispatch]);
+    if (success) {
+      dispatch(getAllCategories());
+    }
+  }, [success, dispatch]);
 
   const handleEdit = (id) => {
     console.log(id);
@@ -53,45 +62,57 @@ const AllCategoriesTable = () => {
   };
 
   const categoryList = () => {
-    return category.categoriesList.map((category) => (
-      <tr>
-        <td>{category._id}</td>
-        <td>{category.name}</td>
-        <td>{category.slug}</td>
-        <td>{category.createdAt}</td>
-        <td>
-          <MDBIcon
-            icon="edit"
-            onClick={() => handleEdit(category._id)}
-            className={classes.editBtn}
-          />
-
-          <MDBIcon
-            icon="trash"
-            className={classes.deleteBtn}
-            onClick={() => handleDelete(category._id)}
-          />
-        </td>
-      </tr>
-    ));
+    if (category) {
+      return category.map((cat) => (
+        <tr>
+          <td>{cat._id}</td>
+          <td>{cat.name}</td>
+          <td>{cat.slug}</td>
+          <td>{cat.createdAt}</td>
+          <td>
+            <MDBIcon
+              icon="edit"
+              onClick={() => handleEdit(cat._id)}
+              className={classes.editBtn}
+            />
+            <MDBIcon
+              icon="trash"
+              className={classes.deleteBtn}
+              onClick={() => handleDelete(cat._id)}
+            />
+          </td>
+        </tr>
+      ));
+    }
   };
 
   return (
     <>
       <h5 className="py-1">List of Categories</h5>
       <hr />
-      <MDBTable btn hover responsive style={{ marginTop: '-10px' }}>
-        <MDBTableHead>
-          <tr>
-            <th>No.</th>
-            <th>Name</th>
-            <th>Slug</th>
-            <th>Date</th>
-            <th>Action</th>
-          </tr>
-        </MDBTableHead>
-        <MDBTableBody>{categoryList()}</MDBTableBody>
-      </MDBTable>
+
+      {loading ? (
+        <div
+          className="spinner-grow"
+          role="status"
+          style={{ width: '3rem', height: '3rem' }}
+        >
+          <span className="sr-only">Loading...</span>
+        </div>
+      ) : (
+        <MDBTable btn hover responsive style={{ marginTop: '-10px' }}>
+          <MDBTableHead>
+            <tr>
+              <th>No.</th>
+              <th>Name</th>
+              <th>Slug</th>
+              <th>Date</th>
+              <th>Action</th>
+            </tr>
+          </MDBTableHead>
+          <MDBTableBody>{categoryList()}</MDBTableBody>
+        </MDBTable>
+      )}
     </>
   );
 };
