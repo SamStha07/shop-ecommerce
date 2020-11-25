@@ -20,6 +20,41 @@ exports.categoryList = catchAsync(async (req, res, next) => {
   res.status(200).json({ categoriesList });
 });
 
+exports.updateCategory = catchAsync(async (req, res, next) => {
+  const editCategory = await Category.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    {
+      new: true,
+      runValidators: true,
+    },
+  );
+
+  if (!editCategory) {
+    return next(
+      new AppError(`Category with that ${req.params.id} not found`, 404),
+    );
+  }
+
+  res.status(201).json({
+    status: 'success',
+    editCategory,
+  });
+});
+
+exports.deleteCategory = catchAsync(async (req, res, next) => {
+  const category = await Category.findByIdAndDelete(req.params.id);
+
+  if (!category) {
+    return next(new AppError('No category found with that ID', 404));
+  }
+
+  res.status(204).json({
+    status: 'success',
+    data: null,
+  });
+});
+
 //Sub-category
 exports.createSubCategory = catchAsync(async (req, res, next) => {
   const subCategory = await Subcategory.create(req.body);
@@ -33,6 +68,41 @@ exports.subCategoryList = catchAsync(async (req, res, next) => {
   res.status(200).json({ subCategoriesList });
 });
 
+exports.updateSubCategory = catchAsync(async (req, res, next) => {
+  const editSubCategory = await Subcategory.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    {
+      new: true,
+      runValidators: true,
+    },
+  );
+
+  if (!editSubCategory) {
+    return next(
+      new AppError(`Sub-Category with that ${req.params.id} not found`, 404),
+    );
+  }
+
+  res.status(201).json({
+    status: 'success',
+    editSubCategory,
+  });
+});
+
+exports.deleteSubCategory = catchAsync(async (req, res, next) => {
+  const subCategory = await Subcategory.findByIdAndDelete(req.params.id);
+
+  if (!subCategory) {
+    return next(new AppError('No sub-category found with that ID', 404));
+  }
+
+  res.status(204).json({
+    status: 'success',
+    data: null,
+  });
+});
+
 //Child-category
 exports.createChildCategory = catchAsync(async (req, res, next) => {
   const childCategory = await Childcategory.create(req.body);
@@ -44,4 +114,48 @@ exports.childCategoryList = catchAsync(async (req, res, next) => {
   const childCategoriesList = await Childcategory.find();
 
   res.status(200).json({ childCategoriesList });
+});
+
+exports.updateChildCategory = catchAsync(async (req, res, next) => {
+  const editChildCategory = await Childcategory.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    {
+      new: true,
+      runValidators: true,
+    },
+  );
+
+  if (!editChildCategory) {
+    return next(
+      new AppError(`Child Category with that ${req.params.id} not found`, 404),
+    );
+  }
+
+  res.status(201).json({
+    status: 'success',
+    editChildCategory,
+  });
+});
+
+exports.deleteChildCategory = catchAsync(async (req, res, next) => {
+  const childCategory = await Childcategory.findByIdAndDelete(req.params.id);
+
+  if (!childCategory) {
+    return next(new AppError('No child category found with that ID', 404));
+  }
+
+  res.status(204).json({
+    status: 'success',
+    data: null,
+  });
+});
+
+exports.getAllCategories = catchAsync(async (req, res, next) => {
+  const categories = await Category.find();
+  const subCategory = await Subcategory.find({
+    categoryID: req.params.id,
+  });
+
+  res.status(200).json({ subCategory });
 });

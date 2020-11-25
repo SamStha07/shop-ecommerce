@@ -3,8 +3,9 @@ import { MDBRow, MDBCol, MDBCard, MDBCardBody } from 'mdbreact';
 import { Button, Breadcrumb, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { v4 as uuidv4 } from 'uuid';
 
-import CatgoriesTable from '../../../components/UI/AllCategories';
+import CategoriesTable from './CategoryTable';
 import {
   createCategory,
   getAllCategories,
@@ -72,7 +73,7 @@ const CategoryCreate = () => {
                 </label>
                 <input
                   type="text"
-                  id="defaultFormCardNameEx"
+                  id={uuidv4()}
                   className="form-control"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
@@ -89,7 +90,7 @@ const CategoryCreate = () => {
         <MDBCol lg="8" md="12">
           <MDBCard>
             <MDBCardBody>
-              <CatgoriesTable />
+              <CategoriesTable />
             </MDBCardBody>
           </MDBCard>
         </MDBCol>

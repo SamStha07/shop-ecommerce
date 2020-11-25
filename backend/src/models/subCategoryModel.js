@@ -5,7 +5,6 @@ const subCategorySchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please add a category name'],
     trim: true,
-    unique: true,
   },
   categoryID: {
     type: mongoose.Schema.Types.ObjectId,
@@ -19,7 +18,7 @@ const subCategorySchema = new mongoose.Schema({
 });
 
 subCategorySchema.pre('save', function (next) {
-  this.name = this.name.toLowerCase();
+  this.name = this.name[0].toUpperCase() + this.name.substring(1);
   next();
 });
 

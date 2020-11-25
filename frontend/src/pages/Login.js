@@ -35,10 +35,11 @@ const Login = ({ location, history }) => {
     if (userInfo) {
       history.push(redirect);
     }
-    {
+    if (
       userInfo &&
-        (userInfo.user.role === 'admin' || userInfo.user.role === 'seller') &&
-        history.push('/dashboard');
+      (userInfo.user.role === 'admin' || userInfo.user.role === 'seller')
+    ) {
+      history.push('/dashboard');
     }
   }, [history, userInfo, redirect]);
 

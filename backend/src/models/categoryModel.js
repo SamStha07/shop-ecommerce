@@ -10,6 +10,7 @@ const categorySchema = new mongoose.Schema({
   },
   slug: {
     type: String,
+    unique: true,
   },
   createdAt: {
     type: Date,
@@ -18,7 +19,7 @@ const categorySchema = new mongoose.Schema({
 });
 
 categorySchema.pre('save', function (next) {
-  this.name = this.name.toLowerCase();
+  this.name = this.name[0].toUpperCase() + this.name.substring(1);
   next();
 });
 

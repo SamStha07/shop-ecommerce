@@ -1,11 +1,5 @@
-import React from 'react';
-import {
-  BrowserRouter,
-  Redirect,
-  Route,
-  Switch,
-  withRouter,
-} from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter, Route, Switch, withRouter } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 
@@ -14,7 +8,6 @@ import AdminRoute from './routes/AdminSellerRoute';
 import AdminSellerRoute from './routes/AdminSellerRoute';
 import Sidebar from './components/layout/Sidebar';
 
-// import NavDash from './NavDash';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Homepage from './pages/Homepage';
@@ -22,9 +15,10 @@ import Profile from './pages/Profile';
 import Order from './pages/Order';
 import Header from './components/Header/Header';
 import Cart from './pages/Cart';
-import AllCategories from './pages/Dashboard/Category/AllCategories';
-import CategoryCreate from './pages/Dashboard/Category/CategoryCreate';
-import SubCategoryCreate from './pages/Dashboard/Category/SubCategoryCreate';
+// import AllCategories from './pages/Dashboard/Category/AllCategories';
+import Category from './pages/Dashboard/Category/Category';
+import SubCategory from './pages/Dashboard/SubCategory/SubCategory';
+import ChildCategory from './pages/Dashboard/ChildCategory/ChildCategory';
 import CreateProduct from './pages/Dashboard/Product/Create';
 import AllProductsList from './pages/Dashboard/Product/AllProducts';
 import Home from './pages/Dashboard/Home/Home';
@@ -46,18 +40,23 @@ function App() {
               <Route
                 exact
                 path="/dashboard/category/create"
-                component={CategoryCreate}
+                component={Category}
               />
               <Route
                 exact
                 path="/dashboard/subcategory/create"
-                component={SubCategoryCreate}
+                component={SubCategory}
               />
               <Route
                 exact
+                path="/dashboard/childcategory/create"
+                component={ChildCategory}
+              />
+              {/* <Route
+                exact
                 path="/dashboard/categories"
                 component={AllCategories}
-              />
+              /> */}
               <Route
                 exact
                 path="/dashboard/product/create"
@@ -97,7 +96,6 @@ function App() {
           </Container>
         </>
       )}
-      {/* <Header /> */}
     </BrowserRouter>
   );
 }
