@@ -58,8 +58,11 @@ export const userUpdateProfile = (user) => async (dispatch, getState) => {
     const config = {
       headers: {
         Authorization: `Bearer ${userInfo.token}`,
+        // 'Content-Type': 'multipart/form-data',
       },
     };
+
+    // console.log(user);
 
     const { data } = await axios.put('/users/update', user, config);
 

@@ -1,3 +1,5 @@
+const multer = require('multer');
+const sharp = require('sharp');
 const User = require('../models/userModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
@@ -41,8 +43,11 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     );
   }
 
+  console.log(req.file);
+
   // Filtered out unwanted fields names that are not allowed to be updated
   const filteredBody = filterObj(req.body, 'name', 'email');
+  filteredBody.photo = req.body.photo;
 
   // Update user document
   const updateUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {

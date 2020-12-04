@@ -12,7 +12,8 @@ const {
   deleteSubCategory,
   updateChildCategory,
   deleteChildCategory,
-  getAllCategories,
+  getSubCatUnderMainCat,
+  getChildCatUnderSubCat,
 } = require('../controllers/categoryController');
 const { protect, restrictTo } = require('../middlewares/auth');
 
@@ -99,7 +100,14 @@ router.get(
   '/subs/:id',
   protect,
   restrictTo('admin', 'seller'),
-  getAllCategories,
+  getSubCatUnderMainCat,
+);
+
+router.get(
+  '/childSub/:id',
+  protect,
+  restrictTo('admin', 'seller'),
+  getChildCatUnderSubCat,
 );
 
 module.exports = router;

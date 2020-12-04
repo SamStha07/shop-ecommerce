@@ -12,6 +12,9 @@ import {
   GET_ALL_SUB_CATEGORY_FAIL,
   GET_ALL_SUB_CATEGORY_REQUEST,
   GET_ALL_SUB_CATEGORY_SUCCESS,
+  GET_SUBCAT_OF_MAINCAT_FAIL,
+  GET_SUBCAT_OF_MAINCAT_REQUEST,
+  GET_SUBCAT_OF_MAINCAT_SUCCESS,
 } from '../constants/categoryConstants';
 
 export const getAllSubCategories = () => async (dispatch) => {
@@ -103,6 +106,29 @@ export const deleteSubCategory = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: DELETE_SUB_CATEGORY_RESET,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const getSubCatUnderMainCatID = (id) => async (dispatch) => {
+  try {
+    dispatch({
+      type: GET_SUBCAT_OF_MAINCAT_REQUEST,
+    });
+
+    const { data } = await axios.get(`/category/subs/${id}`);
+
+    dispatch({
+      type: GET_SUBCAT_OF_MAINCAT_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_SUBCAT_OF_MAINCAT_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

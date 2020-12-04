@@ -180,16 +180,6 @@ export default function GmailTreeView() {
         </LinkContainer>
       </StyledTreeItem>
       <StyledTreeItem nodeId="7" labelText="Product" labelIcon={Dns}>
-        <LinkContainer to="/dashboard/product/create">
-          <StyledTreeItem
-            nodeId="8"
-            labelText="Create "
-            labelIcon={Create}
-            color="#a250f5"
-            bgColor="#e8f0fe"
-          />
-        </LinkContainer>
-
         <LinkContainer to="/dashboard/products">
           <StyledTreeItem
             nodeId="9"

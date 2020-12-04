@@ -1,11 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Form, Container } from 'react-bootstrap';
-import { Button, CircularProgress, makeStyles } from '@material-ui/core';
+import {
+  Button,
+  CircularProgress,
+  makeStyles,
+  Avatar,
+} from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMyDetails, userUpdateProfile } from '../redux/actions/userActions';
 import UserUpdateLoader from '../components/Loader/UserUpdateLoader';
 import UpdatePassword from './UpdatePassword';
+import { userImageUrl } from '../urlConfig';
+import { v4 as uuidv4 } from 'uuid';
+import axios from '../helpers/axios';
 
 const useStyles = makeStyles((theme) => ({
   prgressColor: {
@@ -16,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
 const Profile = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [photo, setPhoto] = useState(null);
   const classes = useStyles();
 
   const dispatch = useDispatch();
@@ -40,13 +49,35 @@ const Profile = () => {
     } else {
       setName(userInfoDetails.name);
       setEmail(userInfoDetails.email);
+      setPhoto(userImageUrl(userInfoDetails.photo));
     }
   }, [userInfoDetails, dispatch, userInfo]);
+
+  const uploadFileHandler = async (e) => {
+    const file = e.target.files[0];
+    const formdata = new FormData();
+    formdata.append('photo', file);
+
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      };
+      const { data } = await axios.post('/upload/users', formdata, config);
+      console.log(data);
+      setPhoto(data);
+    } catch (error) {
+      console.error(error);
+      // setUploading(false);
+    }
+  };
 
   const submitHandler = (e) => {
     e.preventDefault();
 
-    dispatch(userUpdateProfile({ id: userInfo.user._id, name, email }));
+    console.log({ email, name, photo });
+    dispatch(userUpdateProfile({ id: userInfo.user._id, photo, name, email }));
 
     dispatch(getMyDetails(userInfo.user._id));
   };
@@ -74,7 +105,39 @@ const Profile = () => {
                   <UserUpdateLoader />
                 ) : (
                   <>
-                    <Form.Group controlId="first">
+                    <Form.Group>
+                      <div style={{ marginBottom: '10px' }}>
+                        {userInfoDetails && (
+                          <Avatar
+                            alt="image"
+                            src={userImageUrl(userInfoDetails.photo)}
+                            style={{
+                              height: '100px',
+                              width: '100px',
+                              display: 'flex',
+                              margin: 'auto',
+                            }}
+                          />
+                        )}
+
+                        <div style={{ marginTop: '20px' }}>
+                          <Form.Control
+                            type="text"
+                            placeholder="Enter image url"
+                            value={photo}
+                            onChange={(e) => setPhoto(e.target.value)}
+                          ></Form.Control>
+                          <Form.File
+                            id={uuidv4()}
+                            label="Choose File"
+                            custom
+                            onChange={uploadFileHandler}
+                          />
+                        </div>
+                      </div>
+                    </Form.Group>
+
+                    <Form.Group controlId={uuidv4()}>
                       <Form.Label style={{ fontSize: '1rem' }}>
                         Name:
                       </Form.Label>
@@ -86,7 +149,7 @@ const Profile = () => {
                       ></Form.Control>
                     </Form.Group>
 
-                    <Form.Group controlId="email">
+                    <Form.Group controlId={uuidv4()}>
                       <Form.Label style={{ fontSize: '1rem' }}>
                         Email Address:
                       </Form.Label>

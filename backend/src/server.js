@@ -1,5 +1,6 @@
 const express = require('express');
 const env = require('dotenv');
+const path = require('path');
 const cors = require('cors');
 const colors = require('colors');
 const morgan = require('morgan');
@@ -16,6 +17,9 @@ const GlobalErrorHandler = require('./controllers/errorController');
 const AppError = require('./utils/appError');
 const userRoute = require('./routes/userRoutes');
 const categoryRoute = require('./routes/categoryRoute');
+const productRoute = require('./routes/productRoutes');
+const userImageUpload = require('./routes/userImageUploadRoute');
+const productImageUpload = require('./routes/productUploadRoute');
 
 const app = express();
 
@@ -27,9 +31,11 @@ connectDB();
 app.use(helmet());
 
 // Body parser
-app.use(express.json());
-// connects with frontend
 app.use(cors());
+app.use(express.json());
+
+// connects with frontend
+
 app.use(cookieParser());
 app.use(mongoSanitize());
 app.use(xss());
@@ -38,6 +44,14 @@ app.use(compression());
 //routes
 app.use('/api/users', userRoute);
 app.use('/api/category', categoryRoute);
+app.use('/api/product', productRoute);
+app.use('/api/upload', userImageUpload);
+app.use('/api/multipleuploads', productImageUpload);
+
+// to see static files
+// http:localhost:5000/img/users/${filename}
+// OR http:localhost:5000/img/products/${filename}
+app.use(express.static('public'));
 
 // Global error handling Middleware
 app.all('*', (req, res, next) => {

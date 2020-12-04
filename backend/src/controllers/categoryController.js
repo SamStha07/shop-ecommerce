@@ -17,7 +17,7 @@ exports.createCategory = catchAsync(async (req, res, next) => {
 exports.categoryList = catchAsync(async (req, res, next) => {
   const categoriesList = await Category.find();
 
-  res.status(200).json({ categoriesList });
+  res.status(200).json({ length: categoriesList.length, categoriesList });
 });
 
 exports.updateCategory = catchAsync(async (req, res, next) => {
@@ -151,11 +151,18 @@ exports.deleteChildCategory = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.getAllCategories = catchAsync(async (req, res, next) => {
-  const categories = await Category.find();
+exports.getSubCatUnderMainCat = catchAsync(async (req, res, next) => {
   const subCategory = await Subcategory.find({
     categoryID: req.params.id,
   });
 
   res.status(200).json({ subCategory });
+});
+
+exports.getChildCatUnderSubCat = catchAsync(async (req, res, next) => {
+  const childCategory = await Childcategory.find({
+    subCategoryID: req.params.id,
+  });
+
+  res.status(200).json({ childCategory });
 });

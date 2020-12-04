@@ -8,6 +8,7 @@ const UserUpdateLoader = () => {
       <Col>
         <Form>
           <SkeletonTheme color="lightGray">
+            <Skeleton avatar circle={true} height={50} width={50} />
             <Skeleton width={'50%'} height={30} />
             <br />
             <Skeleton width={'100%'} height={33} />

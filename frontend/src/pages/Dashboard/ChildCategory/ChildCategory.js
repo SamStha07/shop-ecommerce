@@ -11,10 +11,10 @@ import SuccessMessage from '../../../components/Message/successMessage';
 import ErrorMessage from '../../../components/Message/errorMessage';
 import {
   createChildCategory,
-  getSubCatUnderMainCatID,
   getAllChildCategories,
 } from '../../../redux/actions/childCategoryActions';
 import { getAllCategories } from '../../../redux/actions/categoryActions';
+import { getSubCatUnderMainCatID } from '../../../redux/actions/subCategoryActions';
 import { CREATE_CHILD_CATEGORY_RESET } from '../../../redux/constants/categoryConstants';
 
 const ChildCategory = () => {
@@ -30,7 +30,7 @@ const ChildCategory = () => {
   const subCatwithMainCat = useSelector(
     (state) => state.getSubCatWithCategoryID,
   );
-  const { childCategory } = subCatwithMainCat;
+  const { subCategory: subCategoryList } = subCatwithMainCat;
 
   const createChild = useSelector((state) => state.createChildCategory);
   const { success, error } = createChild;
@@ -143,8 +143,8 @@ const ChildCategory = () => {
                     value={subcategory}
                     onChange={(e) => setSubCategory(e.target.value)}
                   >
-                    {childCategory &&
-                      childCategory.subCategory.map((cat) => (
+                    {subCategoryList &&
+                      subCategoryList.subCategory.map((cat) => (
                         <MenuItem value={cat._id}>{cat.name}</MenuItem>
                       ))}
                   </Select>

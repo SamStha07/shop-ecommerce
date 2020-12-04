@@ -40,15 +40,6 @@ export const login = (email, password) => async (dispatch, getState) => {
           : error.message,
     });
   }
-  const {
-    userLogin: { userInfo },
-  } = getState();
-
-  {
-    userInfo &&
-      (userInfo.user.role === 'admin' || userInfo.user.role === 'seller') &&
-      history.push('/dashboard');
-  }
 };
 
 export const logout = () => async (dispatch) => {

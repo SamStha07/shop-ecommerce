@@ -11,13 +11,15 @@ import {
   deleteChildCategoryReducer,
   editChildCategoryReducer,
   getAllChildCategoryReducer,
-  getSubCatOfMainCat,
+  getChildCatOfSubCat,
 } from './childCategoryReducers';
+import { createProductReducer } from './productReducers';
 import {
   createSubCategoryReducer,
   deleteSubCategoryReducer,
   editSubCategoryReducer,
   getAllSubCategoryReducer,
+  getSubCatOfMainCat,
 } from './subCategoryReducers';
 
 import {
@@ -54,4 +56,10 @@ export default combineReducers({
 
   // get sub-category under certain main category
   getSubCatWithCategoryID: getSubCatOfMainCat,
+
+  // get Child Category under sub category ID
+  getChildCatWithSubCategoryID: getChildCatOfSubCat,
+
+  // Product
+  createProduct: createProductReducer,
 });

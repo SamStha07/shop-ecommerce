@@ -12,9 +12,9 @@ import {
   GET_ALL_CHILD_CATEGORY_FAIL,
   GET_ALL_CHILD_CATEGORY_REQUEST,
   GET_ALL_CHILD_CATEGORY_SUCCESS,
-  GET_SUBCAT_OF_MAINCAT_FAIL,
-  GET_SUBCAT_OF_MAINCAT_REQUEST,
-  GET_SUBCAT_OF_MAINCAT_SUCCESS,
+  GET_CHILDCAT_OF_SUBCAT_FAIL,
+  GET_CHILDCAT_OF_SUBCAT_REQUEST,
+  GET_CHILDCAT_OF_SUBCAT_SUCCESS,
 } from '../constants/categoryConstants';
 
 export const getAllChildCategories = () => async (dispatch) => {
@@ -69,29 +69,6 @@ export const createChildCategory = (name, categoryID, subCategoryID) => async (
   }
 };
 
-export const getSubCatUnderMainCatID = (id) => async (dispatch) => {
-  try {
-    dispatch({
-      type: GET_SUBCAT_OF_MAINCAT_REQUEST,
-    });
-
-    const { data } = await axios.get(`/category/subs/${id}`);
-
-    dispatch({
-      type: GET_SUBCAT_OF_MAINCAT_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: GET_SUBCAT_OF_MAINCAT_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-};
-
 export const editChildCategory = (
   id,
   name,
@@ -138,6 +115,29 @@ export const deleteChildCategory = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: DELETE_CHILD_CATEGORY_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const getChildCatUnderSubCatID = (id) => async (dispatch) => {
+  try {
+    dispatch({
+      type: GET_CHILDCAT_OF_SUBCAT_REQUEST,
+    });
+
+    const { data } = await axios.get(`/category/childSub/${id}`);
+
+    dispatch({
+      type: GET_CHILDCAT_OF_SUBCAT_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_CHILDCAT_OF_SUBCAT_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

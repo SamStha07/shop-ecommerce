@@ -19,6 +19,10 @@ import {
   DELETE_CHILD_CATEGORY_SUCCESS,
   DELETE_CHILD_CATEGORY_RESET,
   DELETE_CHILD_CATEGORY_FAIL,
+  GET_CHILDCAT_OF_SUBCAT_REQUEST,
+  GET_CHILDCAT_OF_SUBCAT_SUCCESS,
+  GET_CHILDCAT_OF_SUBCAT_FAIL,
+  GET_CHILDCAT_OF_SUBCAT_RESET,
 } from '../constants/categoryConstants';
 
 export const createChildCategoryReducer = (state = {}, action) => {
@@ -61,27 +65,6 @@ export const getAllChildCategoryReducer = (state = {}, action) => {
   }
 };
 
-// to find sub-cateory under main category
-export const getSubCatOfMainCat = (state = {}, action) => {
-  switch (action.type) {
-    case GET_SUBCAT_OF_MAINCAT_REQUEST:
-      return { ...state, loading: true };
-    case GET_SUBCAT_OF_MAINCAT_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        success: true,
-        childCategory: action.payload,
-      };
-    case GET_SUBCAT_OF_MAINCAT_FAIL:
-      return { ...state, loading: false, error: action.payload };
-    case GET_SUBCAT_OF_MAINCAT_RESET:
-      return {};
-    default:
-      return state;
-  }
-};
-
 export const editChildCategoryReducer = (state = {}, action) => {
   switch (action.type) {
     case EDIT_CHILD_CATEGORY_REQUEST:
@@ -111,6 +94,27 @@ export const deleteChildCategoryReducer = (state = {}, action) => {
     case DELETE_CHILD_CATEGORY_FAIL:
       return { loading: false, error: action.payload };
     case DELETE_CHILD_CATEGORY_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+// to find sub-cateory under main category
+export const getChildCatOfSubCat = (state = {}, action) => {
+  switch (action.type) {
+    case GET_CHILDCAT_OF_SUBCAT_REQUEST:
+      return { ...state, loading: true };
+    case GET_CHILDCAT_OF_SUBCAT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: true,
+        childCategory: action.payload,
+      };
+    case GET_CHILDCAT_OF_SUBCAT_FAIL:
+      return { ...state, loading: false, error: action.payload };
+    case GET_CHILDCAT_OF_SUBCAT_RESET:
       return {};
     default:
       return state;

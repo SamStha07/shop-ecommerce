@@ -10,8 +10,8 @@ import {
   getAllChildCategories,
   deleteChildCategory,
   editChildCategory,
-  getSubCatUnderMainCatID,
 } from '../../../redux/actions/childCategoryActions';
+import { getSubCatUnderMainCatID } from '../../../redux/actions/subCategoryActions';
 import SuccessMessage from '../../../components/Message/successMessage';
 import ErrorMessage from '../../../components/Message/errorMessage';
 import {

@@ -15,6 +15,10 @@ import {
   GET_ALL_SUB_CATEGORY_REQUEST,
   GET_ALL_SUB_CATEGORY_RESET,
   GET_ALL_SUB_CATEGORY_SUCCESS,
+  GET_SUBCAT_OF_MAINCAT_FAIL,
+  GET_SUBCAT_OF_MAINCAT_REQUEST,
+  GET_SUBCAT_OF_MAINCAT_RESET,
+  GET_SUBCAT_OF_MAINCAT_SUCCESS,
 } from '../constants/categoryConstants';
 
 export const getAllSubCategoryReducer = (state = {}, action) => {
@@ -86,6 +90,27 @@ export const deleteSubCategoryReducer = (state = {}, action) => {
     case DELETE_SUB_CATEGORY_FAIL:
       return { loading: false, error: action.payload };
     case DELETE_SUB_CATEGORY_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+// to find sub-cateory under main category
+export const getSubCatOfMainCat = (state = {}, action) => {
+  switch (action.type) {
+    case GET_SUBCAT_OF_MAINCAT_REQUEST:
+      return { ...state, loading: true };
+    case GET_SUBCAT_OF_MAINCAT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: true,
+        subCategory: action.payload,
+      };
+    case GET_SUBCAT_OF_MAINCAT_FAIL:
+      return { ...state, loading: false, error: action.payload };
+    case GET_SUBCAT_OF_MAINCAT_RESET:
       return {};
     default:
       return state;

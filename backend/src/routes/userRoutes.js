@@ -6,7 +6,13 @@ const {
   updatePassword,
 } = require('../controllers/authController');
 const { forgotPassword } = require('../controllers/passwordReset');
-const { deleteMe, getMe, updateMe } = require('../controllers/userController');
+const {
+  deleteMe,
+  getMe,
+  updateMe,
+  uploadUserPhoto,
+  resizeUserPhoto,
+} = require('../controllers/userController');
 const { protect, restrictTo } = require('../middlewares/auth');
 const {
   deleteOneUser,
