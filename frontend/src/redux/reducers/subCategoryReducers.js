@@ -15,6 +15,10 @@ import {
   GET_ALL_SUB_CATEGORY_REQUEST,
   GET_ALL_SUB_CATEGORY_RESET,
   GET_ALL_SUB_CATEGORY_SUCCESS,
+  GET_ID_SINGLE_SUB_CATEGORY_FAIL,
+  GET_ID_SINGLE_SUB_CATEGORY_REQUEST,
+  GET_ID_SINGLE_SUB_CATEGORY_RESET,
+  GET_ID_SINGLE_SUB_CATEGORY_SUCCESS,
   GET_SUBCAT_OF_MAINCAT_FAIL,
   GET_SUBCAT_OF_MAINCAT_REQUEST,
   GET_SUBCAT_OF_MAINCAT_RESET,
@@ -35,6 +39,26 @@ export const getAllSubCategoryReducer = (state = {}, action) => {
     case GET_ALL_SUB_CATEGORY_FAIL:
       return { ...state, loading: false, error: action.payload };
     case GET_ALL_SUB_CATEGORY_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const getSubCategoryByIdReducer = (state = {}, action) => {
+  switch (action.type) {
+    case GET_ID_SINGLE_SUB_CATEGORY_REQUEST:
+      return { ...state, loading: true };
+    case GET_ID_SINGLE_SUB_CATEGORY_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: true,
+        subCategory: action.payload,
+      };
+    case GET_ID_SINGLE_SUB_CATEGORY_FAIL:
+      return { ...state, loading: false, error: action.payload };
+    case GET_ID_SINGLE_SUB_CATEGORY_RESET:
       return {};
     default:
       return state;

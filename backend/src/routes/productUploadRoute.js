@@ -35,7 +35,7 @@ const resizeProductPhoto = catchAsync(async (req, res, next) => {
       console.log(newFileName);
 
       await sharp(file.buffer)
-        .resize(2000, 1333)
+        // .resize(2000, 1333)
         .toFormat('jpeg')
         .jpeg({ quality: 90 })
         .toFile(`public/img/products/${newFileName}`);
@@ -58,9 +58,6 @@ const getResult = async (req, res) => {
     });
   }
 
-  // const images = req.body.images.map((image) => {
-  //   return { img: image };
-  // });
   return res.send(images);
 };
 

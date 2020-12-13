@@ -11,6 +11,7 @@ import {
   deleteSubCategory,
   editSubCategory,
 } from '../../../redux/actions/subCategoryActions';
+import { getCategoryByID } from '../../../redux/actions/categoryActions';
 import SuccessMessage from '../../../components/Message/successMessage';
 import ErrorMessage from '../../../components/Message/errorMessage';
 import {
@@ -62,6 +63,9 @@ const SubCatTable = () => {
   const allSubCategories = useSelector((state) => state.getAllSubCategory);
   const { subCategory, loading } = allSubCategories;
 
+  const catByID = useSelector((state) => state.getCategoryByID);
+  const { category: categoryName } = catByID;
+
   const deleteSub = useSelector((state) => state.deleteSubCategory);
   const {
     success: successDelete,
@@ -78,11 +82,14 @@ const SubCatTable = () => {
     }
   }, [success, dispatch, successDelete, editSuccess]);
 
+  // const mainID = categoryList && categoryList.map((item) => item.id);
+
   const subCategoryList = () => {
     if (subCategory) {
       return subCategory.subCategoriesList.map((cat) => (
         <tr>
-          <td>{cat.categoryID}</td>
+          <td>{cat.categoryID.name}</td>
+
           <td>{cat.name}</td>
           <td>{cat.createdAt}</td>
           <td>

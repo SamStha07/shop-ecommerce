@@ -23,6 +23,10 @@ import {
   GET_CHILDCAT_OF_SUBCAT_SUCCESS,
   GET_CHILDCAT_OF_SUBCAT_FAIL,
   GET_CHILDCAT_OF_SUBCAT_RESET,
+  GET_ID_SINGLE_CHILD_CATEGORY_REQUEST,
+  GET_ID_SINGLE_CHILD_CATEGORY_SUCCESS,
+  GET_ID_SINGLE_CHILD_CATEGORY_FAIL,
+  GET_ID_SINGLE_CHILD_CATEGORY_RESET,
 } from '../constants/categoryConstants';
 
 export const createChildCategoryReducer = (state = {}, action) => {
@@ -59,6 +63,26 @@ export const getAllChildCategoryReducer = (state = {}, action) => {
     case GET_ALL_CHILD_CATEGORY_FAIL:
       return { ...state, loading: false, error: action.payload };
     case GET_ALL_CHILD_CATEGORY_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const getChildCategoryByIdReducer = (state = {}, action) => {
+  switch (action.type) {
+    case GET_ID_SINGLE_CHILD_CATEGORY_REQUEST:
+      return { ...state, loading: true };
+    case GET_ID_SINGLE_CHILD_CATEGORY_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: true,
+        childCategory: action.payload,
+      };
+    case GET_ID_SINGLE_CHILD_CATEGORY_FAIL:
+      return { ...state, loading: false, error: action.payload };
+    case GET_ID_SINGLE_CHILD_CATEGORY_RESET:
       return {};
     default:
       return state;

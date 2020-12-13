@@ -3,6 +3,18 @@ import {
   CREATE_PRODUCT_FAIL,
   CREATE_PRODUCT_REQUEST,
   CREATE_PRODUCT_SUCCESS,
+  DELETE_PRODUCT_REQUEST,
+  DELETE_PRODUCT_RESET,
+  DELETE_PRODUCT_SUCCESS,
+  EDIT_PRODUCT_REQUEST,
+  EDIT_PRODUCT_RESET,
+  EDIT_PRODUCT_SUCCESS,
+  GET_ALL_PRODUCTS_FAIL,
+  GET_ALL_PRODUCTS_REQUEST,
+  GET_ALL_PRODUCTS_SUCCESS,
+  GET_PRODUCT_BY_ID_FAIL,
+  GET_PRODUCT_BY_ID_REQUEST,
+  GET_PRODUCT_BY_ID_SUCCESS,
 } from '../constants/productConstants';
 
 export const createProduct = (form) => async (dispatch) => {
@@ -20,6 +32,118 @@ export const createProduct = (form) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: CREATE_PRODUCT_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const getAllProductsList = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: GET_ALL_PRODUCTS_REQUEST,
+    });
+
+    const { data } = await axios.get('/product/list');
+
+    dispatch({
+      type: GET_ALL_PRODUCTS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_ALL_PRODUCTS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const getProductByID = (id) => async (dispatch) => {
+  try {
+    dispatch({
+      type: GET_PRODUCT_BY_ID_REQUEST,
+    });
+
+    const { data } = await axios.get(`/product/${id}`);
+
+    dispatch({
+      type: GET_PRODUCT_BY_ID_SUCCESS,
+      payload: data.product,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_PRODUCT_BY_ID_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const editProduct = (
+  id,
+  category,
+  subCategory,
+  brand,
+  name,
+  price,
+  quantity,
+  description,
+  images,
+) => async (dispatch) => {
+  try {
+    dispatch({
+      type: EDIT_PRODUCT_REQUEST,
+    });
+
+    const { data } = await axios.patch(`/product/${id.id}`, {
+      category,
+      subCategory,
+      brand,
+      name,
+      price,
+      quantity,
+      description,
+      images,
+    });
+
+    console.log(data);
+
+    dispatch({
+      type: EDIT_PRODUCT_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: EDIT_PRODUCT_RESET,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const deleteProduct = (id) => async (dispatch) => {
+  try {
+    dispatch({
+      type: DELETE_PRODUCT_REQUEST,
+    });
+
+    await axios.delete(`/product/${id}`);
+
+    dispatch({
+      type: DELETE_PRODUCT_SUCCESS,
+    });
+  } catch (error) {
+    dispatch({
+      type: DELETE_PRODUCT_RESET,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

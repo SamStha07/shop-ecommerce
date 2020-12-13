@@ -13,6 +13,9 @@ import {
   GET_ALL_CATEGORY_FAIL,
   GET_ALL_CATEGORY_REQUEST,
   GET_ALL_CATEGORY_SUCCESS,
+  GET_ID_SINGLE_CATEGORY_FAIL,
+  GET_ID_SINGLE_CATEGORY_REQUEST,
+  GET_ID_SINGLE_CATEGORY_SUCCESS,
 } from '../constants/categoryConstants';
 
 export const getAllCategories = () => async (dispatch) => {
@@ -32,6 +35,31 @@ export const getAllCategories = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_ALL_CATEGORY_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const getCategoryByID = (id) => async (dispatch) => {
+  try {
+    dispatch({
+      type: GET_ID_SINGLE_CATEGORY_REQUEST,
+    });
+
+    const { data } = await axios.get(`/category/main/${id}`);
+
+    // console.log(data);
+
+    dispatch({
+      type: GET_ID_SINGLE_CATEGORY_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_ID_SINGLE_CATEGORY_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

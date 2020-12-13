@@ -14,6 +14,9 @@ const {
   deleteChildCategory,
   getSubCatUnderMainCat,
   getChildCatUnderSubCat,
+  getCategoryById,
+  getSubCategoryById,
+  getChildCategoryById,
 } = require('../controllers/categoryController');
 const { protect, restrictTo } = require('../middlewares/auth');
 
@@ -39,6 +42,12 @@ router.delete(
   protect,
   restrictTo('admin', 'seller'),
   deleteCategory,
+);
+router.get(
+  '/main/:id',
+  protect,
+  restrictTo('admin', 'seller'),
+  getCategoryById,
 );
 
 /////////////////////////////////////////////
@@ -67,6 +76,12 @@ router.delete(
   restrictTo('admin', 'seller'),
   deleteSubCategory,
 );
+router.get(
+  '/subcategory/:id',
+  protect,
+  restrictTo('admin', 'seller'),
+  getSubCategoryById,
+);
 
 /////////////////////////////////////////////////////////
 // Child-category
@@ -93,6 +108,12 @@ router.delete(
   protect,
   restrictTo('admin', 'seller'),
   deleteChildCategory,
+);
+router.get(
+  '/childcategory/:id',
+  protect,
+  restrictTo('admin', 'seller'),
+  getChildCategoryById,
 );
 
 // Get all the sub-category with that main category id

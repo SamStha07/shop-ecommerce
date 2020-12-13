@@ -7,6 +7,7 @@ const Childcategory = require('../models/childCategoryModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 
+///////////////////////////////////////////////////////////////////////
 // Category
 exports.createCategory = catchAsync(async (req, res, next) => {
   const category = await Category.create(req.body);
@@ -55,6 +56,12 @@ exports.deleteCategory = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.getCategoryById = catchAsync(async (req, res, next) => {
+  const category = await Category.findById(req.params.id);
+  res.status(200).json(category);
+});
+
+///////////////////////////////////////////////////////////////////////////
 //Sub-category
 exports.createSubCategory = catchAsync(async (req, res, next) => {
   const subCategory = await Subcategory.create(req.body);
@@ -63,7 +70,7 @@ exports.createSubCategory = catchAsync(async (req, res, next) => {
 });
 
 exports.subCategoryList = catchAsync(async (req, res, next) => {
-  const subCategoriesList = await Subcategory.find();
+  const subCategoriesList = await Subcategory.find().populate('categoryID');
 
   res.status(200).json({ subCategoriesList });
 });
@@ -103,6 +110,18 @@ exports.deleteSubCategory = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.getSubCategoryById = catchAsync(async (req, res, next) => {
+  const subCategory = await Subcategory.findById(req.params.id);
+  if (!subCategory) {
+    return new AppError(
+      `Sub Category with that ${req.params.id} not found`,
+      404,
+    );
+  }
+  res.status(200).json(subCategory);
+});
+
+/////////////////////////////////////////////////////////////////////////////
 //Child-category
 exports.createChildCategory = catchAsync(async (req, res, next) => {
   const childCategory = await Childcategory.create(req.body);
@@ -111,7 +130,9 @@ exports.createChildCategory = catchAsync(async (req, res, next) => {
 });
 
 exports.childCategoryList = catchAsync(async (req, res, next) => {
-  const childCategoriesList = await Childcategory.find();
+  const childCategoriesList = await Childcategory.find()
+    .populate('categoryID')
+    .populate('subCategoryID');
 
   res.status(200).json({ childCategoriesList });
 });
@@ -151,10 +172,18 @@ exports.deleteChildCategory = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.getChildCategoryById = catchAsync(async (req, res, next) => {
+  const brand = await Childcategory.findById(req.params.id);
+  res.status(200).json(brand);
+});
+
+//////////////////////////////////////////////////////////////////////////
 exports.getSubCatUnderMainCat = catchAsync(async (req, res, next) => {
   const subCategory = await Subcategory.find({
     categoryID: req.params.id,
   });
+
+  console.log(subCategory);
 
   res.status(200).json({ subCategory });
 });

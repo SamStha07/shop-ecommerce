@@ -1,42 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { Container, TextField, MenuItem, Button } from '@material-ui/core';
+import { TextField, MenuItem, Button } from '@material-ui/core';
 import { Breadcrumb, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidV4 } from 'uuid';
+import axios from '../../../helpers/axios';
 
 import { getAllCategories } from '../../../redux/actions/categoryActions';
 import { getSubCatUnderMainCatID } from '../../../redux/actions/subCategoryActions';
 import { getChildCatUnderSubCatID } from '../../../redux/actions/childCategoryActions';
 import { createProduct } from '../../../redux/actions/productActions';
+import ErrorMessage from '../../../components/Message/errorMessage';
 import { CREATE_PRODUCT_RESET } from '../../../redux/constants/productConstants';
-import axios from '../../../helpers/axios';
-import { v4 as uuidv4 } from 'uuid';
-
-const useStyles = makeStyles((theme) => ({
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 200,
-  },
-  prevImages: {
-    minHeight: ' 100%',
-    maxHeight: 'auto',
-    width: '100%',
-    display: 'flex',
-    flexWrap: 'wrap',
-    alignItems: 'center',
-    justifyContent: 'left',
-  },
-  image: {
-    width: '200px',
-    height: '180px',
-    marginLeft: '5px',
-  },
-}));
 
 const Create = ({ history }) => {
-  const classes = useStyles();
   const [category, setCategory] = useState('');
   const [subCategory, setSubCategory] = useState('');
   const [brand, setBrand] = useState('');
@@ -61,9 +38,16 @@ const Create = ({ history }) => {
   );
   const { childCategory: childCategoryList } = childCatWithSubCat;
 
+  const create = useSelector((state) => state.createProduct);
+  const { success: successCreate, error: errorCreate } = create;
+
   useEffect(() => {
     dispatch(getAllCategories());
-  }, [dispatch]);
+
+    if (successCreate) {
+      history.push('/dashboard/products');
+    }
+  }, [dispatch, successCreate, history]);
 
   const uploadMultipleFiles = async (e) => {
     e.preventDefault();
@@ -92,22 +76,6 @@ const Create = ({ history }) => {
       console.error(error);
       // setUploading(false);
     }
-
-    // let id = e.target.id;
-
-    // const pics = [...productImages, e.target.files[0]];
-    // setProductImages(pics);
-    // // console.log(pics);
-
-    // // shows the while selecting images
-    // if (e.target.files) {
-    //   const fileArray = Array.from(e.target.files).map((file) =>
-    //     URL.createObjectURL(file),
-    //   );
-    //   // console.log(fileArray);
-    //   setImages((prevImg) => prevImg.concat(fileArray));
-    //   Array.from(e.target.files).map((file) => URL.revokeObjectURL(file));
-    // }
   };
 
   const handleCategory = (e) => {
@@ -121,8 +89,6 @@ const Create = ({ history }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // const img = images.map((i) => i);
-    // console.log({ name, price, quantity, img });
 
     dispatch(
       createProduct({
@@ -136,19 +102,26 @@ const Create = ({ history }) => {
         images,
       }),
     );
-    history.push('/dashboard/products');
   };
 
   return (
     <>
       <h5>Create</h5>
 
+      {errorCreate && (
+        <ErrorMessage
+          header="Error"
+          message={errorCreate}
+          reset={CREATE_PRODUCT_RESET}
+        />
+      )}
+
       <Breadcrumb>
         <Breadcrumb.Item>
           <Link to="/dashboard">Dashboard</Link>
         </Breadcrumb.Item>
         <Breadcrumb.Item>
-          <Link to="/dashboard/products">Product</Link>
+          <Link to="/dashboard/products">Products</Link>
         </Breadcrumb.Item>
         <Breadcrumb.Item active>Create</Breadcrumb.Item>
       </Breadcrumb>
@@ -176,6 +149,7 @@ const Create = ({ history }) => {
                 ))}
             </TextField>
           </div>
+
           <div className="col-sm col-lg-3 col-md-4 mt-2">
             <TextField
               style={{ width: '100%' }}
@@ -193,6 +167,7 @@ const Create = ({ history }) => {
                 ))}
             </TextField>
           </div>
+
           <div className="col-sm col-lg-3 col-md-4 mt-2">
             <TextField
               style={{ width: '100%' }}
@@ -215,7 +190,7 @@ const Create = ({ history }) => {
 
         <h6>Product Description</h6>
         <div className="row">
-          <div className="col-sm col-lg-3  col-md-4 mt-2">
+          <div className="col-sm col-lg-9 col-md-12 mt-3">
             <TextField
               style={{ width: '100%' }}
               required
@@ -226,7 +201,9 @@ const Create = ({ history }) => {
               onChange={(e) => setName(e.target.value)}
             />
           </div>
-          <div className="col-sm col-lg-3  col-md-4 mt-2">
+        </div>
+        <div className="row">
+          <div className="col-sm col-lg-4  col-md-4 mt-2">
             <TextField
               style={{ width: '100%' }}
               required
@@ -237,7 +214,7 @@ const Create = ({ history }) => {
               onChange={(e) => setPrice(e.target.value)}
             />
           </div>
-          <div className="col-sm col-lg-3  col-md-4 mt-2">
+          <div className="col-sm col-lg-4  col-md-4 mt-2">
             <TextField
               style={{ width: '100%' }}
               required
@@ -273,7 +250,7 @@ const Create = ({ history }) => {
               onChange={(e) => setImages(e.target.value)}
             ></Form.Control>
             <Form.File
-              id={uuidv4()}
+              id={uuidV4()}
               label="Choose Files"
               custom
               multiple
@@ -290,7 +267,7 @@ const Create = ({ history }) => {
           </div>
         </div>
         <hr />
-        <Button type="submit">Create</Button>
+        <Button type="submit">Add Product</Button>
       </Form>
     </>
   );

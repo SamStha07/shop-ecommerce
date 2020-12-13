@@ -5,20 +5,29 @@ import {
   deleteCategoryReducer,
   editCategoryReducer,
   getAllCategoryReducer,
+  getCategoryByIdReducer,
 } from './categoryReducers';
 import {
   createChildCategoryReducer,
   deleteChildCategoryReducer,
   editChildCategoryReducer,
   getAllChildCategoryReducer,
+  getChildCategoryByIdReducer,
   getChildCatOfSubCat,
 } from './childCategoryReducers';
-import { createProductReducer } from './productReducers';
+import {
+  createProductReducer,
+  deleteProductReducer,
+  editProductReducer,
+  getAllProductsReducer,
+  getProductByIDReducer,
+} from './productReducers';
 import {
   createSubCategoryReducer,
   deleteSubCategoryReducer,
   editSubCategoryReducer,
   getAllSubCategoryReducer,
+  getSubCategoryByIdReducer,
   getSubCatOfMainCat,
 } from './subCategoryReducers';
 
@@ -60,6 +69,15 @@ export default combineReducers({
   // get Child Category under sub category ID
   getChildCatWithSubCategoryID: getChildCatOfSubCat,
 
+  //get all types of categories with ID
+  getCategoryByID: getCategoryByIdReducer,
+  getSubCategoryByID: getSubCategoryByIdReducer,
+  getChildCategoryByID: getChildCategoryByIdReducer,
+
   // Product
   createProduct: createProductReducer,
+  getAllProducts: getAllProductsReducer,
+  editProduct: editProductReducer,
+  deleteProduct: deleteProductReducer,
+  getProductByID: getProductByIDReducer,
 });

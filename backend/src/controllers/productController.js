@@ -1,15 +1,20 @@
+const Category = require('../models/childCategoryModel');
 const Product = require('../models/productModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 
 exports.createProduct = catchAsync(async (req, res, next) => {
-  const product = await Product.create(req.body);
+  const createdBy = req.user.id;
+  const product = await await Product.create({ ...req.body, createdBy });
 
   res.status(201).json({ product });
 });
 
 exports.productList = catchAsync(async (req, res, next) => {
-  const productsList = await Product.find();
+  const productsList = await Product.find()
+    .populate('category')
+    .populate('subCategory')
+    .populate('brand');
 
   res.status(200).json({ length: productsList.length, productsList });
 });
@@ -36,11 +41,24 @@ exports.deleteProduct = catchAsync(async (req, res, next) => {
   const product = await Product.findByIdAndDelete(req.params.id);
 
   if (!product) {
-    return next(new AppError('No category found with that ID', 404));
+    return next(new AppError('No product found with that ID', 404));
   }
 
   res.status(204).json({
     status: 'success',
     data: null,
   });
+});
+
+exports.getProductByID = catchAsync(async (req, res, next) => {
+  const product = await Product.findById(req.params.id)
+    .populate('category')
+    .populate('subCategory')
+    .populate('brand');
+
+  if (!product) {
+    return next(new AppError('No product found with that ID', 404));
+  }
+
+  res.status(200).json({ product });
 });

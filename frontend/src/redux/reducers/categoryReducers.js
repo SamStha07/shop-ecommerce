@@ -15,6 +15,10 @@ import {
   DELETE_CATEGORY_SUCCESS,
   DELETE_CATEGORY_FAIL,
   DELETE_CATEGORY_RESET,
+  GET_ID_SINGLE_CATEGORY_REQUEST,
+  GET_ID_SINGLE_CATEGORY_SUCCESS,
+  GET_ID_SINGLE_CATEGORY_FAIL,
+  GET_ID_SINGLE_CATEGORY_RESET,
 } from '../constants/categoryConstants';
 
 export const createCategoryReducer = (state = {}, action) => {
@@ -51,6 +55,26 @@ export const getAllCategoryReducer = (state = {}, action) => {
     case GET_ALL_CATEGORY_FAIL:
       return { ...state, loading: false, error: action.payload };
     case GET_ALL_CATEGORY_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const getCategoryByIdReducer = (state = {}, action) => {
+  switch (action.type) {
+    case GET_ID_SINGLE_CATEGORY_REQUEST:
+      return { ...state, loading: true };
+    case GET_ID_SINGLE_CATEGORY_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: true,
+        category: action.payload,
+      };
+    case GET_ID_SINGLE_CATEGORY_FAIL:
+      return { ...state, loading: false, error: action.payload };
+    case GET_ID_SINGLE_CATEGORY_RESET:
       return {};
     default:
       return state;

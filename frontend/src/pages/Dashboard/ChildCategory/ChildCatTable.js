@@ -93,8 +93,8 @@ const ChildCatTable = () => {
     if (childCategory) {
       return childCategory.childCategoriesList.map((cat) => (
         <tr>
-          <td>{cat.categoryID}</td>
-          <td>{cat.subCategoryID}</td>
+          <td>{cat.categoryID.name}</td>
+          <td>{cat.subCategoryID.name}</td>
           <td>{cat.name}</td>
           <td>{cat.createdAt}</td>
           <td>
