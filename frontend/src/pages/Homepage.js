@@ -1,11 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const Homepage = () => {
-  return (
-    <div>
-      <div>Homepage</div>
-    </div>
-  );
+  return <div>Homepage</div>;
 };
 
 export default Homepage;

@@ -30,7 +30,7 @@ router.post(
   restrictTo('admin', 'seller'),
   createCategory,
 );
-router.get('/main/list', protect, restrictTo('admin', 'seller'), categoryList);
+router.get('/main/list', categoryList);
 router.patch(
   '/main/:id',
   protect,
@@ -58,12 +58,7 @@ router.post(
   restrictTo('admin', 'seller'),
   createSubCategory,
 );
-router.get(
-  '/subcategory/list',
-  protect,
-  restrictTo('admin', 'seller'),
-  subCategoryList,
-);
+router.get('/subcategory/list', subCategoryList);
 router.patch(
   '/subcategory/:id',
   protect,
@@ -76,12 +71,7 @@ router.delete(
   restrictTo('admin', 'seller'),
   deleteSubCategory,
 );
-router.get(
-  '/subcategory/:id',
-  protect,
-  restrictTo('admin', 'seller'),
-  getSubCategoryById,
-);
+router.get('/subcategory/:id', getSubCategoryById);
 
 /////////////////////////////////////////////////////////
 // Child-category
@@ -91,12 +81,7 @@ router.post(
   restrictTo('admin', 'seller'),
   createChildCategory,
 );
-router.get(
-  '/childcategory/list',
-  protect,
-  restrictTo('admin', 'seller'),
-  childCategoryList,
-);
+router.get('/childcategory/list', childCategoryList);
 router.patch(
   '/childcategory/:id',
   protect,
@@ -109,26 +94,11 @@ router.delete(
   restrictTo('admin', 'seller'),
   deleteChildCategory,
 );
-router.get(
-  '/childcategory/:id',
-  protect,
-  restrictTo('admin', 'seller'),
-  getChildCategoryById,
-);
+router.get('/childcategory/:id', getChildCategoryById);
 
 // Get all the sub-category with that main category id
-router.get(
-  '/subs/:id',
-  protect,
-  restrictTo('admin', 'seller'),
-  getSubCatUnderMainCat,
-);
+router.get('/subs/:id', getSubCatUnderMainCat);
 
-router.get(
-  '/childSub/:id',
-  protect,
-  restrictTo('admin', 'seller'),
-  getChildCatUnderSubCat,
-);
+router.get('/childSub/:id', getChildCatUnderSubCat);
 
 module.exports = router;

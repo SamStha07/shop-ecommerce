@@ -183,7 +183,7 @@ exports.getSubCatUnderMainCat = catchAsync(async (req, res, next) => {
     categoryID: req.params.id,
   });
 
-  console.log(subCategory);
+  // console.log(subCategory);
 
   res.status(200).json({ subCategory });
 });

@@ -40,6 +40,7 @@ function App() {
             <Route path="/login" exact component={Login} />
             <Route path="/register" exact component={Register} />
             <Route exact path="/dashboard" component={Home} />
+
             <Route
               exact
               path="/dashboard/category/create"
@@ -55,11 +56,6 @@ function App() {
               path="/dashboard/childcategory/create"
               component={ChildCategory}
             />
-            {/* <Route
-                exact
-                path="/dashboard/categories"
-                component={AllCategories}
-              /> */}
             <Route
               exact
               path="/dashboard/product/create"
@@ -77,6 +73,8 @@ function App() {
             />
             <Route exact path="/dashboard/user/create" component={CreateUser} />
             <Route exact path="/dashboard/users" component={AllUsers} />
+
+            <Route render={() => <div>404 Not found</div>} />
           </Switch>
         </Sidebar>
       ) : (

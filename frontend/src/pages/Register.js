@@ -40,7 +40,7 @@ const Register = ({ location, history }) => {
     if (userInfoLogin) {
       history.push(redirect);
     }
-  }, [userInfo, history, redirect]);
+  }, [userInfoLogin, history, redirect]);
 
   const submitHandler = (e) => {
     e.preventDefault();

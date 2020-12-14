@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { Toolbar, Button, MenuItem, Menu } from '@material-ui/core';
+import React from 'react';
+import { Button, MenuItem, Menu } from '@material-ui/core';
 import { AccountCircle } from '@material-ui/icons';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../redux/actions/authActions';
 
-const AccountIcon = (props) => {
+const AccountIcon = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
