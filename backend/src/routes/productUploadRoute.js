@@ -32,7 +32,7 @@ const resizeProductPhoto = catchAsync(async (req, res, next) => {
       const filename = file.originalname.replace(/\..+$/, '');
       const newFileName = `product-${filename}-${Date.now()}.jpeg`;
 
-      console.log(newFileName);
+      // console.log(newFileName);
 
       await sharp(file.buffer)
         // .resize(2000, 1333)

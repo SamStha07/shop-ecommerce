@@ -70,11 +70,8 @@ const Create = ({ history }) => {
         config,
       );
       setImages(data);
-      // console.log(data);
-      console.log(data);
     } catch (error) {
       console.error(error);
-      // setUploading(false);
     }
   };
 
@@ -247,7 +244,10 @@ const Create = ({ history }) => {
               type="text"
               placeholder="Enter image url"
               value={images}
-              onChange={(e) => setImages(e.target.value)}
+              onChange={(e) => {
+                setImages([...images, e.target.value[0]]);
+                console.log(images);
+              }}
             ></Form.Control>
             <Form.File
               id={uuidV4()}

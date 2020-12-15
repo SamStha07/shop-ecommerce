@@ -113,7 +113,7 @@ export const editProduct = (
       images,
     });
 
-    console.log(data);
+    // console.log(data);
 
     dispatch({
       type: EDIT_PRODUCT_SUCCESS,

@@ -51,7 +51,7 @@ const Profile = () => {
       setEmail(userInfoDetails.email);
       setPhoto(userImageUrl(userInfoDetails.photo));
     }
-  }, [userInfoDetails, dispatch, userInfo]);
+  }, [userInfoDetails, dispatch, userInfo, userInfoUpdated]);
 
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];
@@ -76,10 +76,12 @@ const Profile = () => {
   const submitHandler = (e) => {
     e.preventDefault();
 
-    console.log({ email, name, photo });
+    // console.log({ email, name, photo });
     dispatch(userUpdateProfile({ id: userInfo.user._id, photo, name, email }));
 
-    dispatch(getMyDetails(userInfo.user._id));
+    // if (userInfoUpdated) {
+    //   dispatch(getMyDetails(userInfoUpdated.user._id));
+    // }
   };
 
   return (

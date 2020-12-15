@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import PrivateRoute from './routes/PrivateRoute';
 import AdminRoute from './routes/AdminSellerRoute';
 import AdminSellerRoute from './routes/AdminSellerRoute';
-import Sidebar from './components/layout/Sidebar';
+import Sidebar from './components/Layout/Sidebar';
 
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -15,7 +15,6 @@ import Profile from './pages/Profile';
 import Order from './pages/Order';
 import Header from './components/Header/Header';
 import Cart from './pages/Cart';
-// import AllCategories from './pages/Dashboard/Category/AllCategories';
 import Category from './pages/Dashboard/Category/Category';
 import SubCategory from './pages/Dashboard/SubCategory/SubCategory';
 import ChildCategory from './pages/Dashboard/ChildCategory/ChildCategory';
@@ -25,7 +24,7 @@ import EditProduct from './pages/Dashboard/Product/EditProduct';
 import Home from './pages/Dashboard/Home/Home';
 import CreateUser from './pages/Dashboard/Users/CreateUser';
 import AllUsers from './pages/Dashboard/Users/AllUsers';
-// import Main from './components/Dashboard/Main';
+import ProductDetails from './pages/ProductDetails';
 
 function App() {
   const userLogin = useSelector((state) => state.userLogin);
@@ -87,6 +86,7 @@ function App() {
                 <Route path="/register" exact component={Register} />
                 <Route path="/" exact component={Homepage} />
                 <Route path="/cart" exact component={Cart} />
+                <Route path="/product/:id" exact component={ProductDetails} />
 
                 <PrivateRoute path="/profile" exact component={Profile} />
                 <PrivateRoute path="/orders" exact component={Order} />

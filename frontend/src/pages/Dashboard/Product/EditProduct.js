@@ -91,6 +91,8 @@ const EditProduct = ({ match, history }) => {
     e.preventDefault();
 
     const file = e.target.files;
+    console.log(file);
+    setImages(file);
     const formdata = new FormData();
     for (let key of file) {
       formdata.append('images', key);
@@ -112,6 +114,8 @@ const EditProduct = ({ match, history }) => {
       console.error(error);
     }
   };
+
+  console.log(images);
 
   const handleCategory = (e) => {
     setCategory(e.target.value);

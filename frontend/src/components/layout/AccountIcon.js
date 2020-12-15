@@ -1,18 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, MenuItem, Menu } from '@material-ui/core';
 import { AccountCircle } from '@material-ui/icons';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../redux/actions/authActions';
 
-const AccountIcon = () => {
+const AccountIcon = ({ history }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
   const dispatch = useDispatch();
-
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
 
   const logoutHandler = () => {
     dispatch(logout());
