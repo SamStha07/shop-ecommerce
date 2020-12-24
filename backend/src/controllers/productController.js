@@ -14,7 +14,8 @@ exports.productList = catchAsync(async (req, res, next) => {
   const productsList = await Product.find()
     .populate('category')
     .populate('subCategory')
-    .populate('brand');
+    .populate('brand')
+    .populate('createdBy');
 
   res.status(200).json({ length: productsList.length, productsList });
 });
@@ -54,7 +55,8 @@ exports.getProductByID = catchAsync(async (req, res, next) => {
   const product = await Product.findById(req.params.id)
     .populate('category')
     .populate('subCategory')
-    .populate('brand');
+    .populate('brand')
+    .populate('createdBy');
 
   if (!product) {
     return next(new AppError('No product found with that ID', 404));

@@ -1,10 +1,9 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { MDBTable, MDBTableBody, MDBTableHead, MDBIcon } from 'mdbreact';
 import { LinkContainer } from 'react-router-bootstrap';
 import { makeStyles } from '@material-ui/core/styles';
 import { CircularProgress } from '@material-ui/core';
-import { v4 as uuidv4 } from 'uuid';
 import { Modal } from 'antd';
 
 import { productsImagesUrl } from '../../../urlConfig';
@@ -57,13 +56,6 @@ const useStyles = makeStyles({
 
 const AllProductsTable = () => {
   const [visible, setVisible] = useState(false);
-  const [editOpen, setEditOpen] = useState(false);
-  const [name, setName] = useState('');
-  const [price, setPrice] = useState('');
-  const [quantity, setQuantity] = useState('');
-  const [description, setDescription] = useState('');
-  const [images, setImages] = useState([]);
-  const [brand, setBrand] = useState('');
 
   const classes = useStyles();
 
@@ -90,6 +82,7 @@ const AllProductsTable = () => {
                 className={classes.image}
                 key={pic._id}
                 src={productsImagesUrl(pic.img)}
+                alt={pic._id}
               />
             ))}
           </td>

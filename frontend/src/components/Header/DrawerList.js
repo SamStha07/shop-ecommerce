@@ -42,10 +42,6 @@ const DrawerList = () => {
     loading: loadingChildCat,
   } = childCatWithSubCat;
 
-  const handleClick = (e) => {
-    console.log('click ', e);
-  };
-
   useEffect(() => {
     dispatch(getAllCategories());
   }, [dispatch]);
@@ -53,7 +49,6 @@ const DrawerList = () => {
   return (
     <div>
       <Menu
-        // onClick={handleClick}
         style={{
           width: 230,
           marginLeft: '-15px',

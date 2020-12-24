@@ -11,7 +11,6 @@ import {
   deleteSubCategory,
   editSubCategory,
 } from '../../../redux/actions/subCategoryActions';
-import { getCategoryByID } from '../../../redux/actions/categoryActions';
 import SuccessMessage from '../../../components/Message/successMessage';
 import ErrorMessage from '../../../components/Message/errorMessage';
 import {
@@ -62,9 +61,6 @@ const SubCatTable = () => {
 
   const allSubCategories = useSelector((state) => state.getAllSubCategory);
   const { subCategory, loading } = allSubCategories;
-
-  const catByID = useSelector((state) => state.getCategoryByID);
-  const { category: categoryName } = catByID;
 
   const deleteSub = useSelector((state) => state.deleteSubCategory);
   const {

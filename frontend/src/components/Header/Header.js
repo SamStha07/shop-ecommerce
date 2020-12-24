@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Navbar, Nav, NavDropdown, Container, Row } from 'react-bootstrap';
+import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles, Avatar } from '@material-ui/core';
 import { Drawer } from 'antd';
@@ -32,7 +32,7 @@ const Header = () => {
   const { userInfo } = userLogin;
 
   const userDetails = useSelector((state) => state.userDetails);
-  const { userInfoDetails, loading } = userDetails;
+  const { userInfoDetails } = userDetails;
 
   useEffect(() => {
     if (!userInfoDetails && userInfo) {

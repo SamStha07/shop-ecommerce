@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
-import { BrowserRouter, Route, Switch, withRouter } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 
 import PrivateRoute from './routes/PrivateRoute';
-import AdminRoute from './routes/AdminSellerRoute';
-import AdminSellerRoute from './routes/AdminSellerRoute';
+// import AdminRoute from './routes/AdminSellerRoute';
+// import AdminSellerRoute from './routes/AdminSellerRoute';
 import Sidebar from './components/Layout/Sidebar';
 
 import Login from './pages/Login';

@@ -1,4 +1,4 @@
-import React, { useState, useReducer, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Row, Col, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import {
@@ -29,7 +29,7 @@ const Register = ({ location, history }) => {
 
   const dispatch = useDispatch();
   const userRegister = useSelector((state) => state.userRegister);
-  const { loading, error, userInfo } = userRegister;
+  const { loading, error } = userRegister;
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo: userInfoLogin } = userLogin;

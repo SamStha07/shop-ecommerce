@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Row, Col, Form, Container, Media } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Col, Form, Container } from 'react-bootstrap';
 import { Button, CircularProgress, makeStyles } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { useDispatch, useSelector } from 'react-redux';
@@ -25,10 +25,10 @@ const UpdatePassword = () => {
   const { userInfo } = userLogin;
 
   const userDetails = useSelector((state) => state.userDetails);
-  const { userInfoDetails, loading: userInfoLoading } = userDetails;
+  const { loading: userInfoLoading } = userDetails;
 
   const userUpdatedPassword = useSelector((state) => state.userUpdatedPassword);
-  const { loading, success, userPasswordUpdated, error } = userUpdatedPassword;
+  const { loading, success, error } = userUpdatedPassword;
 
   const submitHandler = (e) => {
     e.preventDefault();
