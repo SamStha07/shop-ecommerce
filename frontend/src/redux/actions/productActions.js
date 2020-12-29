@@ -158,15 +158,23 @@ export const deleteProduct = (id) => async (dispatch) => {
   }
 };
 
-export const searchProducts = (keyword, pageNumber) => async (dispatch) => {
+export const searchProducts = (keyword, pageNumber, filters) => async (
+  dispatch
+) => {
   try {
     dispatch({
       type: SEARCH_PRODUCT_REQUEST,
     });
+    // console.log('Inside actions');
+    // console.log(filters);
 
-    const { data } = await axios.get(
-      `/product?keyword=${keyword}&pageNumber=${pageNumber}`
+    const {
+      data,
+    } = await axios.post(
+      `/product?keyword=${keyword}&pageNumber=${pageNumber}`,
+      { filters }
     );
+    // console.log(data);
 
     dispatch({
       type: SEARCH_PRODUCT_SUCCESS,

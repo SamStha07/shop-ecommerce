@@ -20,8 +20,8 @@ router.delete('/:id', protect, restrictTo('admin', 'seller'), deleteProduct);
 router.get('/:id', getProductByID);
 
 //search
-router.get('/', searchProducts);
-// router.get('/filter', filterProducts);
+router.post('/', searchProducts);
+
 // Filtering
 router.post('/filters', listBySearch);
 

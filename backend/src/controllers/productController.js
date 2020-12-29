@@ -84,10 +84,8 @@ const handlePrice = async (req, res, price) => {
 // search products
 
 exports.searchProducts = catchAsync(async (req, res, next) => {
-  const pageSize = 10; // will have only 2 products
+  const pageSize = 2; // will have only 2 products
   const page = Number(req.query.pageNumber) || 1;
-
-  const { price } = req.body;
 
   // keyword search
   const keyword = req.query.keyword
@@ -99,28 +97,49 @@ exports.searchProducts = catchAsync(async (req, res, next) => {
       }
     : {};
 
-  // price [0,10],[20,200]
-  if (price !== undefined) {
-    console.log('🚀 ~ file: productController.js ~ price', price);
-    await handlePrice(req, res, price);
+  // filtering with prices
+  let findArgs = {};
+
+  for (let key in req.body.filters) {
+    if (req.body.filters[key].length > 0) {
+      if (key === 'price') {
+        findArgs[key] = {
+          $gte: req.body.filters[key][0],
+          $lte: req.body.filters[key][1],
+        };
+      } else {
+        findArgs[key] = req.body.filters[key];
+      }
+    }
   }
 
   // Pagination
-  const count = await Product.countDocuments({ ...keyword });
+  const count = await Product.countDocuments({ ...keyword }).countDocuments(
+    findArgs
+  );
+
   const skip = pageSize * (page - 1);
 
-  const productsList = await Product.find({ ...keyword })
-    .populate('brand')
-    .populate('createdBy')
-    .limit(pageSize)
-    .skip(skip);
+  // console.log(req.body.filters);
 
-  res.status(200).json({
-    length: productsList.length,
-    productsList,
-    page, // page number
-    pages: Math.ceil(count / pageSize), //total pages
-  });
+  if (req.query.keyword || req.body.filters) {
+    const productsList = await Product.find({ ...keyword })
+      .find(findArgs)
+      .populate('brand')
+      .populate('createdBy')
+      .limit(pageSize)
+      .skip(skip);
+
+    res.status(200).json({
+      length: productsList.length,
+      productsList,
+      page, // page number
+      pages: Math.ceil(count / pageSize), //total pages
+      count,
+    });
+  } else {
+    return next(new AppError('Not found', 500));
+  }
 });
 
 exports.listBySearch = catchAsync(async (req, res, next) => {
