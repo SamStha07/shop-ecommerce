@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
+import { Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles, Avatar } from '@material-ui/core';
 import { Drawer } from 'antd';
@@ -22,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Header = () => {
+const Header = ({ history }) => {
   const classes = useStyles();
   const [visible, setVisible] = useState(false);
 
@@ -48,14 +49,14 @@ const Header = () => {
     if (userInfo) {
       return (
         <LinkContainer
-          to="/profile"
+          to='/profile'
           style={{ cursor: 'pointer' }}
           onClick={() => setVisible(false)}
         >
           {userInfoDetails && (
             <div>
               <Avatar
-                alt="image"
+                alt='image'
                 src={userImageUrl(userInfoDetails.photo)}
                 style={{
                   height: '50px',
@@ -82,17 +83,17 @@ const Header = () => {
 
   return (
     <>
-      <Navbar className={classes.root} variant="dark" expand="lg" sticky="top">
+      <Navbar className={classes.root} variant='dark' expand='lg' sticky='top'>
         <Container>
           <>
             <div className={classes.btn} onClick={() => setVisible(true)}>
-              <span class="navbar-toggler-icon"></span>
+              <span class='navbar-toggler-icon'></span>
             </div>
 
             <Drawer
               style={{ zIndex: '123123213' }}
               title={showProfile()}
-              placement="left"
+              placement='left'
               closable={false}
               onClose={() => setVisible(false)}
               visible={visible}
@@ -100,28 +101,28 @@ const Header = () => {
               <DrawerList />
             </Drawer>
           </>
-          <LinkContainer to="/">
+          <LinkContainer to='/'>
             <Navbar.Brand>Shop</Navbar.Brand>
           </LinkContainer>
 
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Toggle aria-controls='basic-navbar-nav' />
 
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Search />
+          <Navbar.Collapse id='basic-navbar-nav'>
+            <Route render={({ history }) => <Search history={history} />} />
 
-            <Nav className="ml-auto">
-              <LinkContainer to="/cart">
+            <Nav className='ml-auto'>
+              <LinkContainer to='/cart'>
                 <Nav.Link>
-                  <i class="fas fa-shopping-cart"></i> Cart
+                  <i class='fas fa-shopping-cart'></i> Cart
                 </Nav.Link>
               </LinkContainer>
               {userInfo ? (
-                <NavDropdown title={userInfo.user.name} id="firstname">
-                  <LinkContainer to="/profile">
+                <NavDropdown title={userInfo.user.name} id='firstname'>
+                  <LinkContainer to='/profile'>
                     <NavDropdown.Item>Profile</NavDropdown.Item>
                   </LinkContainer>
                   {userInfo.user.role === 'user' && (
-                    <LinkContainer to="/orders">
+                    <LinkContainer to='/orders'>
                       <NavDropdown.Item>My Orders</NavDropdown.Item>
                     </LinkContainer>
                   )}
@@ -131,16 +132,16 @@ const Header = () => {
                   </NavDropdown.Item>
                 </NavDropdown>
               ) : (
-                <LinkContainer to="/login">
+                <LinkContainer to='/login'>
                   <Nav.Link>
-                    <i className="fas fa-user"></i> Login
+                    <i className='fas fa-user'></i> Login
                   </Nav.Link>
                 </LinkContainer>
               )}
               {userInfo &&
                 (userInfo.user.role === 'admin' ||
                   userInfo.user.role === 'seller') && (
-                  <LinkContainer to="/dashboard">
+                  <LinkContainer to='/dashboard'>
                     <Nav.Link>Dashboard</Nav.Link>
                   </LinkContainer>
                 )}

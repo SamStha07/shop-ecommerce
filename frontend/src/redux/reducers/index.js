@@ -19,8 +19,10 @@ import {
   createProductReducer,
   deleteProductReducer,
   editProductReducer,
+  filterProductsReducer,
   getAllProductsReducer,
   getProductByIDReducer,
+  searchProductsReducer,
 } from './productReducers';
 import {
   createSubCategoryReducer,
@@ -80,4 +82,10 @@ export default combineReducers({
   editProduct: editProductReducer,
   deleteProduct: deleteProductReducer,
   getProductByID: getProductByIDReducer,
+
+  // Search
+  searchProduct: searchProductsReducer,
+
+  // Filter
+  filterProduct: filterProductsReducer,
 });

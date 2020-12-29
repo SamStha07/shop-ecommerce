@@ -8,6 +8,7 @@ const productSchema = new mongoose.Schema(
       required: [true, 'Product name is required'],
       trim: true,
       unique: true,
+      text: true,
     },
     slug: {
       type: String,
@@ -25,6 +26,7 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: [true, 'A product must have description'],
       trim: true,
+      text: true,
     },
     offer: {
       type: Number,
@@ -67,7 +69,7 @@ const productSchema = new mongoose.Schema(
     },
     updatedAt: Date,
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 productSchema.pre('save', function (next) {

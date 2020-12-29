@@ -11,13 +11,13 @@ const useStyles = makeStyles({
   },
 });
 
-const ProductDetails = ({ product }) => {
+export const ProductBreadCrumb = ({ product }) => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <Breadcrumb separator=">">
+      <Breadcrumb separator='>'>
         <Breadcrumb.Item>
-          <Link to="/">Home</Link>
+          <Link to='/'>Home</Link>
         </Breadcrumb.Item>
         <Breadcrumb.Item>{product.category.name}</Breadcrumb.Item>
         <Breadcrumb.Item>{product.subCategory.name}</Breadcrumb.Item>
@@ -28,4 +28,13 @@ const ProductDetails = ({ product }) => {
   );
 };
 
-export default ProductDetails;
+export const SearchBreadcrumb = () => {
+  return (
+    <Breadcrumb separator='>'>
+      <Breadcrumb.Item>
+        <Link to='/'>Home</Link>
+      </Breadcrumb.Item>
+      <Breadcrumb.Item>Search Results</Breadcrumb.Item>
+    </Breadcrumb>
+  );
+};

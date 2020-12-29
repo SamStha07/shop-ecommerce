@@ -4,11 +4,10 @@ import { Row, Col, Form } from 'react-bootstrap';
 import { makeStyles } from '@material-ui/core';
 import { Button } from 'antd';
 import { Link } from 'react-router-dom';
-import { Carousel } from 'react-responsive-carousel';
 
 import { getProductByID } from '../redux/actions/productActions';
 import { productsImagesUrl } from '../urlConfig';
-import Breadcrumb from '../components/Breadcrumb/ProductDetails';
+import { ProductBreadCrumb } from '../components/Breadcrumb/ProductDetails';
 import Rating from '../components/Rating';
 import RatingDetails from './Ratings';
 
@@ -53,8 +52,8 @@ const useStyles = makeStyles((theme) => ({
         cursor: 'pointer',
       },
       [theme.breakpoints.down('md')]: {
-        width: '3rem',
-        height: '4rem',
+        width: '2rem',
+        height: '3rem',
         flexWrap: 'wrap',
       },
     },
@@ -182,7 +181,7 @@ const ProductDetails = ({ match }) => {
         <>
           {productID && (
             <>
-              <Breadcrumb product={productID} />
+              <ProductBreadCrumb product={productID} />
 
               <Row>
                 <Col lg={3} md={3} sm={12} xs={12}>
@@ -229,7 +228,7 @@ const ProductDetails = ({ match }) => {
                       <div style={{ display: 'flex' }}>
                         <h3>Quantity:</h3>
                         <Form.Control
-                          as="select"
+                          as='select'
                           value={qty}
                           onChange={(e) => setQty(e.target.value)}
                         >
@@ -277,7 +276,7 @@ const ProductDetails = ({ match }) => {
                     <p>Sold by</p>
                     <h4>{productID.createdBy.name}</h4>
                     <a>
-                      <Link to="/store">GO TO STORE</Link>
+                      <Link to='/store'>GO TO STORE</Link>
                     </a>
                   </div>
                 </Col>

@@ -8,9 +8,10 @@ import { productsImagesUrl } from '../urlConfig';
 
 const useStyle = makeStyles((theme) => ({
   root: {
-    [theme.breakpoints.down('md' || 'sm')]: {
-      margin: '0 0 1.5rem 0',
-    },
+    // [theme.breakpoints.down('lg' || 'md' || 'sm')]: {
+
+    // },
+    margin: '0 0 1.5rem 0',
   },
   image: {
     height: '10rem',
@@ -43,25 +44,25 @@ const Product = ({ product }) => {
         <Card.Img
           src={productsImagesUrl(product.images[0].img)}
           className={classes.image}
-          variant="top"
+          variant='top'
         />
       </Link>
 
       <Card.Body>
         <Link to={`/product/${product._id}`}>
-          <Card.Title as="div">
+          <Card.Title as='div'>
             <strong className={classes.name}>{product.name}</strong>
           </Card.Title>
         </Link>
 
-        <Card.Text as="div">
+        <Card.Text as='div'>
           <Rating
             value={product.rating}
             text={` ${product.numReviews} reviews`}
           />
         </Card.Text>
 
-        <Card.Text as="h3" style={{ marginTop: '1rem' }}>
+        <Card.Text as='h3' style={{ marginTop: '1rem' }}>
           Rs.{product.price}
         </Card.Text>
       </Card.Body>

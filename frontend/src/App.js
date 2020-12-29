@@ -25,6 +25,7 @@ import Home from './pages/Dashboard/Home/Home';
 import CreateUser from './pages/Dashboard/Users/CreateUser';
 import AllUsers from './pages/Dashboard/Users/AllUsers';
 import ProductDetails from './pages/ProductDetails';
+import SearchEngine from './pages/SearchEngine';
 
 function App() {
   const userLogin = useSelector((state) => state.userLogin);
@@ -36,42 +37,42 @@ function App() {
       (userInfo.user.role === 'admin' || userInfo.user.role === 'seller') ? (
         <Sidebar>
           <Switch>
-            <Route path="/login" exact component={Login} />
-            <Route path="/register" exact component={Register} />
-            <Route exact path="/dashboard" component={Home} />
+            <Route path='/login' exact component={Login} />
+            <Route path='/register' exact component={Register} />
+            <Route exact path='/dashboard' component={Home} />
 
             <Route
               exact
-              path="/dashboard/category/create"
+              path='/dashboard/category/create'
               component={Category}
             />
             <Route
               exact
-              path="/dashboard/subcategory/create"
+              path='/dashboard/subcategory/create'
               component={SubCategory}
             />
             <Route
               exact
-              path="/dashboard/childcategory/create"
+              path='/dashboard/childcategory/create'
               component={ChildCategory}
             />
             <Route
               exact
-              path="/dashboard/product/create"
+              path='/dashboard/product/create'
               component={CreateProduct}
             />
             <Route
               exact
-              path="/dashboard/products"
+              path='/dashboard/products'
               component={AllProductsList}
             />
             <Route
               exact
-              path="/dashboard/products/edit/:id"
+              path='/dashboard/products/edit/:id'
               component={EditProduct}
             />
-            <Route exact path="/dashboard/user/create" component={CreateUser} />
-            <Route exact path="/dashboard/users" component={AllUsers} />
+            <Route exact path='/dashboard/user/create' component={CreateUser} />
+            <Route exact path='/dashboard/users' component={AllUsers} />
 
             <Route render={() => <div>404 Not found</div>} />
           </Switch>
@@ -80,16 +81,24 @@ function App() {
         <>
           <Header />
           <Container>
-            <main className="py-3">
+            <main className='py-3'>
               <Switch>
-                <Route path="/login" exact component={Login} />
-                <Route path="/register" exact component={Register} />
-                <Route path="/" exact component={Homepage} />
-                <Route path="/cart" exact component={Cart} />
-                <Route path="/product/:id" exact component={ProductDetails} />
+                <Route path='/login' exact component={Login} />
+                <Route path='/register' exact component={Register} />
+                <Route path='/' exact component={Homepage} />
 
-                <PrivateRoute path="/profile" exact component={Profile} />
-                <PrivateRoute path="/orders" exact component={Order} />
+                <Route path='/search/:keyword' exact component={SearchEngine} />
+                <Route
+                  path='/search/:keyword/page/:pageNumber'
+                  exact
+                  component={SearchEngine}
+                />
+
+                <Route path='/cart' exact component={Cart} />
+                <Route path='/product/:id' exact component={ProductDetails} />
+
+                <PrivateRoute path='/profile' exact component={Profile} />
+                <PrivateRoute path='/orders' exact component={Order} />
 
                 <Route render={() => <div>404 Not found</div>} />
               </Switch>

@@ -19,6 +19,14 @@ import {
   GET_PRODUCT_BY_ID_SUCCESS,
   GET_PRODUCT_BY_ID_FAIL,
   GET_PRODUCT_BY_ID_RESET,
+  SEARCH_PRODUCT_REQUEST,
+  SEARCH_PRODUCT_FAIL,
+  SEARCH_PRODUCT_RESET,
+  SEARCH_PRODUCT_SUCCESS,
+  FILTER_PRODUCT_REQUEST,
+  FILTER_PRODUCT_SUCCESS,
+  FILTER_PRODUCT_FAIL,
+  FILTER_PRODUCT_RESET,
 } from '../constants/productConstants';
 
 export const createProductReducer = (state = {}, action) => {
@@ -114,6 +122,46 @@ export const getProductByIDReducer = (state = {}, action) => {
     case GET_PRODUCT_BY_ID_FAIL:
       return { ...state, loading: false, error: action.payload };
     case GET_PRODUCT_BY_ID_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const searchProductsReducer = (state = {}, action) => {
+  switch (action.type) {
+    case SEARCH_PRODUCT_REQUEST:
+      return { ...state, loading: true };
+    case SEARCH_PRODUCT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: true,
+        productsSearch: action.payload,
+      };
+    case SEARCH_PRODUCT_FAIL:
+      return { ...state, loading: false, error: action.payload };
+    case SEARCH_PRODUCT_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const filterProductsReducer = (state = {}, action) => {
+  switch (action.type) {
+    case FILTER_PRODUCT_REQUEST:
+      return { ...state, loading: true };
+    case FILTER_PRODUCT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: true,
+        productsFilter: action.payload,
+      };
+    case FILTER_PRODUCT_FAIL:
+      return { ...state, loading: false, error: action.payload };
+    case FILTER_PRODUCT_RESET:
       return {};
     default:
       return state;

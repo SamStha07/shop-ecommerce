@@ -9,12 +9,18 @@ import {
   EDIT_PRODUCT_REQUEST,
   EDIT_PRODUCT_RESET,
   EDIT_PRODUCT_SUCCESS,
+  FILTER_PRODUCT_FAIL,
+  FILTER_PRODUCT_REQUEST,
+  FILTER_PRODUCT_SUCCESS,
   GET_ALL_PRODUCTS_FAIL,
   GET_ALL_PRODUCTS_REQUEST,
   GET_ALL_PRODUCTS_SUCCESS,
   GET_PRODUCT_BY_ID_FAIL,
   GET_PRODUCT_BY_ID_REQUEST,
   GET_PRODUCT_BY_ID_SUCCESS,
+  SEARCH_PRODUCT_FAIL,
+  SEARCH_PRODUCT_REQUEST,
+  SEARCH_PRODUCT_SUCCESS,
 } from '../constants/productConstants';
 
 export const createProduct = (form) => async (dispatch) => {
@@ -95,7 +101,7 @@ export const editProduct = (
   price,
   quantity,
   description,
-  images,
+  images
 ) => async (dispatch) => {
   try {
     dispatch({
@@ -144,6 +150,60 @@ export const deleteProduct = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: DELETE_PRODUCT_RESET,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const searchProducts = (keyword, pageNumber) => async (dispatch) => {
+  try {
+    dispatch({
+      type: SEARCH_PRODUCT_REQUEST,
+    });
+
+    const { data } = await axios.get(
+      `/product?keyword=${keyword}&pageNumber=${pageNumber}`
+    );
+
+    dispatch({
+      type: SEARCH_PRODUCT_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: SEARCH_PRODUCT_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const getFilteredProducts = (skip, limit, filters = {}) => async (
+  dispatch
+) => {
+  try {
+    dispatch({
+      type: FILTER_PRODUCT_REQUEST,
+    });
+
+    const { data } = await axios.post('/product/filters', {
+      skip,
+      limit,
+      filters,
+    });
+
+    dispatch({
+      type: FILTER_PRODUCT_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: FILTER_PRODUCT_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

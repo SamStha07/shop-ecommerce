@@ -2,6 +2,7 @@ const Category = require('../models/childCategoryModel');
 const Product = require('../models/productModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
+const APIFeatures = require('../utils/advancedFiltering');
 
 exports.createProduct = catchAsync(async (req, res, next) => {
   const createdBy = req.user.id;
@@ -28,7 +29,7 @@ exports.updateProduct = catchAsync(async (req, res, next) => {
 
   if (!editProduct) {
     return next(
-      new AppError(`Product with that ${req.params.id} not found`, 404),
+      new AppError(`Product with that ${req.params.id} not found`, 404)
     );
   }
 
@@ -63,4 +64,89 @@ exports.getProductByID = catchAsync(async (req, res, next) => {
   }
 
   res.status(200).json({ product });
+});
+
+const handlePrice = async (req, res, price) => {
+  try {
+    let products = await Product.find({
+      price: {
+        $gte: price[0],
+        $lte: price[1],
+      },
+    }).populate('brand');
+
+    res.json(products);
+  } catch (err) {
+    console.log();
+  }
+};
+
+// search products
+
+exports.searchProducts = catchAsync(async (req, res, next) => {
+  const pageSize = 10; // will have only 2 products
+  const page = Number(req.query.pageNumber) || 1;
+
+  const { price } = req.body;
+
+  // keyword search
+  const keyword = req.query.keyword
+    ? {
+        name: {
+          $regex: req.query.keyword,
+          $options: 'i',
+        },
+      }
+    : {};
+
+  // price [0,10],[20,200]
+  if (price !== undefined) {
+    console.log('🚀 ~ file: productController.js ~ price', price);
+    await handlePrice(req, res, price);
+  }
+
+  // Pagination
+  const count = await Product.countDocuments({ ...keyword });
+  const skip = pageSize * (page - 1);
+
+  const productsList = await Product.find({ ...keyword })
+    .populate('brand')
+    .populate('createdBy')
+    .limit(pageSize)
+    .skip(skip);
+
+  res.status(200).json({
+    length: productsList.length,
+    productsList,
+    page, // page number
+    pages: Math.ceil(count / pageSize), //total pages
+  });
+});
+
+exports.listBySearch = catchAsync(async (req, res, next) => {
+  let order = req.body.order ? req.body.order : 'desc';
+  let sortBy = req.body.sortBy ? req.body.sortBy : '_id';
+  let limit = req.body.limit ? parseInt(req.body.limit) : 100;
+  let skip = parseInt(req.body.skip);
+  let findArgs = {};
+
+  for (let key in req.body.filters) {
+    if (req.body.filters[key].length > 0) {
+      if (key === 'price') {
+        findArgs[key] = {
+          $gte: req.body.filters[key][0],
+          $lte: req.body.filters[key][1],
+        };
+      } else {
+        findArgs[key] = req.body.filters[key];
+      }
+    }
+  }
+
+  const products = await Product.find(findArgs).populate('brand');
+  // .sort([sortBy, order])
+  // .skip(skip)
+  // .limit(limit);
+
+  res.status(200).json({ products });
 });
