@@ -6,4 +6,4 @@ This is an eCommerce web application which is in the development phase created w
 
 I will be adding payment system, order management, review management etc.
 
-
+![sample pictures of this project] (/home/sam/Pictures/Screenshot from 2020-12-22 23-49-21.png)
