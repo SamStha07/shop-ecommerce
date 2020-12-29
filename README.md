@@ -20,8 +20,6 @@ I will be adding payment system, order management, review management etc.
 
 ![](images/Screenshot%20from%202020-12-29%2014-36-02.png)
 
-
-
 # Admin Dashboard
 ![](images/Screenshot%20from%202020-12-29%2014-34-04.png)
 
@@ -37,3 +35,17 @@ I will be adding payment system, order management, review management etc.
 ![](images/Screenshot%20from%202020-12-29%2014-41-13.png)
 
 ![](images/Screenshot%20from%202020-12-29%2014-42-56.png)
+
+# Built with
+- Node.js
+- Express
+- React
+- Redux
+- MongoDb
+- UI libraries like Material-UI, Ant Design, React Bootstrap, etc.
+- Axios
+- Bcrypt
+- JSON Web Tokens
+
+# Author
+- Linkedin: [sam.stha](https://www.linkedin.com/in/sam-shrestha-4798241aa/)
