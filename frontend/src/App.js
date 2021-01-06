@@ -26,6 +26,7 @@ import CreateUser from './pages/Dashboard/Users/CreateUser';
 import AllUsers from './pages/Dashboard/Users/AllUsers';
 import ProductDetails from './pages/ProductDetails';
 import SearchEngine from './pages/SearchEngine';
+import Shipping from './pages/Shipping';
 
 function App() {
   const userLogin = useSelector((state) => state.userLogin);
@@ -94,8 +95,10 @@ function App() {
                   component={SearchEngine}
                 />
 
-                <Route path='/cart' exact component={Cart} />
+                <Route path='/cart/:id?' exact component={Cart} />
                 <Route path='/product/:id' exact component={ProductDetails} />
+
+                <PrivateRoute path='/shipping' exact component={Shipping} />
 
                 <PrivateRoute path='/profile' exact component={Profile} />
                 <PrivateRoute path='/orders' exact component={Order} />

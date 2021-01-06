@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { cartReducer } from './cartReducers';
 
 import {
   createCategoryReducer,
@@ -88,4 +89,7 @@ export default combineReducers({
 
   // Filter
   filterProduct: filterProductsReducer,
+
+  // Add To Cart
+  cart: cartReducer,
 });

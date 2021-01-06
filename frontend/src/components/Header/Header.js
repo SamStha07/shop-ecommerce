@@ -4,7 +4,7 @@ import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
 import { Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles, Avatar } from '@material-ui/core';
-import { Drawer } from 'antd';
+import { Drawer, Badge } from 'antd';
 
 import Search from '../Search/Search';
 import { logout } from '../../redux/actions/authActions';
@@ -21,6 +21,25 @@ const useStyles = makeStyles((theme) => ({
   btn: {
     marginRight: '2rem',
   },
+  cartItems: {
+    background: 'red',
+    color: '#fff',
+    fontSize: '0.8rem',
+    position: 'absolute',
+    width: '18px',
+    height: '18px',
+    top: '-9px',
+    right: '29px',
+    padding: '0 5px',
+    borderRadius: '50%',
+    fontWeight: '500',
+    [theme.breakpoints.down('sm')]: {
+      right: '97%',
+    },
+    [theme.breakpoints.down('xs')]: {
+      right: '93%',
+    },
+  },
 }));
 
 const Header = ({ history }) => {
@@ -34,6 +53,9 @@ const Header = ({ history }) => {
 
   const userDetails = useSelector((state) => state.userDetails);
   const { userInfoDetails } = userDetails;
+
+  const cart = useSelector((state) => state.cart);
+  const { cartItems } = cart;
 
   useEffect(() => {
     if (!userInfoDetails && userInfo) {
@@ -87,7 +109,7 @@ const Header = ({ history }) => {
         <Container>
           <>
             <div className={classes.btn} onClick={() => setVisible(true)}>
-              <span class='navbar-toggler-icon'></span>
+              <span className='navbar-toggler-icon'></span>
             </div>
 
             <Drawer
@@ -110,10 +132,21 @@ const Header = ({ history }) => {
           <Navbar.Collapse id='basic-navbar-nav'>
             <Route render={({ history }) => <Search history={history} />} />
 
-            <Nav className='ml-auto'>
+            <Nav className='ml-auto '>
               <LinkContainer to='/cart'>
                 <Nav.Link>
-                  <i class='fas fa-shopping-cart'></i> Cart
+                  <div className='d-flex'>
+                    <div className='mr-1'>
+                      <Badge
+                        offset={[0, -6]}
+                        size={'small'}
+                        count={cartItems && cartItems.length}
+                      >
+                        <i className='fas fa-shopping-cart'></i>
+                      </Badge>
+                    </div>{' '}
+                    Cart
+                  </div>
                 </Nav.Link>
               </LinkContainer>
               {userInfo ? (

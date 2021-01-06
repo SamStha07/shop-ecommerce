@@ -4,6 +4,7 @@ import { Row, Col, Form } from 'react-bootstrap';
 import { makeStyles } from '@material-ui/core';
 import { Button } from 'antd';
 import { Link } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 
 import { getProductByID } from '../redux/actions/productActions';
 import { productsImagesUrl } from '../urlConfig';
@@ -148,7 +149,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ProductDetails = ({ match }) => {
+const ProductDetails = ({ match, history }) => {
   const [image, setImage] = useState('');
   const [qty, setQty] = useState(1);
 
@@ -159,6 +160,10 @@ const ProductDetails = ({ match }) => {
 
   const details = useSelector((state) => state.getProductByID);
   const { loading, productID } = details;
+
+  const handleAddToCart = () => {
+    history.push(`/cart/${id}?qty=${qty}`);
+  };
 
   useEffect(() => {
     if (!productID) {
@@ -198,6 +203,7 @@ const ProductDetails = ({ match }) => {
                           }}
                           src={productsImagesUrl(img.img)}
                           alt={img.img}
+                          key={uuidv4()}
                         />
                       ))}
                     </div>
@@ -255,6 +261,7 @@ const ProductDetails = ({ match }) => {
                           background: '#f57224',
                           color: '#fff',
                         }}
+                        onClick={handleAddToCart}
                       >
                         Add to cart
                       </Button>
@@ -275,9 +282,8 @@ const ProductDetails = ({ match }) => {
                   <div className={classes.seller}>
                     <p>Sold by</p>
                     <h4>{productID.createdBy.name}</h4>
-                    <a>
-                      <Link to='/store'>GO TO STORE</Link>
-                    </a>
+
+                    <Link to='/store'>GO TO STORE</Link>
                   </div>
                 </Col>
               </Row>
