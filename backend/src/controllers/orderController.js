@@ -75,3 +75,25 @@ exports.getMyOrders = catchAsync(async (req, res, next) => {
 
   res.status(200).json(orders);
 });
+
+// Admin
+exports.getAllOrders = catchAsync(async (req, res, next) => {
+  const orders = await Order.find().populate('user', 'id name');
+
+  res.status(200).json(orders);
+});
+
+// Admin updates from not deliverd to delivered
+exports.updateOrderToDelivered = catchAsync(async (req, res, next) => {
+  const order = await Order.findById(req.params.id);
+
+  if (order) {
+    order.isDelivered = true;
+    order.deliveredAt = Date.now();
+
+    const updatedOrder = await order.save();
+    res.status(200).json(updatedOrder);
+  } else {
+    return next(new AppError('Order not found', 404));
+  }
+});

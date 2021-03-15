@@ -12,6 +12,7 @@ import {
   People,
   ArrowDropDown,
   ArrowRight,
+  Shop,
 } from '@material-ui/icons';
 import { LinkContainer } from 'react-router-bootstrap';
 
@@ -80,11 +81,11 @@ function StyledTreeItem(props) {
     <TreeItem
       label={
         <div className={classes.labelRoot}>
-          <LabelIcon color="inherit" className={classes.labelIcon} />
-          <Typography variant="body2" className={classes.labelText}>
+          <LabelIcon color='inherit' className={classes.labelIcon} />
+          <Typography variant='body2' className={classes.labelText}>
             {labelText}
           </Typography>
-          <Typography variant="caption" color="inherit">
+          <Typography variant='caption' color='inherit'>
             {labelInfo}
           </Typography>
         </div>
@@ -133,81 +134,93 @@ export default function GmailTreeView() {
       defaultExpandIcon={<ArrowRight />}
       defaultEndIcon={<div style={{ width: 24 }} />}
     >
-      <LinkContainer to="/dashboard">
+      <LinkContainer to='/dashboard'>
         <StyledTreeItem
-          nodeId="1"
-          labelText="Dashboard"
+          nodeId='1'
+          labelText='Dashboard'
           labelIcon={Dashboard}
         />
       </LinkContainer>
 
-      <StyledTreeItem nodeId="2" labelText="Categories" labelIcon={Label}>
-        <LinkContainer to="/dashboard/category/create">
+      <StyledTreeItem nodeId='2' labelText='Categories' labelIcon={Label}>
+        <LinkContainer to='/dashboard/category/create'>
           <StyledTreeItem
-            nodeId="3"
-            labelText="Create Category"
+            nodeId='3'
+            labelText='Create Category'
             labelIcon={Create}
-            color="#a250f5"
-            bgColor="#e8f0fe"
+            color='#a250f5'
+            bgColor='#e8f0fe'
           />
         </LinkContainer>
-        <LinkContainer to="/dashboard/subcategory/create">
+        <LinkContainer to='/dashboard/subcategory/create'>
           <StyledTreeItem
-            nodeId="4"
-            labelText="Create Sub-Category"
+            nodeId='4'
+            labelText='Create Sub-Category'
             labelIcon={Create}
-            color="#a250f5"
-            bgColor="#e8f0fe"
+            color='#a250f5'
+            bgColor='#e8f0fe'
           />
         </LinkContainer>
-        <LinkContainer to="/dashboard/childcategory/create">
+        <LinkContainer to='/dashboard/childcategory/create'>
           <StyledTreeItem
-            nodeId="5"
-            labelText="Create Child-Category"
+            nodeId='5'
+            labelText='Create Child-Category'
             labelIcon={Create}
-            color="#a250f5"
-            bgColor="#e8f0fe"
+            color='#a250f5'
+            bgColor='#e8f0fe'
           />
         </LinkContainer>
-        <LinkContainer to="/dashboard/categories">
+        <LinkContainer to='/dashboard/categories'>
           <StyledTreeItem
-            nodeId="6"
-            labelText="All Categories"
+            nodeId='6'
+            labelText='All Categories'
             labelIcon={ViewList}
-            color="#a250f5"
-            bgColor="#e6f4ea"
+            color='#a250f5'
+            bgColor='#e6f4ea'
           />
         </LinkContainer>
       </StyledTreeItem>
-      <StyledTreeItem nodeId="7" labelText="Product" labelIcon={Dns}>
-        <LinkContainer to="/dashboard/products">
+      <StyledTreeItem nodeId='7' labelText='Product' labelIcon={Dns}>
+        <LinkContainer to='/dashboard/products'>
           <StyledTreeItem
-            nodeId="9"
-            labelText="All Products"
+            nodeId='9'
+            labelText='All Products'
             labelIcon={ViewList}
-            color="#a250f5"
-            bgColor="#e6f4ea"
+            color='#a250f5'
+            bgColor='#e6f4ea'
           />
         </LinkContainer>
       </StyledTreeItem>
-      <StyledTreeItem nodeId="10" labelText="User" labelIcon={People}>
-        <LinkContainer to="/dashboard/user/create">
+      <StyledTreeItem nodeId='10' labelText='User' labelIcon={People}>
+        <LinkContainer to='/dashboard/user/create'>
           <StyledTreeItem
-            nodeId="11"
-            labelText="Create "
+            nodeId='11'
+            labelText='Create '
             labelIcon={Create}
-            color="#a250f5"
-            bgColor="#e8f0fe"
+            color='#a250f5'
+            bgColor='#e8f0fe'
           />
         </LinkContainer>
 
-        <LinkContainer to="/dashboard/users">
+        <LinkContainer to='/dashboard/users'>
           <StyledTreeItem
-            nodeId="12"
-            labelText="Customers"
+            nodeId='12'
+            labelText='Customers'
             labelIcon={ViewList}
-            color="#a250f5"
-            bgColor="#e6f4ea"
+            color='#a250f5'
+            bgColor='#e6f4ea'
+          />
+        </LinkContainer>
+      </StyledTreeItem>
+
+      <StyledTreeItem nodeId='13' labelText='Orders' labelIcon={Shop}>
+        <LinkContainer to='/dashboard/orders/list'>
+          <StyledTreeItem
+            nodeId='14'
+            labelText='List'
+            labelIcon={ViewList}
+            color='#a250f5'
+            bgColor='#e6f4ea'
           />
         </LinkContainer>
       </StyledTreeItem>

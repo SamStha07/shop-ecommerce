@@ -14,7 +14,10 @@ import {
   USER_UPDATE_PASSWORD_RESET,
 } from '../constants/userConstants';
 import history from '../../history';
-import { ORDER_MY_LIST_RESET } from '../constants/orderConstants';
+import {
+  ORDER_ALL_LIST_RESET,
+  ORDER_MY_LIST_RESET,
+} from '../constants/orderConstants';
 
 export const login = (email, password) => async (dispatch, getState) => {
   try {
@@ -51,6 +54,7 @@ export const logout = () => async (dispatch) => {
   dispatch({ type: USER_UPDATE_RESET });
   dispatch({ type: USER_UPDATE_PASSWORD_RESET });
   dispatch({ type: ORDER_MY_LIST_RESET });
+  dispatch({ type: ORDER_ALL_LIST_RESET });
   history.push('/');
 };
 

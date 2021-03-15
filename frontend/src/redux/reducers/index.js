@@ -17,7 +17,9 @@ import {
   getChildCatOfSubCat,
 } from './childCategoryReducers';
 import {
+  orderAllListReducer,
   orderCreateReducer,
+  orderDeliverReducer,
   orderDetailsReducer,
   orderMyListReducer,
   orderPayReducer,
@@ -104,4 +106,6 @@ export default combineReducers({
   orderDetails: orderDetailsReducer,
   orderPay: orderPayReducer,
   orderMyList: orderMyListReducer,
+  allOrdersList: orderAllListReducer,
+  orderDeliver: orderDeliverReducer,
 });

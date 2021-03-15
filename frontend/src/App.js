@@ -30,6 +30,7 @@ import Shipping from './pages/Shipping';
 import Payment from './pages/Payment';
 import PlaceOrder from './pages/PlaceOrder';
 import OrderPage from './pages/OrderPage';
+import OrdersList from './pages/Dashboard/OrdersList/OrdersList';
 
 function App() {
   const userLogin = useSelector((state) => state.userLogin);
@@ -78,6 +79,10 @@ function App() {
             <Route exact path='/dashboard/user/create' component={CreateUser} />
             <Route exact path='/dashboard/users' component={AllUsers} />
 
+            <Route path='/order/:id' exact component={OrderPage} />
+
+            <Route exact path='/dashboard/orders/list' component={OrdersList} />
+
             <Route render={() => <div>404 Not found</div>} />
           </Switch>
         </Sidebar>
@@ -107,7 +112,7 @@ function App() {
                 <PrivateRoute path='/myorders' exact component={MyOrder} />
                 <PrivateRoute path='/payment' exact component={Payment} />
                 <PrivateRoute path='/placeorder' exact component={PlaceOrder} />
-                <PrivateRoute path='/order/:id' exact component={OrderPage} />
+                <Route path='/order/:id' exact component={OrderPage} />
 
                 <Route render={() => <div>404 Not found</div>} />
               </Switch>
