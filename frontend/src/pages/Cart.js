@@ -30,6 +30,8 @@ const Cart = ({ match, location, history }) => {
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
 
+  console.log(cartItems);
+
   useEffect(() => {
     if (productId) {
       dispatch(addToCart(productId, qty));
@@ -43,7 +45,7 @@ const Cart = ({ match, location, history }) => {
   return (
     <Row>
       <Col md={8}>
-        <h1>Shopping Cart</h1>
+        <h2>Shopping Cart</h2>
         {cartItems && cartItems.length === 0 ? (
           <h1>Your cart is empty</h1>
         ) : (
@@ -60,7 +62,7 @@ const Cart = ({ match, location, history }) => {
                         width: '100%',
                         justifyContent: 'center',
                       }}
-                      src={productsImagesUrl(item.image[0].img)}
+                      src={productsImagesUrl(item.image)}
                       alt={item.name}
                       fluid
                       rounded
@@ -124,7 +126,12 @@ const Cart = ({ match, location, history }) => {
                 .toFixed(2)}
             </ListGroup.Item>
             <ListGroup.Item>
-              <Button onClick={checkoutHandler}>Proceed To Checkout</Button>
+              <Button
+                onClick={checkoutHandler}
+                disabled={cartItems.length === 0}
+              >
+                Proceed To Checkout
+              </Button>
             </ListGroup.Item>
           </ListGroup>
         </Card>

@@ -3,8 +3,8 @@ import { Container, Row, Col } from 'react-bootstrap';
 
 const FormContainer = ({ children }) => {
   return (
-    <Container style={{ marginTop: '2rem' }}>
-      <Row className="justify-content-md-center">
+    <Container style={{ marginTop: '1rem' }}>
+      <Row className='justify-content-md-center'>
         <Col xs={12} md={6}>
           {children}
         </Col>

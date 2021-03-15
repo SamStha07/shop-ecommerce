@@ -12,7 +12,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Homepage from './pages/Homepage';
 import Profile from './pages/Profile';
-import Order from './pages/Order';
+import MyOrder from './pages/MyOrders';
 import Header from './components/Header/Header';
 import Cart from './pages/Cart';
 import Category from './pages/Dashboard/Category/Category';
@@ -27,6 +27,9 @@ import AllUsers from './pages/Dashboard/Users/AllUsers';
 import ProductDetails from './pages/ProductDetails';
 import SearchEngine from './pages/SearchEngine';
 import Shipping from './pages/Shipping';
+import Payment from './pages/Payment';
+import PlaceOrder from './pages/PlaceOrder';
+import OrderPage from './pages/OrderPage';
 
 function App() {
   const userLogin = useSelector((state) => state.userLogin);
@@ -101,11 +104,15 @@ function App() {
                 <PrivateRoute path='/shipping' exact component={Shipping} />
 
                 <PrivateRoute path='/profile' exact component={Profile} />
-                <PrivateRoute path='/orders' exact component={Order} />
+                <PrivateRoute path='/myorders' exact component={MyOrder} />
+                <PrivateRoute path='/payment' exact component={Payment} />
+                <PrivateRoute path='/placeorder' exact component={PlaceOrder} />
+                <PrivateRoute path='/order/:id' exact component={OrderPage} />
 
                 <Route render={() => <div>404 Not found</div>} />
               </Switch>
             </main>
+            {/* <Footer /> */}
           </Container>
         </>
       )}

@@ -29,12 +29,12 @@ const Create = ({ history }) => {
   const { category: categoryList } = allCategories;
 
   const subCatwithMainCat = useSelector(
-    (state) => state.getSubCatWithCategoryID,
+    (state) => state.getSubCatWithCategoryID
   );
   const { subCategory: subCategoryList } = subCatwithMainCat;
 
   const childCatWithSubCat = useSelector(
-    (state) => state.getChildCatWithSubCategoryID,
+    (state) => state.getChildCatWithSubCategoryID
   );
   const { childCategory: childCategoryList } = childCatWithSubCat;
 
@@ -67,7 +67,7 @@ const Create = ({ history }) => {
       const { data } = await axios.post(
         '/multipleuploads/products',
         formdata,
-        config,
+        config
       );
       setImages(data);
     } catch (error) {
@@ -97,7 +97,7 @@ const Create = ({ history }) => {
         quantity,
         description,
         images,
-      }),
+      })
     );
   };
 
@@ -107,7 +107,7 @@ const Create = ({ history }) => {
 
       {errorCreate && (
         <ErrorMessage
-          header="Error"
+          header='Error'
           message={errorCreate}
           reset={CREATE_PRODUCT_RESET}
         />
@@ -115,10 +115,10 @@ const Create = ({ history }) => {
 
       <Breadcrumb>
         <Breadcrumb.Item>
-          <Link to="/dashboard">Dashboard</Link>
+          <Link to='/dashboard'>Dashboard</Link>
         </Breadcrumb.Item>
         <Breadcrumb.Item>
-          <Link to="/dashboard/products">Products</Link>
+          <Link to='/dashboard/products'>Products</Link>
         </Breadcrumb.Item>
         <Breadcrumb.Item active>Create</Breadcrumb.Item>
       </Breadcrumb>
@@ -126,15 +126,15 @@ const Create = ({ history }) => {
       <Form style={{ width: '75%' }} onSubmit={handleSubmit}>
         <h6>Select Category</h6>
 
-        <div className="row">
-          <div className="col-sm col-lg-3  col-md-4 mt-2">
+        <div className='row'>
+          <div className='col-sm col-lg-3  col-md-4 mt-2'>
             <TextField
               style={{ width: '100%' }}
               select
               required
-              variant="filled"
+              variant='filled'
               id={uuidV4()}
-              label="Category"
+              label='Category'
               value={category}
               onChange={handleCategory}
             >
@@ -147,14 +147,14 @@ const Create = ({ history }) => {
             </TextField>
           </div>
 
-          <div className="col-sm col-lg-3 col-md-4 mt-2">
+          <div className='col-sm col-lg-3 col-md-4 mt-2'>
             <TextField
               style={{ width: '100%' }}
               select
               required
-              variant="filled"
+              variant='filled'
               id={uuidV4()}
-              label="Sub-Category"
+              label='Sub-Category'
               value={subCategory}
               onChange={handleSubCategory}
             >
@@ -165,14 +165,14 @@ const Create = ({ history }) => {
             </TextField>
           </div>
 
-          <div className="col-sm col-lg-3 col-md-4 mt-2">
+          <div className='col-sm col-lg-3 col-md-4 mt-2'>
             <TextField
               style={{ width: '100%' }}
               select
               required
-              variant="filled"
+              variant='filled'
               id={uuidV4()}
-              label="Brand"
+              label='Brand'
               value={brand}
               onChange={(e) => setBrand(e.target.value)}
             >
@@ -186,50 +186,51 @@ const Create = ({ history }) => {
         <hr />
 
         <h6>Product Description</h6>
-        <div className="row">
-          <div className="col-sm col-lg-9 col-md-12 mt-3">
+        <div className='row'>
+          <div className='col-sm col-lg-9 col-md-12 mt-3'>
             <TextField
               style={{ width: '100%' }}
               required
               id={uuidV4()}
-              label="Name"
-              variant="filled"
+              label='Name'
+              variant='filled'
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
           </div>
         </div>
-        <div className="row">
-          <div className="col-sm col-lg-4  col-md-4 mt-2">
+        <div className='row'>
+          <div className='col-sm col-lg-4  col-md-4 mt-2'>
             <TextField
               style={{ width: '100%' }}
+              // type='number'
               required
               id={uuidV4()}
-              label="Price"
-              variant="filled"
+              label='Price'
+              variant='filled'
               value={price}
               onChange={(e) => setPrice(e.target.value)}
             />
           </div>
-          <div className="col-sm col-lg-4  col-md-4 mt-2">
+          <div className='col-sm col-lg-4  col-md-4 mt-2'>
             <TextField
               style={{ width: '100%' }}
               required
-              variant="filled"
+              variant='filled'
               id={uuidV4()}
-              label="Quantity"
+              label='Quantity'
               value={quantity}
               onChange={(e) => setQuantity(e.target.value)}
             ></TextField>
           </div>
         </div>
 
-        <div className="row">
-          <div className="col-sm col-lg-9 col-md-12 mt-3">
+        <div className='row'>
+          <div className='col-sm col-lg-9 col-md-12 mt-3'>
             <TextField
               style={{ width: '100%' }}
-              label="Description"
-              variant="filled"
+              label='Description'
+              variant='filled'
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             ></TextField>
@@ -238,11 +239,11 @@ const Create = ({ history }) => {
         <hr />
 
         <h6>Image Uploads</h6>
-        <div className="row mt-3 ml-1">
-          <div className="form-group">
+        <div className='row mt-3 ml-1'>
+          <div className='form-group'>
             <Form.Control
-              type="text"
-              placeholder="Enter image url"
+              type='text'
+              placeholder='Enter image url'
               value={images}
               onChange={(e) => {
                 setImages([...images, e.target.value[0]]);
@@ -251,7 +252,7 @@ const Create = ({ history }) => {
             ></Form.Control>
             <Form.File
               id={uuidV4()}
-              label="Choose Files"
+              label='Choose Files'
               custom
               multiple
               onChange={uploadMultipleFiles}
@@ -259,7 +260,7 @@ const Create = ({ history }) => {
 
             {images.length > 0
               ? images.map((pic, index) => (
-                  <div key={index} className="mt-2">
+                  <div key={index} className='mt-2'>
                     <li>{pic.img}</li>
                   </div>
                 ))
@@ -267,7 +268,7 @@ const Create = ({ history }) => {
           </div>
         </div>
         <hr />
-        <Button type="submit">Add Product</Button>
+        <Button type='submit'>Add Product</Button>
       </Form>
     </>
   );

@@ -20,6 +20,7 @@ const categoryRoute = require('./routes/categoryRoute');
 const productRoute = require('./routes/productRoutes');
 const userImageUpload = require('./routes/userImageUploadRoute');
 const productImageUpload = require('./routes/productUploadRoute');
+const orderRoute = require('./routes/orderRoutes');
 
 const app = express();
 
@@ -47,6 +48,11 @@ app.use('/api/category', categoryRoute);
 app.use('/api/product', productRoute);
 app.use('/api/upload', userImageUpload);
 app.use('/api/multipleuploads', productImageUpload);
+app.use('/api/orders', orderRoute);
+
+app.get('/api/config/paypal', (req, res) =>
+  res.send(process.env.PAYPAL_CLIENT_ID)
+);
 
 // to see static files
 // http:localhost:5000/img/users/${filename}
@@ -63,6 +69,6 @@ const port = process.env.PORT || 5000;
 app.listen(port, () => {
   console.log(
     `Server is running in ${process.env.NODE_ENV} mode on port ${port}...`
-      .yellow.bold,
+      .yellow.bold
   );
 });

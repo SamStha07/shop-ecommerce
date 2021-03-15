@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Radio } from 'antd';
 
 const Radiobox = ({ prices, handleFilters }) => {
   const [value, setValue] = useState(0);

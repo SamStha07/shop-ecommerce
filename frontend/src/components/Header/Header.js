@@ -155,7 +155,7 @@ const Header = ({ history }) => {
                     <NavDropdown.Item>Profile</NavDropdown.Item>
                   </LinkContainer>
                   {userInfo.user.role === 'user' && (
-                    <LinkContainer to='/orders'>
+                    <LinkContainer to='/myorders'>
                       <NavDropdown.Item>My Orders</NavDropdown.Item>
                     </LinkContainer>
                   )}

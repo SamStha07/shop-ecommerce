@@ -2,21 +2,27 @@ import {
   CART_ADD_ITEM,
   CART_CLEAR_ITEMS,
   CART_REMOVE_ITEM,
+  CART_SAVE_PAYMENT_METHODS,
+  CART_SAVE_SHIPPING_ADDRESS,
 } from '../constants/cartConstants';
 
 const cartState = {
   cartItems: [],
+  shippingAddress: {},
 };
 
 // checks if cartItems is available in localStorage or not
 // If available add the previous localStoarge data in cartIems: [...localStorage data]
-if (typeof window !== 'undefined') {
-  if (localStorage.getItem('cartItems')) {
-    cartState.cartItems = JSON.parse(localStorage.getItem('cartItems'));
-  } else {
-    cartState.cartItems = [];
-  }
-}
+
+// best method is to write in store.js
+
+// if (typeof window !== 'undefined') {
+//   if (localStorage.getItem('cartItems')) {
+//     cartState.cartItems = JSON.parse(localStorage.getItem('cartItems'));
+//   } else {
+//     cartState.cartItems = [];
+//   }
+// }
 
 export const cartReducer = (state = cartState, action) => {
   switch (action.type) {
@@ -49,6 +55,18 @@ export const cartReducer = (state = cartState, action) => {
       return {
         ...state,
         cartItems: [],
+      };
+
+    case CART_SAVE_SHIPPING_ADDRESS:
+      return {
+        ...state,
+        shippingAddress: action.payload,
+      };
+
+    case CART_SAVE_PAYMENT_METHODS:
+      return {
+        ...state,
+        paymentMethod: action.payload,
       };
 
     default:

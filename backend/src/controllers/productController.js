@@ -6,7 +6,7 @@ const APIFeatures = require('../utils/advancedFiltering');
 
 exports.createProduct = catchAsync(async (req, res, next) => {
   const createdBy = req.user.id;
-  const product = await await Product.create({ ...req.body, createdBy });
+  const product = await Product.create({ ...req.body, createdBy });
 
   res.status(201).json({ product });
 });

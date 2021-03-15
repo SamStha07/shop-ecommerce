@@ -17,6 +17,12 @@ import {
   getChildCatOfSubCat,
 } from './childCategoryReducers';
 import {
+  orderCreateReducer,
+  orderDetailsReducer,
+  orderMyListReducer,
+  orderPayReducer,
+} from './orderReducers';
+import {
   createProductReducer,
   deleteProductReducer,
   editProductReducer,
@@ -92,4 +98,10 @@ export default combineReducers({
 
   // Add To Cart
   cart: cartReducer,
+
+  // Order
+  orderCreate: orderCreateReducer,
+  orderDetails: orderDetailsReducer,
+  orderPay: orderPayReducer,
+  orderMyList: orderMyListReducer,
 });
