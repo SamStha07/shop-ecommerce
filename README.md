@@ -1,11 +1,8 @@
 # shop- MERN Stack ecommerce(in Development)
 
-This is an eCommerce web application which is in the development phase created with MERN(MongoDb, Express, React, Node & Redux) stack. It has user, seller and admin authentication system. An admin or seller can do CRUD operations with products or categories, sub-categories or brand.
+This is an eCommerce web application which is in the development phase created with MERN(MongoDb, Express, React, Node & Redux) stack. It has user, seller and admin authentication system. An admin or seller can do CRUD operations with products or categories, sub-categories or brand. Also it has order management, review management and payment system using paypal(esewa integration is on development).
 It is responsive and mobile friendly too.
 
-### Further days
-
-I will be adding payment system, order management, review management etc.
 
 
 ![](images/Screenshot%20from%202020-12-29%2014-38-01.png)
