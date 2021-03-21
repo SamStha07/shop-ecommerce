@@ -3,6 +3,7 @@ const Product = require('../models/productModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const APIFeatures = require('../utils/advancedFiltering');
+const Childcategory = require('../models/childCategoryModel');
 
 exports.createProduct = catchAsync(async (req, res, next) => {
   const createdBy = req.user.id;
@@ -64,6 +65,14 @@ exports.getProductByID = catchAsync(async (req, res, next) => {
   }
 
   res.status(200).json({ product });
+});
+
+exports.productsListUnderBrand = catchAsync(async (req, res, next) => {
+  const products = await Product.find({
+    brand: req.params.id,
+  });
+
+  res.status(200).json({ length: products.length, products });
 });
 
 const handlePrice = async (req, res, price) => {

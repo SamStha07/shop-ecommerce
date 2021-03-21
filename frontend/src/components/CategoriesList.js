@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { Menu, Spin } from 'antd';
+import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core';
 
-import { getAllCategories } from '../../redux/actions/categoryActions';
-import { getSubCatUnderMainCatID } from '../../redux/actions/subCategoryActions';
-import { getChildCatUnderSubCatID } from '../../redux/actions/childCategoryActions';
+import { getAllCategories } from '../redux/actions/categoryActions';
+import { getSubCatUnderMainCatID } from '../redux/actions/subCategoryActions';
+import { getChildCatUnderSubCatID } from '../redux/actions/childCategoryActions';
+import { LinkContainer } from 'react-router-bootstrap';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   spinner: {
@@ -17,17 +19,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DrawerList = () => {
-  const dispatch = useDispatch();
+const List = () => {
   const classes = useStyles();
-
   const { SubMenu } = Menu;
+
+  const dispatch = useDispatch();
 
   const categorylist = useSelector((state) => state.getAllCategory);
   const { category: allCategories } = categorylist;
 
   const subCatwithMainCat = useSelector(
-    (state) => state.getSubCatWithCategoryID,
+    (state) => state.getSubCatWithCategoryID
   );
   const {
     subCategory: subCategoryList,
@@ -35,7 +37,7 @@ const DrawerList = () => {
   } = subCatwithMainCat;
 
   const childCatWithSubCat = useSelector(
-    (state) => state.getChildCatWithSubCategoryID,
+    (state) => state.getChildCatWithSubCategoryID
   );
   const {
     childCategory: childCategoryList,
@@ -46,25 +48,21 @@ const DrawerList = () => {
     dispatch(getAllCategories());
   }, [dispatch]);
 
+  const handleClick = (e) => {
+    console.log('click', e);
+  };
+
   return (
-    <div>
-      <Menu
-        style={{
-          width: 230,
-          marginLeft: '-15px',
-          fontWeight: 'normal',
-          zIndex: '2345888',
-        }}
-        mode="inline"
-        defaultSelectedKeys={['1']}
-        defaultOpenKeys={['sub1']}
-      >
+    <>
+      <Menu mode='vertical' onClick={handleClick}>
         {allCategories &&
           allCategories.map((cat) => (
             <SubMenu
               key={cat._id}
               title={cat.name}
-              onTitleClick={() => dispatch(getSubCatUnderMainCatID(cat._id))}
+              onTitleMouseEnter={() =>
+                dispatch(getSubCatUnderMainCatID(cat._id))
+              }
             >
               {loadingSubCat ? (
                 <div className={classes.spinner}>
@@ -77,7 +75,7 @@ const DrawerList = () => {
                       <SubMenu
                         key={subCat._id}
                         title={subCat.name}
-                        onTitleClick={() =>
+                        onTitleMouseEnter={() =>
                           dispatch(getChildCatUnderSubCatID(subCat._id))
                         }
                       >
@@ -90,10 +88,16 @@ const DrawerList = () => {
                             {childCategoryList &&
                               childCategoryList.childCategory.map(
                                 (childCat) => (
+                                  // <LinkContainer to={`/{}`}>
                                   <Menu.Item key={childCat._id}>
-                                    {childCat.name}
+                                    <Link
+                                      to={`${childCat.categoryID.name}/${childCat.subCategoryID.name}/${childCat._id}`}
+                                    >
+                                      {childCat.name}
+                                    </Link>
                                   </Menu.Item>
-                                ),
+                                  // </LinkContainer>
+                                )
                               )}
                           </>
                         )}
@@ -104,8 +108,8 @@ const DrawerList = () => {
             </SubMenu>
           ))}
       </Menu>
-    </div>
+    </>
   );
 };
 
-export default DrawerList;
+export default List;

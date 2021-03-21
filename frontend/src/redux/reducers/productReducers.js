@@ -27,6 +27,9 @@ import {
   FILTER_PRODUCT_SUCCESS,
   FILTER_PRODUCT_FAIL,
   FILTER_PRODUCT_RESET,
+  PRODUCT_LIST_UNDER_BRAND_REQUEST,
+  PRODUCT_LIST_UNDER_BRAND_SUCCESS,
+  PRODUCT_LIST_UNDER_BRAND_FAIL,
 } from '../constants/productConstants';
 
 export const createProductReducer = (state = {}, action) => {
@@ -123,6 +126,25 @@ export const getProductByIDReducer = (state = {}, action) => {
       return { ...state, loading: false, error: action.payload };
     case GET_PRODUCT_BY_ID_RESET:
       return {};
+    default:
+      return state;
+  }
+};
+
+export const getProductListUnderBrandReducer = (state = {}, action) => {
+  switch (action.type) {
+    case PRODUCT_LIST_UNDER_BRAND_REQUEST:
+      return { ...state, loading: true };
+    case PRODUCT_LIST_UNDER_BRAND_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: true,
+        brandList: action.payload,
+      };
+    case PRODUCT_LIST_UNDER_BRAND_FAIL:
+      return { ...state, loading: false, error: action.payload };
+
     default:
       return state;
   }

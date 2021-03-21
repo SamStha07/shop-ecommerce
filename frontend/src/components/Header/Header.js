@@ -1,16 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
 import { Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { makeStyles, Avatar } from '@material-ui/core';
-import { Drawer, Badge } from 'antd';
+import { makeStyles } from '@material-ui/core';
+import { Badge } from 'antd';
 
 import Search from '../Search/Search';
 import { logout } from '../../redux/actions/authActions';
 import { getMyDetails } from '../../redux/actions/userActions';
-import { userImageUrl } from '../../urlConfig';
-import DrawerList from './DrawerList';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,7 +42,6 @@ const useStyles = makeStyles((theme) => ({
 
 const Header = ({ history }) => {
   const classes = useStyles();
-  const [visible, setVisible] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -67,62 +64,10 @@ const Header = ({ history }) => {
     dispatch(logout());
   };
 
-  const showProfile = () => {
-    if (userInfo) {
-      return (
-        <LinkContainer
-          to='/profile'
-          style={{ cursor: 'pointer' }}
-          onClick={() => setVisible(false)}
-        >
-          {userInfoDetails && (
-            <div>
-              <Avatar
-                alt='image'
-                src={userImageUrl(userInfoDetails.photo)}
-                style={{
-                  height: '50px',
-                  width: '50px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  marginLeft: '40%',
-                }}
-              />
-              <p
-                style={{
-                  textAlign: 'center',
-                  margin: 'auto',
-                }}
-              >
-                {userInfoDetails.name}
-              </p>
-            </div>
-          )}
-        </LinkContainer>
-      );
-    }
-  };
-
   return (
     <>
       <Navbar className={classes.root} variant='dark' expand='lg' sticky='top'>
         <Container>
-          <>
-            <div className={classes.btn} onClick={() => setVisible(true)}>
-              <span className='navbar-toggler-icon'></span>
-            </div>
-
-            <Drawer
-              style={{ zIndex: '123123213' }}
-              title={showProfile()}
-              placement='left'
-              closable={false}
-              onClose={() => setVisible(false)}
-              visible={visible}
-            >
-              <DrawerList />
-            </Drawer>
-          </>
           <LinkContainer to='/'>
             <Navbar.Brand>Shop</Navbar.Brand>
           </LinkContainer>

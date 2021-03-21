@@ -28,12 +28,12 @@ exports.updateCategory = catchAsync(async (req, res, next) => {
     {
       new: true,
       runValidators: true,
-    },
+    }
   );
 
   if (!editCategory) {
     return next(
-      new AppError(`Category with that ${req.params.id} not found`, 404),
+      new AppError(`Category with that ${req.params.id} not found`, 404)
     );
   }
 
@@ -82,12 +82,12 @@ exports.updateSubCategory = catchAsync(async (req, res, next) => {
     {
       new: true,
       runValidators: true,
-    },
+    }
   );
 
   if (!editSubCategory) {
     return next(
-      new AppError(`Sub-Category with that ${req.params.id} not found`, 404),
+      new AppError(`Sub-Category with that ${req.params.id} not found`, 404)
     );
   }
 
@@ -115,7 +115,7 @@ exports.getSubCategoryById = catchAsync(async (req, res, next) => {
   if (!subCategory) {
     return new AppError(
       `Sub Category with that ${req.params.id} not found`,
-      404,
+      404
     );
   }
   res.status(200).json(subCategory);
@@ -144,12 +144,12 @@ exports.updateChildCategory = catchAsync(async (req, res, next) => {
     {
       new: true,
       runValidators: true,
-    },
+    }
   );
 
   if (!editChildCategory) {
     return next(
-      new AppError(`Child Category with that ${req.params.id} not found`, 404),
+      new AppError(`Child Category with that ${req.params.id} not found`, 404)
     );
   }
 
@@ -191,7 +191,9 @@ exports.getSubCatUnderMainCat = catchAsync(async (req, res, next) => {
 exports.getChildCatUnderSubCat = catchAsync(async (req, res, next) => {
   const childCategory = await Childcategory.find({
     subCategoryID: req.params.id,
-  });
+  })
+    .populate('categoryID', 'name')
+    .populate('subCategoryID', 'name');
 
   res.status(200).json({ childCategory });
 });

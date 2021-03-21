@@ -7,6 +7,7 @@ const {
   getProductByID,
   searchProducts,
   listBySearch,
+  productsListUnderBrand,
   // filterProducts,
 } = require('../controllers/productController');
 const { protect, restrictTo } = require('../middlewares/auth');
@@ -18,6 +19,7 @@ router.get('/list', productList);
 router.patch('/:id', protect, restrictTo('admin', 'seller'), updateProduct);
 router.delete('/:id', protect, restrictTo('admin', 'seller'), deleteProduct);
 router.get('/:id', getProductByID);
+router.get('/brand/list/:id', productsListUnderBrand);
 
 //search
 router.post('/', searchProducts);

@@ -4,16 +4,12 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { listMyOrders } from '../redux/actions/orderActions';
-import { getMyDetails } from '../redux/actions/userActions';
 
 const Order = ({ history }) => {
   const dispatch = useDispatch();
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
-
-  const userDetails = useSelector((state) => state.userDetails);
-  const { userInfoDetails } = userDetails;
 
   const orderMyList = useSelector((state) => state.orderMyList);
   const { loading, error, orders } = orderMyList;
@@ -22,13 +18,9 @@ const Order = ({ history }) => {
     if (!userInfo) {
       history.push('/login');
     } else {
-      if (!userInfoDetails) {
-        dispatch(getMyDetails(userInfo.user._id));
-      } else {
-        dispatch(listMyOrders());
-      }
+      dispatch(listMyOrders());
     }
-  }, [dispatch, userInfo, userInfoDetails, history]);
+  }, [dispatch, userInfo, history]);
 
   return (
     <Col md={12}>

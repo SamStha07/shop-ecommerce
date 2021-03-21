@@ -18,6 +18,9 @@ import {
   GET_PRODUCT_BY_ID_FAIL,
   GET_PRODUCT_BY_ID_REQUEST,
   GET_PRODUCT_BY_ID_SUCCESS,
+  PRODUCT_LIST_UNDER_BRAND_FAIL,
+  PRODUCT_LIST_UNDER_BRAND_REQUEST,
+  PRODUCT_LIST_UNDER_BRAND_SUCCESS,
   SEARCH_PRODUCT_FAIL,
   SEARCH_PRODUCT_REQUEST,
   SEARCH_PRODUCT_SUCCESS,
@@ -150,6 +153,29 @@ export const deleteProduct = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: DELETE_PRODUCT_RESET,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const getProductListOfBrand = (productId) => async (dispatch) => {
+  try {
+    dispatch({
+      type: PRODUCT_LIST_UNDER_BRAND_REQUEST,
+    });
+
+    const { data } = await axios.get(`/product/brand/list/${productId}`);
+
+    dispatch({
+      type: PRODUCT_LIST_UNDER_BRAND_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_LIST_UNDER_BRAND_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

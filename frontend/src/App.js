@@ -31,6 +31,7 @@ import Payment from './pages/Payment';
 import PlaceOrder from './pages/PlaceOrder';
 import OrderPage from './pages/OrderPage';
 import OrdersList from './pages/Dashboard/OrdersList/OrdersList';
+import BrandListPage from './pages/BrandListPage';
 
 function App() {
   const userLogin = useSelector((state) => state.userLogin);
@@ -113,6 +114,12 @@ function App() {
                 <PrivateRoute path='/payment' exact component={Payment} />
                 <PrivateRoute path='/placeorder' exact component={PlaceOrder} />
                 <Route path='/order/:id' exact component={OrderPage} />
+
+                <Route
+                  path='/:category/:subCat/:id'
+                  exact
+                  component={BrandListPage}
+                />
 
                 <Route render={() => <div>404 Not found</div>} />
               </Switch>
