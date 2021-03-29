@@ -50,10 +50,12 @@ exports.getOrderById = catchAsync(async (req, res, next) => {
 exports.updateOrderToPaid = catchAsync(async (req, res, next) => {
   const order = await Order.findById(req.params.id);
 
+  console.log(order);
+
   if (order) {
     order.isPaid = true;
     order.paidAt = Date.now();
-    // this paymentResult response will from PayPal
+    // this paymentResult response will come from PayPal
     order.paymentResult = {
       id: req.body.id,
       status: req.body.status,

@@ -78,19 +78,19 @@ const SubCatTable = () => {
     }
   }, [success, dispatch, successDelete, editSuccess]);
 
-  // const mainID = categoryList && categoryList.map((item) => item.id);
+  // console.log(subCategory.subCategoriesList[0].categoryID.name);
 
   const subCategoryList = () => {
     if (subCategory) {
       return subCategory.subCategoriesList.map((cat) => (
         <tr>
-          <td>{cat.categoryID.name}</td>
+          <td>{cat.categoryID && cat.categoryID.name}</td>
 
           <td>{cat.name}</td>
           <td>{cat.createdAt}</td>
           <td>
             <MDBIcon
-              icon="edit"
+              icon='edit'
               className={classes.editBtn}
               onClick={(e) => {
                 setEditOpen(true);
@@ -98,7 +98,7 @@ const SubCatTable = () => {
               }}
             />
             <Modal
-              title="Edit Sub-Category"
+              title='Edit Sub-Category'
               visible={editOpen}
               onOk={() => {
                 dispatch(editSubCategory({ id: cat._id }, name, category));
@@ -107,22 +107,22 @@ const SubCatTable = () => {
               onCancel={() => setEditOpen(false)}
             >
               <label
-                htmlFor="editsubcategory"
-                className="grey-text font-weight-light h6"
+                htmlFor='editsubcategory'
+                className='grey-text font-weight-light h6'
               >
                 Name*
               </label>
               <input
-                type="text"
+                type='text'
                 id={uuidv4()}
-                className="form-control"
+                className='form-control'
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
               <br />
               <label
-                htmlFor="Category"
-                className="grey-text font-weight-light h6"
+                htmlFor='Category'
+                className='grey-text font-weight-light h6'
               >
                 Category*
               </label>
@@ -144,12 +144,12 @@ const SubCatTable = () => {
           </td>
           <td>
             <MDBIcon
-              icon="trash"
+              icon='trash'
               className={classes.deleteBtn}
               onClick={() => setVisible(true)}
             />
             <Modal
-              title="Delete Sub-Category"
+              title='Delete Sub-Category'
               visible={visible}
               onOk={() => {
                 dispatch(deleteSubCategory(cat._id));
@@ -167,19 +167,19 @@ const SubCatTable = () => {
 
   return (
     <>
-      <h5 className="py-1">List of Sub-Categories</h5>
+      <h5 className='py-1'>List of Sub-Categories</h5>
       <hr />
 
       {successDelete && (
         <SuccessMessage
-          header="Success"
-          message="Sub-Category Deleted"
+          header='Success'
+          message='Sub-Category Deleted'
           reset={DELETE_SUB_CATEGORY_RESET}
         />
       )}
       {errorDelete && (
         <ErrorMessage
-          header="Error"
+          header='Error'
           message={errorDelete}
           reset={DELETE_SUB_CATEGORY_RESET}
         />
@@ -187,14 +187,14 @@ const SubCatTable = () => {
 
       {editSuccess && (
         <SuccessMessage
-          header="Success"
-          message="Sub-Category updated"
+          header='Success'
+          message='Sub-Category updated'
           reset={EDIT_SUB_CATEGORY_RESET}
         />
       )}
       {editError && (
         <ErrorMessage
-          header="Error"
+          header='Error'
           message={editError}
           reset={EDIT_SUB_CATEGORY_RESET}
         />

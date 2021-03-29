@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { PayPalButton } from 'react-paypal-button-v2';
+import KhaltiCheckout from 'khalti-checkout-web';
 
 import { productsImagesUrl } from '../urlConfig';
 import ErrorMessage from '../components/Message/errorMessage';
@@ -11,9 +13,10 @@ import {
   getOrderDetails,
   payOrder,
   orderDeliver,
+  payOrderFromKhalti,
 } from '../redux/actions/orderActions';
 import Message from '../components/Message/Message';
-import axios from '../helpers/axios';
+import axiosInstance from '../helpers/axios';
 import {
   ORDER_PAY_RESET,
   ORDER_DELIVER_RESET,
@@ -55,7 +58,7 @@ const OrderPage = ({ match, history }) => {
     }
 
     const addPayPalScript = async () => {
-      const { data: clientId } = await axios.get('/config/paypal');
+      const { data: clientId } = await axiosInstance.get('/config/paypal');
       const script = document.createElement('script');
       script.type = 'text/javascript';
       script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`;
@@ -87,6 +90,46 @@ const OrderPage = ({ match, history }) => {
 
   const deliverdHandler = () => {
     dispatch(orderDeliver(order));
+  };
+
+  // Khalti
+  let config = {
+    // replace this key with yours
+    publicKey: 'test_public_key_11bb1a30e4b145b7a2b389b96a61c371',
+    amount: '5000',
+    productIdentity: `${orderId}`,
+    productName: 'ecommerce',
+    productUrl: `http://localhost:3000/product/5fd663a869e6f11b94df0482`,
+    eventHandler: {
+      async onSuccess(payload) {
+        // hit merchant api for initiating verfication
+        // console.log(payload);
+        // dispatch(payOrder(orderId, payload));
+        const { token, amount } = payload;
+        const data = { token, amount };
+        // console.log(data);
+
+        dispatch(payOrderFromKhalti(orderId, data));
+
+        // await axiosInstance.post(`/config/khalti/${orderId}/pay`, data);
+      },
+      // onError handler is optional
+      onError(error) {
+        // handle errors
+        console.log(error.message);
+      },
+      onClose() {
+        console.log('widget is closing');
+      },
+    },
+    paymentPreference: ['KHALTI'],
+  };
+
+  const payWithKhalti = () => {
+    let checkout = new KhaltiCheckout(config);
+    const totalAmount = order.totalPrice * 100;
+    const mobileNumber = order.shippingAddress && order.shippingAddress.mobile;
+    checkout.show({ amount: totalAmount, mobile: mobileNumber });
   };
 
   return loading ? (
@@ -230,10 +273,24 @@ const OrderPage = ({ match, history }) => {
                   {!sdkReady ? (
                     <p>Loading</p>
                   ) : (
-                    <PayPalButton
-                      amount={order.totalPrice}
-                      onSuccess={successPaymentHandler}
-                    />
+                    <>
+                      {order.paymentMethod === 'Khalti' ? (
+                        <Button
+                          size='sm'
+                          variant='outlined'
+                          color='primary'
+                          // fullWidth
+                          onClick={payWithKhalti}
+                        >
+                          Khalti
+                        </Button>
+                      ) : (
+                        <PayPalButton
+                          amount={order.totalPrice}
+                          onSuccess={successPaymentHandler}
+                        />
+                      )}
+                    </>
                   )}
                 </ListGroup.Item>
               )}

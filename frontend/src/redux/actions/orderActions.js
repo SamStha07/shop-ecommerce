@@ -1,4 +1,5 @@
 import axios from '../../helpers/axios';
+
 import {
   ORDER_ALL_LIST_FAIL,
   ORDER_ALL_LIST_REQUEST,
@@ -66,6 +67,7 @@ export const getOrderDetails = (id) => async (dispatch) => {
   }
 };
 
+// For Paypal
 export const payOrder = (orderId, paymentResult) => async (dispatch) => {
   try {
     dispatch({
@@ -73,6 +75,35 @@ export const payOrder = (orderId, paymentResult) => async (dispatch) => {
     });
 
     const { data } = await axios.put(`/orders/${orderId}/pay`, paymentResult);
+
+    dispatch({
+      type: ORDER_PAY_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ORDER_PAY_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+// for Khalti
+export const payOrderFromKhalti = (orderId, paymentResult) => async (
+  dispatch
+) => {
+  try {
+    dispatch({
+      type: ORDER_PAY_REQUEST,
+    });
+
+    const { data } = await axios.post(
+      `/config/khalti/${orderId}/pay`,
+      paymentResult
+    );
 
     dispatch({
       type: ORDER_PAY_SUCCESS,

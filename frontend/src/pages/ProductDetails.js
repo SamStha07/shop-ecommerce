@@ -209,14 +209,28 @@ const ProductDetails = ({ match, history }) => {
                     </div>
                   </div>
                 </Col>
-                <Col lg={6} md={6} sm={12} xs={12}>
+                <Col lg={9} md={9} sm={12} xs={12}>
                   <div className={classes.details}>
                     <h3>{productID.name}</h3>
 
-                    <Rating
-                      value={productID.rating}
-                      text={` ${productID.numReviews} reviews`}
-                    />
+                    <div
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                      }}
+                    >
+                      <Rating
+                        value={productID.rating}
+                        text={` ${productID.numReviews} reviews`}
+                      />
+                      <p style={{ marginRight: '80px' }}>
+                        Sold by{' '}
+                        <span style={{ fontSize: '1.2em' }}>
+                          {productID.createdBy.name}
+                        </span>
+                      </p>
+                    </div>
+
                     <hr />
                     <div style={{ display: 'flex' }}>
                       <p className={classes.price}>Rs.{productID.price}</p>
@@ -278,14 +292,14 @@ const ProductDetails = ({ match, history }) => {
                     </div>
                   </div>
                 </Col>
-                <Col lg={3} md={3} sm={12} xs={12}>
+                {/* <Col lg={3} md={3} sm={12} xs={12}>
                   <div className={classes.seller}>
                     <p>Sold by</p>
                     <h4>{productID.createdBy.name}</h4>
 
                     <Link to='/store'>GO TO STORE</Link>
                   </div>
-                </Col>
+                </Col> */}
               </Row>
 
               <RatingDetails product={productID} />
