@@ -42,45 +42,45 @@ const AllProducts = () => {
   }, [dispatch, deleteSuccess]);
 
   return (
-    <item>
+    <>
       <h5>All Products</h5>
 
       {successCreate && (
         <SuccessMessage
-          header="Success"
-          message="Product Added"
+          header='Success'
+          message='Product Added'
           reset={CREATE_PRODUCT_RESET}
         />
       )}
       {editSuccess && (
         <SuccessMessage
-          header="Success"
-          message="Product Updated"
+          header='Success'
+          message='Product Updated'
           reset={EDIT_PRODUCT_RESET}
         />
       )}
       {deleteSuccess && (
         <SuccessMessage
-          header="Success"
-          message="Product Deleted"
+          header='Success'
+          message='Product Deleted'
           reset={DELETE_PRODUCT_RESET}
         />
       )}
 
       {deleteError && (
         <SuccessMessage
-          header="Error"
+          header='Error'
           message={deleteError}
           reset={DELETE_PRODUCT_RESET}
         />
       )}
 
-      <div className="m-auto">
-        <LinkContainer to="/dashboard/product/create">
+      <div className='m-auto'>
+        <LinkContainer to='/dashboard/product/create'>
           <Button className={classes.button}>
             <Icon
               style={{ fontSize: '13px', marginLeft: '2px' }}
-              className="fa fa-plus"
+              className='fa fa-plus'
             ></Icon>
             Create
           </Button>
@@ -90,7 +90,7 @@ const AllProducts = () => {
       <div>
         <TableProducts />
       </div>
-    </item>
+    </>
   );
 };
 

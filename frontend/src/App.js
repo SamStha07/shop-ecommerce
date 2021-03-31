@@ -32,6 +32,7 @@ import PlaceOrder from './pages/PlaceOrder';
 import OrderPage from './pages/OrderPage';
 import OrdersList from './pages/Dashboard/OrdersList/OrdersList';
 import BrandListPage from './pages/BrandListPage';
+import EditUser from './pages/Dashboard/Users/EditUser';
 
 function App() {
   const userLogin = useSelector((state) => state.userLogin);
@@ -79,6 +80,11 @@ function App() {
             />
             <Route exact path='/dashboard/user/create' component={CreateUser} />
             <Route exact path='/dashboard/users' component={AllUsers} />
+            <Route
+              path='/dashboard/users/edit/:id'
+              exact
+              component={EditUser}
+            />
 
             <Route path='/order/:id' exact component={OrderPage} />
 

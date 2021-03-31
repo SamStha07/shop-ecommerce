@@ -49,6 +49,11 @@ import {
   userDetailsReducer,
   userUpdateProfileReducer,
   userUpdatePasswordReducer,
+  registerNewUserReducer,
+  usersListReducer,
+  usersEditReducer,
+  usersDeleteReducer,
+  getUserByIDReducer,
 } from './userReducers';
 
 export default combineReducers({
@@ -58,6 +63,11 @@ export default combineReducers({
   userDetails: userDetailsReducer,
   userUpdated: userUpdateProfileReducer,
   userUpdatedPassword: userUpdatePasswordReducer,
+  newUserRegister: registerNewUserReducer,
+  usersList: usersListReducer,
+  usersEdit: usersEditReducer,
+  usersDelete: usersDeleteReducer,
+  getUserById: getUserByIDReducer,
   // Category
   createCategory: createCategoryReducer,
   getAllCategory: getAllCategoryReducer,

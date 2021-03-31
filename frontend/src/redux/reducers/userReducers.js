@@ -18,6 +18,25 @@ import {
   USER_UPDATE_PASSWORD_REQUEST,
   USER_UPDATE_PASSWORD_SUCCESS,
   USER_UPDATE_PASSWORD_FAIL,
+  USER_NEW_REGISTER_REQUEST,
+  USER_NEW_REGISTER_FAIL,
+  USER_NEW_REGISTER_SUCCESS,
+  USER_NEW_REGISTER_RESET,
+  USERS_LIST_REQUEST,
+  USERS_LIST_SUCCESS,
+  USERS_LIST_FAIL,
+  USERS_EDIT_REQUEST,
+  USERS_EDIT_SUCCESS,
+  USERS_EDIT_FAIL,
+  USERS_EDIT_RESET,
+  USERS_DELETE_REQUEST,
+  USERS_DELETE_SUCCESS,
+  USERS_DELETE_FAIL,
+  USERS_DELETE_RESET,
+  GET_USER_BY_ID_REQUEST,
+  GET_USER_BY_ID_SUCCESS,
+  GET_USER_BY_ID_FAIL,
+  GET_USER_BY_ID_RESET,
 } from '../constants/userConstants';
 
 export const userLoginReducer = (state = {}, action) => {
@@ -49,6 +68,27 @@ export const userRegisterReducer = (state = {}, action) => {
     case USER_REGISTER_FAIL:
       return { ...state, loading: false, error: action.payload };
     case USER_REGISTER_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+// new user from admin
+export const registerNewUserReducer = (state = {}, action) => {
+  switch (action.type) {
+    case USER_NEW_REGISTER_REQUEST:
+      return { ...state, loading: true };
+    case USER_NEW_REGISTER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: true,
+        userInfo: action.payload,
+      };
+    case USER_NEW_REGISTER_FAIL:
+      return { ...state, loading: false, error: action.payload };
+    case USER_NEW_REGISTER_RESET:
       return {};
     default:
       return state;
@@ -104,6 +144,74 @@ export const userUpdatePasswordReducer = (state = {}, action) => {
     case USER_UPDATE_PASSWORD_FAIL:
       return { ...state, loading: false, error: action.payload };
     case USER_UPDATE_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const usersListReducer = (state = {}, action) => {
+  switch (action.type) {
+    case USERS_LIST_REQUEST:
+      return { ...state, loading: true };
+    case USERS_LIST_SUCCESS:
+      return { ...state, loading: false, usersList: action.payload };
+    case USERS_LIST_FAIL:
+      return { ...state, loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const usersEditReducer = (state = {}, action) => {
+  switch (action.type) {
+    case USERS_EDIT_REQUEST:
+      return { ...state, loading: true };
+    case USERS_EDIT_SUCCESS:
+      return { ...state, loading: false, success: true, user: action.payload };
+    case USERS_EDIT_FAIL:
+      return { ...state, loading: false, error: action.payload };
+    case USERS_EDIT_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const usersDeleteReducer = (state = {}, action) => {
+  switch (action.type) {
+    case USERS_DELETE_REQUEST:
+      return { ...state, loading: true };
+    case USERS_DELETE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: true,
+      };
+    case USERS_DELETE_FAIL:
+      return { ...state, loading: false, error: action.payload };
+
+    case USERS_DELETE_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const getUserByIDReducer = (state = {}, action) => {
+  switch (action.type) {
+    case GET_USER_BY_ID_REQUEST:
+      return { ...state, loading: true };
+    case GET_USER_BY_ID_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        user: action.payload,
+      };
+    case GET_USER_BY_ID_FAIL:
+      return { ...state, loading: false, error: action.payload };
+
+    case GET_USER_BY_ID_RESET:
       return {};
     default:
       return state;

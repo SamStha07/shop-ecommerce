@@ -38,8 +38,8 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     return next(
       new AppError(
         'This route is not for password updates. Please use /updateMyPassword',
-        400,
-      ),
+        400
+      )
     );
   }
 
@@ -59,4 +59,45 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     status: 'success',
     user: updateUser,
   });
+});
+
+exports.deleteUserByAdmin = catchAsync(async (req, res, next) => {
+  const user = await User.findByIdAndDelete(req.params.id, { active: false });
+
+  if (!user) {
+    return next(new AppError('No user found with that ID', 404));
+  }
+
+  res.status(204).json({
+    status: 'success',
+    data: null,
+  });
+});
+
+exports.updateUserByAdmin = catchAsync(async (req, res, next) => {
+  const editUser = await User.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
+
+  if (!editUser) {
+    return next(
+      new AppError(`Product with that ${req.params.id} not found`, 404)
+    );
+  }
+
+  res.status(201).json({
+    status: 'success',
+    editUser,
+  });
+});
+
+exports.getUserByID = catchAsync(async (req, res, next) => {
+  const user = await User.findById(req.params.id);
+
+  if (!user) {
+    return next(new AppError('No user found with that ID', 404));
+  }
+
+  res.status(200).json(user);
 });

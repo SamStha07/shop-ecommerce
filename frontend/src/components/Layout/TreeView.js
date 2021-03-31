@@ -170,15 +170,6 @@ export default function GmailTreeView() {
             bgColor='#e8f0fe'
           />
         </LinkContainer>
-        <LinkContainer to='/dashboard/categories'>
-          <StyledTreeItem
-            nodeId='6'
-            labelText='All Categories'
-            labelIcon={ViewList}
-            color='#a250f5'
-            bgColor='#e6f4ea'
-          />
-        </LinkContainer>
       </StyledTreeItem>
       <StyledTreeItem nodeId='7' labelText='Product' labelIcon={Dns}>
         <LinkContainer to='/dashboard/products'>

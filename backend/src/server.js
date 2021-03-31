@@ -58,7 +58,7 @@ app.get('/api/config/paypal', (req, res) =>
 
 // khalti payment integration
 app.post('/api/config/khalti/:id/pay', async (req, res) => {
-  console.log(req.body); // {token, amount}
+  // console.log(req.body); // {token, amount}
   const { token, amount } = req.body;
   const data = { token, amount };
 
@@ -88,7 +88,7 @@ app.post('/api/config/khalti/:id/pay', async (req, res) => {
       }
 
       const updatedOrder = await order.save();
-      console.log(updatedOrder);
+      // console.log(updatedOrder);
       res.status(200).json(updatedOrder);
     })
     .catch((error) => {

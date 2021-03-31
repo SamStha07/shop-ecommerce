@@ -4,6 +4,8 @@ const {
   login,
   logout,
   updatePassword,
+  registerUser,
+  userList,
 } = require('../controllers/authController');
 const { forgotPassword } = require('../controllers/passwordReset');
 const {
@@ -12,6 +14,9 @@ const {
   updateMe,
   uploadUserPhoto,
   resizeUserPhoto,
+  deleteUserByAdmin,
+  updateUserByAdmin,
+  getUserByID,
 } = require('../controllers/userController');
 const { protect, restrictTo } = require('../middlewares/auth');
 const {
@@ -26,6 +31,7 @@ const router = express.Router();
 router.post('/signup', signup);
 router.post('/login', login);
 router.get('/logout', logout);
+router.post('/registernewuser', registerUser);
 
 // Password Reset - Not working
 router.post('/forgot-password', forgotPassword);
@@ -43,5 +49,10 @@ router.get('/me/:id', protect, getMe);
 router.delete('/deleteMe', protect, deleteMe);
 router.put('/update', protect, updateMe);
 router.put('/updateMyPassword', protect, updatePassword);
+
+router.get('/list', protect, restrictTo('admin'), userList);
+router.delete('/:id', protect, restrictTo('admin'), deleteUserByAdmin);
+router.patch('/:id', protect, restrictTo('admin'), updateUserByAdmin);
+router.get('/:id', protect, getUserByID);
 
 module.exports = router;

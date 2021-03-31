@@ -12,6 +12,10 @@ import {
   USER_DETAILS_RESET,
   USER_UPDATE_RESET,
   USER_UPDATE_PASSWORD_RESET,
+  USER_NEW_REGISTER_REQUEST,
+  USER_NEW_REGISTER_FAIL,
+  USER_NEW_REGISTER_SUCCESS,
+  USER_NEW_REGISTER_RESET,
 } from '../constants/userConstants';
 import history from '../../history';
 import {
@@ -90,6 +94,42 @@ export const register = (name, email, password, passwordConfirm) => async (
   } catch (error) {
     dispatch({
       type: USER_REGISTER_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+// from admin panel
+export const registerCustomer = (
+  name,
+  email,
+  password,
+  passwordConfirm,
+  role
+) => async (dispatch) => {
+  try {
+    dispatch({
+      type: USER_NEW_REGISTER_REQUEST,
+    });
+
+    const { data } = await axios.post('/users/registernewuser', {
+      name,
+      email,
+      password,
+      passwordConfirm,
+      role,
+    });
+
+    dispatch({
+      type: USER_NEW_REGISTER_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: USER_NEW_REGISTER_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

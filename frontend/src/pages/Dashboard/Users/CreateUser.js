@@ -14,7 +14,8 @@ import { Alert } from '@material-ui/lab';
 import { useDispatch, useSelector } from 'react-redux';
 
 import FormContainer from '../../../components/FormContainer/FormContainer';
-import { register } from '../../../redux/actions/authActions';
+import { registerCustomer } from '../../../redux/actions/authActions';
+import { USER_NEW_REGISTER_RESET } from '../../../redux/constants/userConstants';
 
 const useStyles = makeStyles((theme) => ({
   prgressColor: {
@@ -23,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CreateUser = ({ location, history }) => {
-  const [username, setUsername] = useState('');
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -35,27 +36,23 @@ const CreateUser = ({ location, history }) => {
   const userRegister = useSelector((state) => state.userRegister);
   const { loading, error } = userRegister;
 
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo: userInfoLogin } = userLogin;
+  const newUser = useSelector((state) => state.newUserRegister);
+  const { success } = newUser;
 
-  const redirect = location.search ? location.search.split('=')[1] : '/';
-
-  // useEffect(() => {
-  //   if (userInfoLogin) {
-  //     history.push(redirect);
-  //   }
-  // }, [userInfoLogin, history, redirect]);
-
-  console.log(role);
+  useEffect(() => {
+    if (success) {
+      history.push('/dashboard/users');
+      dispatch({ type: USER_NEW_REGISTER_RESET });
+    }
+  }, [success, history, dispatch]);
 
   const submitHandler = (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
       setMessage('Password do not match');
     }
-    console.log({ username, email, password, confirmPassword, role });
-    // dispatch(register(username, email, password, confirmPassword, role));
-    history.push('/');
+
+    dispatch(registerCustomer(name, email, password, confirmPassword, role));
   };
 
   return (
@@ -77,17 +74,17 @@ const CreateUser = ({ location, history }) => {
         <Form onSubmit={submitHandler}>
           <TextField
             variant='outlined'
-            type='username'
+            type='name'
             margin='normal'
             required
             fullWidth
-            id='username'
-            label='Username'
-            name='username'
-            autoComplete='username'
+            id='name'
+            label='Name'
+            name='Name'
+            autoComplete='name'
             autoFocus
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
 
           <TextField

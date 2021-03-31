@@ -86,21 +86,21 @@ const AllProductsTable = () => {
               />
             ))}
           </td>
-          <td>{item.brand.name}</td>
+          <td>{item.brand && item.brand.name}</td>
           <td>
             <LinkContainer to={`/dashboard/products/edit/${item._id}`}>
-              <MDBIcon icon="edit" className={classes.editBtn} />
+              <MDBIcon icon='edit' className={classes.editBtn} />
             </LinkContainer>
           </td>
           <td>
             <MDBIcon
-              icon="trash"
+              icon='trash'
               className={classes.deleteBtn}
               onClick={(e) => setVisible(true)}
             />
 
             <Modal
-              title="Delete Category"
+              title='Delete Category'
               visible={visible}
               onOk={() => {
                 dispatch(deleteProduct(item._id));

@@ -16,7 +16,7 @@ const createSendToken = (user, statusCode, res) => {
   // Create cookie where it stores token in the browser
   const cookieOptions = {
     expires: new Date(
-      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000,
+      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
     ),
 
     httpOnly: true,
@@ -55,6 +55,27 @@ exports.signup = catchAsync(async (req, res, next) => {
   });
 
   createSendToken(user, 201, res);
+});
+
+// new user registration from admin panel
+exports.registerUser = catchAsync(async (req, res, next) => {
+  const { name, email, password, passwordConfirm, role } = req.body;
+
+  const userExists = await User.findOne({ email });
+
+  if (userExists) {
+    return next(new AppError('User already exists', 400));
+  }
+
+  const user = await User.create({
+    name,
+    email,
+    password,
+    passwordConfirm,
+    role,
+  });
+
+  res.status(200).json(user);
 });
 
 //Login
@@ -100,4 +121,10 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
 
   // Log user in, send JWT
   createSendToken(user, 200, res);
+});
+
+exports.userList = catchAsync(async (req, res, next) => {
+  const users = await User.find();
+
+  res.status(200).json({ length: users.length, users });
 });
