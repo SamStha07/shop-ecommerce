@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
+
+import { PDFDownloadLink } from '@react-pdf/renderer';
 import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { PayPalButton } from 'react-paypal-button-v2';
@@ -8,7 +9,7 @@ import KhaltiCheckout from 'khalti-checkout-web';
 
 import { productsImagesUrl } from '../urlConfig';
 import ErrorMessage from '../components/Message/errorMessage';
-import SuccessMessage from '../components/Message/successMessage';
+
 import {
   getOrderDetails,
   payOrder,
@@ -21,6 +22,7 @@ import {
   ORDER_PAY_RESET,
   ORDER_DELIVER_RESET,
 } from '../redux/constants/orderConstants';
+import Invoice from '../components/Order/Invoice';
 
 const OrderPage = ({ match, history }) => {
   const [sdkReady, setSdkReady] = useState(false);
@@ -131,6 +133,10 @@ const OrderPage = ({ match, history }) => {
     const mobileNumber = order.shippingAddress && order.shippingAddress.mobile;
     checkout.show({ amount: totalAmount, mobile: mobileNumber });
   };
+
+  // const MyDocument = (
+
+  // );
 
   return loading ? (
     <h1>Loading</h1>
@@ -293,6 +299,16 @@ const OrderPage = ({ match, history }) => {
                     </>
                   )}
                 </ListGroup.Item>
+              )}
+
+              {order.isPaid && (
+                <PDFDownloadLink
+                  document={<Invoice order={order} />}
+                  fileName='invoice.pdf'
+                  className='btn btn-sm'
+                >
+                  Download PDF
+                </PDFDownloadLink>
               )}
 
               {loadingDeliver && <h1>Loading</h1>}
