@@ -1,16 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Row, Col, Form } from 'react-bootstrap';
+import { Row, Col, Form, ListGroup } from 'react-bootstrap';
 import { makeStyles } from '@material-ui/core';
 import { Button } from 'antd';
 import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
-import { getProductByID } from '../redux/actions/productActions';
+import {
+  createProductReview,
+  getProductByID,
+} from '../redux/actions/productActions';
+import { PRODUCT_CREATE_REVIEW_RESET } from '../redux/constants/productConstants';
+
 import { productsImagesUrl } from '../urlConfig';
 import { ProductBreadCrumb } from '../components/Breadcrumb/ProductDetails';
 import Rating from '../components/Rating';
-import RatingDetails from './Ratings';
+import Reviews from './Reviews';
+import Message from '../components/Message/Message';
 
 const useStyles = makeStyles((theme) => ({
   image: {
@@ -150,16 +156,25 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ProductDetails = ({ match, history }) => {
+  const classes = useStyles();
   const [image, setImage] = useState('');
   const [qty, setQty] = useState(1);
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState('');
 
   const dispatch = useDispatch();
-  const classes = useStyles();
 
   const id = match.params.id;
 
   const details = useSelector((state) => state.getProductByID);
   const { loading, productID } = details;
+
+  const {
+    success: successProductreview,
+    error: errorProductReview,
+  } = useSelector((state) => state.productReviewCreate);
+
+  const { userInfo } = useSelector((state) => state.userLogin);
 
   const handleAddToCart = () => {
     history.push(`/cart/${id}?qty=${qty}`);
@@ -171,9 +186,9 @@ const ProductDetails = ({ match, history }) => {
     } else {
       if (productID._id !== id) {
         dispatch(getProductByID(id));
+        dispatch({ type: PRODUCT_CREATE_REVIEW_RESET });
       }
       const img = productID.images[0].img;
-      // console.log(img);
       setImage(img);
     }
   }, [dispatch, productID, id]);
@@ -223,12 +238,6 @@ const ProductDetails = ({ match, history }) => {
                         value={productID.rating}
                         text={` ${productID.numReviews} reviews`}
                       />
-                      <p style={{ marginRight: '80px' }}>
-                        Sold by{' '}
-                        <span style={{ fontSize: '1.2em' }}>
-                          {productID.createdBy.name}
-                        </span>
-                      </p>
                     </div>
 
                     <hr />
@@ -292,17 +301,17 @@ const ProductDetails = ({ match, history }) => {
                     </div>
                   </div>
                 </Col>
-                {/* <Col lg={3} md={3} sm={12} xs={12}>
-                  <div className={classes.seller}>
-                    <p>Sold by</p>
-                    <h4>{productID.createdBy.name}</h4>
-
-                    <Link to='/store'>GO TO STORE</Link>
-                  </div>
-                </Col> */}
               </Row>
 
-              <RatingDetails product={productID} />
+              <Row>
+                <Reviews
+                  errorProductReview={errorProductReview}
+                  successProductreview={successProductreview}
+                  userInfo={userInfo}
+                  product={productID}
+                  id={id}
+                />
+              </Row>
             </>
           )}
         </>

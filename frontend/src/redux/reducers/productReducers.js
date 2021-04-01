@@ -30,6 +30,10 @@ import {
   PRODUCT_LIST_UNDER_BRAND_REQUEST,
   PRODUCT_LIST_UNDER_BRAND_SUCCESS,
   PRODUCT_LIST_UNDER_BRAND_FAIL,
+  PRODUCT_CREATE_REVIEW_REQUEST,
+  PRODUCT_CREATE_REVIEW_SUCCESS,
+  PRODUCT_CREATE_REVIEW_RESET,
+  PRODUCT_CREATE_REVIEW_FAIL,
 } from '../constants/productConstants';
 
 export const createProductReducer = (state = {}, action) => {
@@ -125,6 +129,25 @@ export const getProductByIDReducer = (state = {}, action) => {
     case GET_PRODUCT_BY_ID_FAIL:
       return { ...state, loading: false, error: action.payload };
     case GET_PRODUCT_BY_ID_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const productReviewCreateReducer = (state = {}, action) => {
+  switch (action.type) {
+    case PRODUCT_CREATE_REVIEW_REQUEST:
+      return { ...state, loading: true };
+    case PRODUCT_CREATE_REVIEW_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: true,
+      };
+    case PRODUCT_CREATE_REVIEW_FAIL:
+      return { ...state, loading: false, error: action.payload };
+    case PRODUCT_CREATE_REVIEW_RESET:
       return {};
     default:
       return state;

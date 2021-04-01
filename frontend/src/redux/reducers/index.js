@@ -32,6 +32,7 @@ import {
   getAllProductsReducer,
   getProductByIDReducer,
   getProductListUnderBrandReducer,
+  productReviewCreateReducer,
   searchProductsReducer,
 } from './productReducers';
 import {
@@ -103,6 +104,7 @@ export default combineReducers({
   deleteProduct: deleteProductReducer,
   getProductByID: getProductByIDReducer,
   getProductListUnderBrand: getProductListUnderBrandReducer,
+  productReviewCreate: productReviewCreateReducer,
 
   // Search
   searchProduct: searchProductsReducer,

@@ -39,8 +39,8 @@ const useStyles = makeStyles({
     },
   },
   image: {
-    width: '80px',
-    height: '80px',
+    width: '50px',
+    height: '50px',
     borderRadius: '50%',
   },
   name: {
@@ -74,7 +74,6 @@ const AllUsers = () => {
     if (usersList) {
       return usersList.users.map((user) => (
         <tr>
-          <td>{user._id}</td>
           <td>
             <span className={classes.name}>{user.name}</span>
           </td>
@@ -88,6 +87,7 @@ const AllUsers = () => {
               alt={user._id}
             />
           </td>
+          <td>{user.role}</td>
           <td>
             <LinkContainer to={`/dashboard/users/edit/${user._id}`}>
               <MDBIcon icon='edit' className={classes.editBtn} />
@@ -148,11 +148,10 @@ const AllUsers = () => {
       <MDBTable btn hover responsive>
         <MDBTableHead>
           <tr>
-            <th>UserID</th>
-
             <th>Name</th>
             <th>Email</th>
             <th>Image</th>
+            <th>Role</th>
           </tr>
         </MDBTableHead>
         {loading ? (

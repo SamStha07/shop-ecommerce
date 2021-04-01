@@ -8,6 +8,7 @@ const {
   searchProducts,
   listBySearch,
   productsListUnderBrand,
+  createProductReview,
   // filterProducts,
 } = require('../controllers/productController');
 const { protect, restrictTo } = require('../middlewares/auth');
@@ -20,6 +21,9 @@ router.patch('/:id', protect, restrictTo('admin', 'seller'), updateProduct);
 router.delete('/:id', protect, restrictTo('admin', 'seller'), deleteProduct);
 router.get('/:id', getProductByID);
 router.get('/brand/list/:id', productsListUnderBrand);
+
+// review
+router.post('/:id/reviews', protect, createProductReview);
 
 //search
 router.post('/', searchProducts);

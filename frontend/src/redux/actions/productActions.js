@@ -18,6 +18,9 @@ import {
   GET_PRODUCT_BY_ID_FAIL,
   GET_PRODUCT_BY_ID_REQUEST,
   GET_PRODUCT_BY_ID_SUCCESS,
+  PRODUCT_CREATE_REVIEW_FAIL,
+  PRODUCT_CREATE_REVIEW_REQUEST,
+  PRODUCT_CREATE_REVIEW_SUCCESS,
   PRODUCT_LIST_UNDER_BRAND_FAIL,
   PRODUCT_LIST_UNDER_BRAND_REQUEST,
   PRODUCT_LIST_UNDER_BRAND_SUCCESS,
@@ -238,6 +241,28 @@ export const getFilteredProducts = (skip, limit, filters = {}) => async (
   } catch (error) {
     dispatch({
       type: FILTER_PRODUCT_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const createProductReview = (productId, review) => async (dispatch) => {
+  try {
+    dispatch({
+      type: PRODUCT_CREATE_REVIEW_REQUEST,
+    });
+
+    await axios.post(`/product/${productId}/reviews`, review);
+
+    dispatch({
+      type: PRODUCT_CREATE_REVIEW_SUCCESS,
+    });
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_CREATE_REVIEW_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
