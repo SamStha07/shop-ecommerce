@@ -58,7 +58,7 @@ const ChildCatTable = () => {
   const { category: categoryList } = allCategories;
 
   const subCatwithMainCat = useSelector(
-    (state) => state.getSubCatWithCategoryID,
+    (state) => state.getSubCatWithCategoryID
   );
   const { childCategory: listSubCat } = subCatwithMainCat;
 
@@ -94,12 +94,12 @@ const ChildCatTable = () => {
       return childCategory.childCategoriesList.map((cat) => (
         <tr>
           <td>{cat.categoryID.name}</td>
-          <td>{cat.subCategoryID.name}</td>
+          <td>{cat.subCategoryID && cat.subCategoryID.name}</td>
           <td>{cat.name}</td>
           <td>{cat.createdAt}</td>
           <td>
             <MDBIcon
-              icon="edit"
+              icon='edit'
               className={classes.editBtn}
               onClick={(e) => {
                 console.log(cat._id);
@@ -108,7 +108,7 @@ const ChildCatTable = () => {
               }}
             />
             <Modal
-              title="Edit Child-Category"
+              title='Edit Child-Category'
               visible={editOpen}
               onOk={() => {
                 dispatch(
@@ -118,30 +118,30 @@ const ChildCatTable = () => {
                     },
                     name,
                     category,
-                    subCategory,
-                  ),
+                    subCategory
+                  )
                 );
                 setEditOpen(false);
               }}
               onCancel={() => setEditOpen(false)}
             >
               <label
-                htmlFor="editchildcategory"
-                className="grey-text font-weight-light h6"
+                htmlFor='editchildcategory'
+                className='grey-text font-weight-light h6'
               >
                 Name*
               </label>
               <input
-                type="text"
+                type='text'
                 id={uuidv4()}
-                className="form-control"
+                className='form-control'
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
               <br />
               <label
-                htmlFor="Category"
-                className="grey-text font-weight-light h6"
+                htmlFor='Category'
+                className='grey-text font-weight-light h6'
               >
                 Main Category*
               </label>
@@ -161,8 +161,8 @@ const ChildCatTable = () => {
               </div>
               <br />
               <label
-                htmlFor="Sub-Category"
-                className="grey-text font-weight-light h6"
+                htmlFor='Sub-Category'
+                className='grey-text font-weight-light h6'
               >
                 Sub-Category*
               </label>
@@ -184,12 +184,12 @@ const ChildCatTable = () => {
           </td>
           <td>
             <MDBIcon
-              icon="trash"
+              icon='trash'
               className={classes.deleteBtn}
               onClick={() => setVisible(true)}
             />
             <Modal
-              title="Delete Child-Category"
+              title='Delete Child-Category'
               visible={visible}
               onOk={() => {
                 dispatch(deleteChildCategory(cat._id));
@@ -207,33 +207,33 @@ const ChildCatTable = () => {
 
   return (
     <>
-      <h5 className="py-1">List of Child-Categories</h5>
+      <h5 className='py-1'>List of Child-Categories</h5>
       <hr />
 
       {successDelete && (
         <SuccessMessage
-          header="Success"
-          message="Child-Category Deleted"
+          header='Success'
+          message='Child-Category Deleted'
           reset={DELETE_CHILD_CATEGORY_RESET}
         />
       )}
       {errorDelete && (
         <ErrorMessage
-          header="Error"
+          header='Error'
           message={errorDelete}
           reset={DELETE_CHILD_CATEGORY_RESET}
         />
       )}
       {editSuccess && (
         <SuccessMessage
-          header="Success"
-          message="Child-Category updated"
+          header='Success'
+          message='Child-Category updated'
           reset={EDIT_CHILD_CATEGORY_RESET}
         />
       )}
       {editError && (
         <ErrorMessage
-          header="Error"
+          header='Error'
           message={editError}
           reset={EDIT_CHILD_CATEGORY_RESET}
         />

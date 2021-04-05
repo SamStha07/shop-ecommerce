@@ -33,6 +33,8 @@ import OrderPage from './pages/OrderPage';
 import OrdersList from './pages/Dashboard/OrdersList/OrdersList';
 import BrandListPage from './pages/BrandListPage';
 import EditUser from './pages/Dashboard/Users/EditUser';
+import Footer from './components/Footer/Footer';
+import ContactPage from './pages/ContactPage';
 
 function App() {
   const userLogin = useSelector((state) => state.userLogin);
@@ -110,6 +112,8 @@ function App() {
                   component={SearchEngine}
                 />
 
+                <Route path='/contact' component={ContactPage} />
+
                 <Route path='/cart/:id?' exact component={Cart} />
                 <Route path='/product/:id' exact component={ProductDetails} />
 
@@ -130,8 +134,8 @@ function App() {
                 <Route render={() => <div>404 Not found</div>} />
               </Switch>
             </main>
-            {/* <Footer /> */}
           </Container>
+          <Footer />
         </>
       )}
     </BrowserRouter>

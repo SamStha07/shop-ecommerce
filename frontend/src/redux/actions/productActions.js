@@ -27,6 +27,9 @@ import {
   SEARCH_PRODUCT_FAIL,
   SEARCH_PRODUCT_REQUEST,
   SEARCH_PRODUCT_SUCCESS,
+  TOP_RATED_PRODUCT_FAIL,
+  TOP_RATED_PRODUCT_REQUEST,
+  TOP_RATED_PRODUCT_SUCCESS,
 } from '../constants/productConstants';
 
 export const createProduct = (form) => async (dispatch) => {
@@ -156,6 +159,29 @@ export const deleteProduct = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: DELETE_PRODUCT_RESET,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const getTopRatedProducts = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: TOP_RATED_PRODUCT_REQUEST,
+    });
+
+    const { data } = await axios.get('/product/toprated');
+
+    dispatch({
+      type: TOP_RATED_PRODUCT_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: TOP_RATED_PRODUCT_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

@@ -17,7 +17,9 @@ exports.productList = catchAsync(async (req, res, next) => {
     .populate('category')
     .populate('subCategory')
     .populate('brand')
-    .populate('createdBy');
+    .populate('createdBy')
+    .sort({ updatedAt: -1 })
+    .limit(8);
 
   res.status(200).json({ length: productsList.length, productsList });
 });
@@ -212,4 +214,10 @@ exports.createProductReview = catchAsync(async (req, res, next) => {
   }
 
   res.status(200).json({ length: products.length, products });
+});
+
+exports.getTopRatedProducts = catchAsync(async (req, res, next) => {
+  const productsList = await Product.find().sort({ rating: -1 }).limit(8);
+
+  res.status(200).json({ productsList });
 });

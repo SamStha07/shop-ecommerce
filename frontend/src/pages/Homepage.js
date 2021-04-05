@@ -1,20 +1,26 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
-import Carousel from '../components/productCarousel';
+import Carousel from '../components/Carousel/productCarousel';
 import ProductsList from './ProductsList';
-import { getAllProductsList } from '../redux/actions/productActions';
+import {
+  getAllProductsList,
+  getTopRatedProducts,
+} from '../redux/actions/productActions';
+import TopRatedProducts from '../components/TopRatedProducts/TopRatedProducts';
 
 const Homepage = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllProductsList());
+    dispatch(getTopRatedProducts());
   }, [dispatch]);
 
   return (
     <>
       <Carousel />
       <ProductsList />
+      <TopRatedProducts />
     </>
   );
 };

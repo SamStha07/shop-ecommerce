@@ -78,6 +78,13 @@ const Header = ({ history }) => {
             <Route render={({ history }) => <Search history={history} />} />
 
             <Nav className='ml-auto '>
+              <LinkContainer to='/contact'>
+                <Nav.Link>
+                  <div className='d-flex'>
+                    <div className='mr-1'>Contact us</div>
+                  </div>
+                </Nav.Link>
+              </LinkContainer>
               <LinkContainer to='/cart'>
                 <Nav.Link>
                   <div className='d-flex'>

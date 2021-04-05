@@ -11,7 +11,7 @@ const useStyle = makeStyles((theme) => ({
     // [theme.breakpoints.down('lg' || 'md' || 'sm')]: {
 
     // },
-    margin: '0 0 1.5rem 0',
+    margin: '0 .2rem 1.5rem .2rem',
   },
   image: {
     height: '10rem',
