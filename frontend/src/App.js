@@ -33,8 +33,11 @@ import OrderPage from './pages/OrderPage';
 import OrdersList from './pages/Dashboard/OrdersList/OrdersList';
 import BrandListPage from './pages/BrandListPage';
 import EditUser from './pages/Dashboard/Users/EditUser';
+import CarouselPage from './pages/Dashboard/Carousel/Carousel';
 import Footer from './components/Footer/Footer';
 import ContactPage from './pages/ContactPage';
+import EditCarousel from './pages/Dashboard/Carousel/EditCarousel';
+import CreateCarousel from './pages/Dashboard/Carousel/CreateCarousel';
 
 function App() {
   const userLogin = useSelector((state) => state.userLogin);
@@ -89,6 +92,24 @@ function App() {
             />
 
             <Route path='/order/:id' exact component={OrderPage} />
+
+            <Route
+              path='/dashboard/carousel/list'
+              exact
+              component={CarouselPage}
+            />
+
+            <Route
+              path='/dashboard/carousel/create'
+              exact
+              component={CreateCarousel}
+            />
+
+            <Route
+              path='/dashboard/carousel/edit/:id'
+              exact
+              component={EditCarousel}
+            />
 
             <Route exact path='/dashboard/orders/list' component={OrdersList} />
 

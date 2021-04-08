@@ -45,7 +45,6 @@ const useStyles = makeStyles({
 });
 
 const SubCatTable = () => {
-  const [visible, setVisible] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const [name, setName] = useState('');
   const [category, setCategory] = useState('');
@@ -57,33 +56,33 @@ const SubCatTable = () => {
   const { category: categoryList } = allCategories;
 
   const createSubCat = useSelector((state) => state.createSubCategory);
-  const { success } = createSubCat;
+  const { success: successCreate } = createSubCat;
 
   const allSubCategories = useSelector((state) => state.getAllSubCategory);
   const { subCategory, loading } = allSubCategories;
 
   const deleteSub = useSelector((state) => state.deleteSubCategory);
-  const {
-    success: successDelete,
-    error: errorDelete,
-    loading: loadingDelete,
-  } = deleteSub;
+  const { success: successDelete, error: errorDelete } = deleteSub;
 
   const editSub = useSelector((state) => state.editSubCategory);
   const { success: editSuccess, error: editError } = editSub;
 
   useEffect(() => {
-    if (success || successDelete || editSuccess) {
-      dispatch(getAllSubCategories());
-    }
-  }, [success, dispatch, successDelete, editSuccess]);
+    // if (successCreate) {
+    dispatch(getAllSubCategories());
+    // }
+  }, [successCreate, dispatch, successDelete, editSuccess]);
 
-  // console.log(subCategory.subCategoriesList[0].categoryID.name);
+  const handleDelete = (id) => {
+    if (window.confirm(`Are you sure ${id} ?`)) {
+      dispatch(deleteSubCategory(id));
+    }
+  };
 
   const subCategoryList = () => {
     if (subCategory) {
       return subCategory.subCategoriesList.map((cat) => (
-        <tr>
+        <tr key={uuidv4()}>
           <td>{cat.categoryID && cat.categoryID.name}</td>
 
           <td>{cat.name}</td>
@@ -95,6 +94,7 @@ const SubCatTable = () => {
               onClick={(e) => {
                 setEditOpen(true);
                 setName(cat.name);
+                setCategory(cat.categoryID.name);
               }}
             />
             <Modal
@@ -136,7 +136,9 @@ const SubCatTable = () => {
                 >
                   {categoryList &&
                     categoryList.map((cat) => (
-                      <MenuItem value={cat._id}>{cat.name}</MenuItem>
+                      <MenuItem key={cat._id} value={cat._id}>
+                        {cat.name}
+                      </MenuItem>
                     ))}
                 </Select>
               </div>
@@ -146,19 +148,8 @@ const SubCatTable = () => {
             <MDBIcon
               icon='trash'
               className={classes.deleteBtn}
-              onClick={() => setVisible(true)}
+              onClick={() => handleDelete(cat._id)}
             />
-            <Modal
-              title='Delete Sub-Category'
-              visible={visible}
-              onOk={() => {
-                dispatch(deleteSubCategory(cat._id));
-                setVisible(false);
-              }}
-              onCancel={() => setVisible(false)}
-            >
-              <p>Are you sure? You want to delete {cat.name}</p>
-            </Modal>
           </td>
         </tr>
       ));
@@ -200,7 +191,7 @@ const SubCatTable = () => {
         />
       )}
 
-      {loading || loadingDelete ? (
+      {loading ? (
         <div style={{ display: 'flex', marginLeft: '50%' }}>
           <CircularProgress />
         </div>

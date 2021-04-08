@@ -6,6 +6,8 @@ import List from '../CategoriesList';
 
 import Slider from 'react-slick';
 import './productCarosel.css';
+import { useSelector } from 'react-redux';
+import { carouselImagesUrl } from '../../urlConfig';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,12 +30,16 @@ const useStyles = makeStyles((theme) => ({
 const ProductCarousel = () => {
   const classes = useStyles();
 
+  const { loading, carousel } = useSelector((state) => state.getAllCarousel);
+
   const settings = {
     dots: true,
     infinite: false,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
   };
 
   return (
@@ -44,32 +50,10 @@ const ProductCarousel = () => {
         </Col>
         <Col md={9}>
           <Slider {...settings}>
-            <div>
-              <img
-                className={classes.root}
-                src='https://images.unsplash.com/photo-1558716378-95ab2d0c7af4?ixid=MXwxMjA3fDB8MHx0b3BpYy1mZWVkfDE3fHJuU0tESHd3WVVrfHxlbnwwfHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
-                alt='img2'
-              />
-            </div>
-            <div>
-              <h3>2</h3>
-            </div>
-            <div>
-              <img
-                className={classes.root}
-                src='https://images.unsplash.com/photo-1558716378-95ab2d0c7af4?ixid=MXwxMjA3fDB8MHx0b3BpYy1mZWVkfDE3fHJuU0tESHd3WVVrfHxlbnwwfHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
-                alt='img2'
-              />
-            </div>
-            <div>
-              <h3>4</h3>
-            </div>
-            <div>
-              <h3>5</h3>
-            </div>
-            <div>
-              <h3>6</h3>
-            </div>
+            {carousel &&
+              carousel.map((item) => (
+                <img src={carouselImagesUrl(item.image)} alt='' />
+              ))}
           </Slider>
         </Col>
       </Row>

@@ -22,6 +22,7 @@ const productRoute = require('./routes/productRoutes');
 const userImageUpload = require('./routes/userImageUploadRoute');
 const productImageUpload = require('./routes/productUploadRoute');
 const orderRoute = require('./routes/orderRoutes');
+const carouselRoute = require('./routes/carouselRoute');
 const Order = require('./models/orderModel');
 
 const app = express();
@@ -48,9 +49,11 @@ app.use(compression());
 app.use('/api/users', userRoute);
 app.use('/api/category', categoryRoute);
 app.use('/api/product', productRoute);
+
 app.use('/api/upload', userImageUpload);
 app.use('/api/multipleuploads', productImageUpload);
 app.use('/api/orders', orderRoute);
+app.use('/api/carousel', carouselRoute);
 
 app.get('/api/config/paypal', (req, res) =>
   res.send(process.env.PAYPAL_CLIENT_ID)

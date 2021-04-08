@@ -2,12 +2,13 @@ import { CircularProgress } from '@material-ui/core';
 import { MDBIcon, MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { Modal } from 'antd';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { userDelete, userList } from '../../../redux/actions/userActions';
 import { userImageUrl } from '../../../urlConfig';
 import { LinkContainer } from 'react-router-bootstrap';
-import Modal from 'antd/lib/modal/Modal';
+
 import SuccessMessage from '../../../components/Message/successMessage';
 import {
   USERS_DELETE_RESET,
@@ -50,11 +51,17 @@ const useStyles = makeStyles({
     whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
   },
+
+  model: {
+    zIndex: '100',
+  },
 });
 
 const AllUsers = () => {
   const [visible, setVisible] = useState(false);
+
   const classes = useStyles();
+
   const dispatch = useDispatch();
 
   const list = useSelector((state) => state.usersList);
@@ -70,10 +77,16 @@ const AllUsers = () => {
     dispatch(userList());
   }, [dispatch, deleteSuccess]);
 
+  const handleDelete = (id) => {
+    if (window.confirm(`Are you sure ${id} ?`)) {
+      dispatch(userDelete(id));
+    }
+  };
+
   const allUsersList = () => {
     if (usersList) {
       return usersList.users.map((user) => (
-        <tr>
+        <tr key={user._id}>
           <td>
             <span className={classes.name}>{user.name}</span>
           </td>
@@ -97,20 +110,8 @@ const AllUsers = () => {
             <MDBIcon
               icon='trash'
               className={classes.deleteBtn}
-              onClick={(e) => setVisible(true)}
+              onClick={() => handleDelete(user._id)}
             />
-
-            <Modal
-              title='Delete User'
-              visible={visible}
-              onOk={() => {
-                dispatch(userDelete(user._id));
-                setVisible(false);
-              }}
-              onCancel={() => setVisible(false)}
-            >
-              <p>Are you sure? You want to delete {user.email}</p>
-            </Modal>
           </td>
         </tr>
       ));
@@ -144,31 +145,31 @@ const AllUsers = () => {
           reset={USERS_EDIT_RESET}
         />
       )}
+      {loading ? (
+        <div
+          style={{
+            position: 'absolute',
+            margin: '0 auto',
+            top: '50%',
+            left: '50%',
+          }}
+        >
+          <CircularProgress />
+        </div>
+      ) : (
+        <MDBTable btn hover responsive>
+          <MDBTableHead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Image</th>
+              <th>Role</th>
+            </tr>
+          </MDBTableHead>
 
-      <MDBTable btn hover responsive>
-        <MDBTableHead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Image</th>
-            <th>Role</th>
-          </tr>
-        </MDBTableHead>
-        {loading ? (
-          <div
-            style={{
-              position: 'absolute',
-              margin: '0 auto',
-              top: '50%',
-              left: '50%',
-            }}
-          >
-            <CircularProgress />
-          </div>
-        ) : (
           <MDBTableBody>{allUsersList()}</MDBTableBody>
-        )}
-      </MDBTable>
+        </MDBTable>
+      )}
     </>
   );
 };

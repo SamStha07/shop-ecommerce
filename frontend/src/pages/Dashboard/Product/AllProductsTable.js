@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { MDBTable, MDBTableBody, MDBTableHead, MDBIcon } from 'mdbreact';
 import { LinkContainer } from 'react-router-bootstrap';
 import { makeStyles } from '@material-ui/core/styles';
 import { CircularProgress } from '@material-ui/core';
-import { Modal } from 'antd';
 
 import { productsImagesUrl } from '../../../urlConfig';
 import { deleteProduct } from '../../../redux/actions/productActions';
@@ -55,8 +54,6 @@ const useStyles = makeStyles({
 });
 
 const AllProductsTable = () => {
-  const [visible, setVisible] = useState(false);
-
   const classes = useStyles();
 
   const dispatch = useDispatch();
@@ -64,10 +61,16 @@ const AllProductsTable = () => {
   const list = useSelector((state) => state.getAllProducts);
   const { productsList, loading } = list;
 
+  const handleDelete = (id) => {
+    if (window.confirm(`Are you sure ${id} ?`)) {
+      dispatch(deleteProduct(id));
+    }
+  };
+
   const allProductsList = () => {
     if (productsList) {
       return productsList.productsList.map((item) => (
-        <tr>
+        <tr key={item._id}>
           <td>
             <span className={classes.name}>{item.name}</span>
           </td>
@@ -96,20 +99,8 @@ const AllProductsTable = () => {
             <MDBIcon
               icon='trash'
               className={classes.deleteBtn}
-              onClick={(e) => setVisible(true)}
+              onClick={() => handleDelete(item._id)}
             />
-
-            <Modal
-              title='Delete Category'
-              visible={visible}
-              onOk={() => {
-                dispatch(deleteProduct(item._id));
-                setVisible(false);
-              }}
-              onCancel={() => setVisible(false)}
-            >
-              <p>Are you sure? You want to delete {item.name}</p>
-            </Modal>
           </td>
         </tr>
       ));
@@ -118,33 +109,33 @@ const AllProductsTable = () => {
 
   return (
     <>
-      <MDBTable btn hover responsive>
-        <MDBTableHead>
-          <tr>
-            <th>Name</th>
+      {loading ? (
+        <div
+          style={{
+            position: 'absolute',
+            margin: '0 auto',
+            top: '50%',
+            left: '50%',
+          }}
+        >
+          <CircularProgress />
+        </div>
+      ) : (
+        <MDBTable btn hover responsive>
+          <MDBTableHead>
+            <tr>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Description</th>
+              <th>Pictures</th>
+              <th>Brand</th>
+            </tr>
+          </MDBTableHead>
 
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Description</th>
-            <th>Pictures</th>
-            <th>Brand</th>
-          </tr>
-        </MDBTableHead>
-        {loading ? (
-          <div
-            style={{
-              position: 'absolute',
-              margin: '0 auto',
-              top: '50%',
-              left: '50%',
-            }}
-          >
-            <CircularProgress />
-          </div>
-        ) : (
           <MDBTableBody>{allProductsList()}</MDBTableBody>
-        )}
-      </MDBTable>
+        </MDBTable>
+      )}
     </>
   );
 };

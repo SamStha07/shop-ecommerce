@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { MDBRow, MDBCol, MDBCard, MDBCardBody } from 'mdbreact';
 import { Button, Breadcrumb, Form } from 'react-bootstrap';
 import { Select, MenuItem } from '@material-ui/core';
-import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -15,6 +14,7 @@ import {
   createSubCategory,
 } from '../../../redux/actions/subCategoryActions';
 import { CREATE_SUB_CATEGORY_RESET } from '../../../redux/constants/categoryConstants';
+import { LinkContainer } from 'react-router-bootstrap';
 
 const SubCategory = () => {
   const [name, setName] = useState('');
@@ -45,55 +45,55 @@ const SubCategory = () => {
       <h5>Sub-Categories</h5>
 
       <Breadcrumb>
-        <Breadcrumb.Item>
-          <Link to="/dashboard">Dashboard</Link>
-        </Breadcrumb.Item>
-        <Breadcrumb.Item>
-          <Link to="/dashboard/category/create">Category</Link>
-        </Breadcrumb.Item>
+        <LinkContainer to='/dashboard'>
+          <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
+        </LinkContainer>
+        <LinkContainer to='/dashboard/category/create'>
+          <Breadcrumb.Item>Category</Breadcrumb.Item>
+        </LinkContainer>
         <Breadcrumb.Item active>Sub-Category</Breadcrumb.Item>
       </Breadcrumb>
 
       {success && (
         <SuccessMessage
-          header="Success"
-          message="Sub-Category Added"
+          header='Success'
+          message='Sub-Category Added'
           reset={CREATE_SUB_CATEGORY_RESET}
         />
       )}
       {error && (
         <ErrorMessage
-          header="Error"
+          header='Error'
           message={error}
           reset={CREATE_SUB_CATEGORY_RESET}
         />
       )}
 
-      <MDBRow className="py-2">
-        <MDBCol lg="4" md="7" className="mb-4">
+      <MDBRow className='py-2'>
+        <MDBCol lg='4' md='7' className='mb-4'>
           <MDBCard>
             <MDBCardBody>
               <Form onSubmit={handleSubmit}>
-                <p className="h5 py-1">Add Sub-Category</p>
+                <p className='h5 py-1'>Add Sub-Category</p>
                 <hr />
                 <label
-                  htmlFor="Name"
-                  className="grey-text font-weight-light h6"
+                  htmlFor='Name'
+                  className='grey-text font-weight-light h6'
                 >
                   Name*
                 </label>
                 <input
-                  type="text"
+                  type='text'
                   id={uuidv4()}
-                  className="form-control"
+                  className='form-control'
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                 />
                 <br />
 
                 <label
-                  htmlFor="Category"
-                  className="grey-text font-weight-light h6"
+                  htmlFor='Category'
+                  className='grey-text font-weight-light h6'
                 >
                   Category*
                 </label>
@@ -107,13 +107,15 @@ const SubCategory = () => {
                   >
                     {categoryList &&
                       categoryList.map((cat) => (
-                        <MenuItem value={cat._id}>{cat.name}</MenuItem>
+                        <MenuItem key={cat._id} value={cat._id}>
+                          {cat.name}
+                        </MenuItem>
                       ))}
                   </Select>
                 </div>
 
                 <br />
-                <Button variant="primary" type="submit">
+                <Button variant='primary' type='submit'>
                   Add New
                 </Button>
               </Form>
@@ -121,7 +123,7 @@ const SubCategory = () => {
           </MDBCard>
         </MDBCol>
 
-        <MDBCol lg="8" md="12">
+        <MDBCol lg='8' md='12'>
           <MDBCard>
             <MDBCardBody>
               <SubCatTable />

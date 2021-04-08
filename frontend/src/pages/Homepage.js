@@ -8,12 +8,14 @@ import {
   getTopRatedProducts,
 } from '../redux/actions/productActions';
 import TopRatedProducts from '../components/TopRatedProducts/TopRatedProducts';
+import { getAllCarousel } from '../redux/actions/carouselActions';
 
 const Homepage = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllProductsList());
     dispatch(getTopRatedProducts());
+    dispatch(getAllCarousel());
   }, [dispatch]);
 
   return (

@@ -7,3 +7,7 @@ export const userImageUrl = (filename) => {
 export const productsImagesUrl = (filename) => {
   return `http://localhost:5000/img/products/${filename}`;
 };
+
+export const carouselImagesUrl = (filename) => {
+  return `http://localhost:5000/img/carousel/${filename}`;
+};

@@ -89,11 +89,17 @@ const ChildCatTable = () => {
     dispatch(getSubCatUnderMainCatID(e.target.value));
   };
 
+  const handleDelete = (id) => {
+    if (window.confirm(`Are you sure ${id} ?`)) {
+      dispatch(deleteChildCategory(id));
+    }
+  };
+
   const childCategoryList = () => {
     if (childCategory) {
       return childCategory.childCategoriesList.map((cat) => (
-        <tr>
-          <td>{cat.categoryID.name}</td>
+        <tr key={cat._id}>
+          <td>{cat.categoryID && cat.categoryID.name}</td>
           <td>{cat.subCategoryID && cat.subCategoryID.name}</td>
           <td>{cat.name}</td>
           <td>{cat.createdAt}</td>
@@ -155,7 +161,9 @@ const ChildCatTable = () => {
                 >
                   {categoryList &&
                     categoryList.map((cat) => (
-                      <MenuItem value={cat._id}>{cat.name}</MenuItem>
+                      <MenuItem key={cat._id} value={cat._id}>
+                        {cat.name}
+                      </MenuItem>
                     ))}
                 </Select>
               </div>
@@ -176,7 +184,9 @@ const ChildCatTable = () => {
                 >
                   {listSubCat &&
                     listSubCat.subCategory.map((cat) => (
-                      <MenuItem value={cat._id}>{cat.name}</MenuItem>
+                      <MenuItem key={cat._id} value={cat._id}>
+                        {cat.name}
+                      </MenuItem>
                     ))}
                 </Select>
               </div>
@@ -186,19 +196,8 @@ const ChildCatTable = () => {
             <MDBIcon
               icon='trash'
               className={classes.deleteBtn}
-              onClick={() => setVisible(true)}
+              onClick={() => handleDelete(cat._id)}
             />
-            <Modal
-              title='Delete Child-Category'
-              visible={visible}
-              onOk={() => {
-                dispatch(deleteChildCategory(cat._id));
-                setVisible(false);
-              }}
-              onCancel={() => setVisible(false)}
-            >
-              <p>Are you sure? You want to delete {cat.name}</p>
-            </Modal>
           </td>
         </tr>
       ));

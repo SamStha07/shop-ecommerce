@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { MDBRow, MDBCol, MDBCard, MDBCardBody } from 'mdbreact';
 import { Button, Breadcrumb, Form } from 'react-bootstrap';
 import { Select, MenuItem } from '@material-ui/core';
-import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -16,6 +15,7 @@ import {
 import { getAllCategories } from '../../../redux/actions/categoryActions';
 import { getSubCatUnderMainCatID } from '../../../redux/actions/subCategoryActions';
 import { CREATE_CHILD_CATEGORY_RESET } from '../../../redux/constants/categoryConstants';
+import { LinkContainer } from 'react-router-bootstrap';
 
 const ChildCategory = () => {
   const [name, setName] = useState('');
@@ -28,7 +28,7 @@ const ChildCategory = () => {
   const { category: categoryList } = allCategories;
 
   const subCatwithMainCat = useSelector(
-    (state) => state.getSubCatWithCategoryID,
+    (state) => state.getSubCatWithCategoryID
   );
   const { subCategory: subCategoryList } = subCatwithMainCat;
 
@@ -58,58 +58,52 @@ const ChildCategory = () => {
       <h5>Child-Categories</h5>
 
       <Breadcrumb>
-        <Breadcrumb.Item>
-          <Link to="/dashboard">Dashboard</Link>
-        </Breadcrumb.Item>
-        <Breadcrumb.Item>
-          <Link to="/dashboard/category/create">Category</Link>
-        </Breadcrumb.Item>
-        <Breadcrumb.Item>
-          <Link to="/dashboard/subcategory/create">Sub-Category</Link>
-        </Breadcrumb.Item>
+        <LinkContainer to='/dashboard'>
+          <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
+        </LinkContainer>
         <Breadcrumb.Item active>Child-Category</Breadcrumb.Item>
       </Breadcrumb>
 
       {success && (
         <SuccessMessage
-          header="Success"
-          message="Sub-Category Added"
+          header='Success'
+          message='Sub-Category Added'
           reset={CREATE_CHILD_CATEGORY_RESET}
         />
       )}
       {error && (
         <ErrorMessage
-          header="Error"
+          header='Error'
           message={error}
           reset={CREATE_CHILD_CATEGORY_RESET}
         />
       )}
 
-      <MDBRow className="py-2">
-        <MDBCol lg="4" md="7" className="mb-4">
+      <MDBRow className='py-2'>
+        <MDBCol lg='4' md='7' className='mb-4'>
           <MDBCard>
             <MDBCardBody>
               <Form onSubmit={handleSubmit}>
-                <p className="h5 py-1">Add Child-Category</p>
+                <p className='h5 py-1'>Add Child-Category</p>
                 <hr />
                 <label
-                  htmlFor="Name"
-                  className="grey-text font-weight-light h6"
+                  htmlFor='Name'
+                  className='grey-text font-weight-light h6'
                 >
                   Name*
                 </label>
                 <input
-                  type="text"
+                  type='text'
                   id={uuidv4()}
-                  className="form-control"
+                  className='form-control'
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                 />
                 <br />
 
                 <label
-                  htmlFor="Category"
-                  className="grey-text font-weight-light h6"
+                  htmlFor='Category'
+                  className='grey-text font-weight-light h6'
                 >
                   Main Category*
                 </label>
@@ -123,15 +117,17 @@ const ChildCategory = () => {
                   >
                     {categoryList &&
                       categoryList.map((cat) => (
-                        <MenuItem value={cat._id}>{cat.name}</MenuItem>
+                        <MenuItem key={cat._id} value={cat._id}>
+                          {cat.name}
+                        </MenuItem>
                       ))}
                   </Select>
                 </div>
                 <br />
 
                 <label
-                  htmlFor="Category"
-                  className="grey-text font-weight-light h6"
+                  htmlFor='Category'
+                  className='grey-text font-weight-light h6'
                 >
                   Sub Category*
                 </label>
@@ -145,13 +141,15 @@ const ChildCategory = () => {
                   >
                     {subCategoryList &&
                       subCategoryList.subCategory.map((cat) => (
-                        <MenuItem value={cat._id}>{cat.name}</MenuItem>
+                        <MenuItem key={cat._id} value={cat._id}>
+                          {cat.name}
+                        </MenuItem>
                       ))}
                   </Select>
                 </div>
 
                 <br />
-                <Button variant="primary" type="submit">
+                <Button variant='primary' type='submit'>
                   Add New
                 </Button>
               </Form>
@@ -159,7 +157,7 @@ const ChildCategory = () => {
           </MDBCard>
         </MDBCol>
 
-        <MDBCol lg="8" md="12">
+        <MDBCol lg='8' md='12'>
           <MDBCard>
             <MDBCardBody>
               <ChildCatTable />

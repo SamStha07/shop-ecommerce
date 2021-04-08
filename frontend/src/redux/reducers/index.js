@@ -1,4 +1,11 @@
 import { combineReducers } from 'redux';
+import {
+  carouselByIDReducer,
+  createCarouselReducer,
+  deleteCarouselReducer,
+  getAllCarouselReducer,
+  updateCarouselReducer,
+} from './carouselReducers';
 import { cartReducer } from './cartReducers';
 
 import {
@@ -108,6 +115,12 @@ export default combineReducers({
   productReviewCreate: productReviewCreateReducer,
   topRatedProducts: getTopRatedProductsReducer,
 
+  // Carousel
+  createCarousel: createCarouselReducer,
+  getAllCarousel: getAllCarouselReducer,
+  updateCarousel: updateCarouselReducer,
+  deleteCarousel: deleteCarouselReducer,
+  carouselByID: carouselByIDReducer,
   // Search
   searchProduct: searchProductsReducer,
 

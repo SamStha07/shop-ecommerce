@@ -112,7 +112,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     marginTop: '10px',
     '& Button': {
-      width: '50%',
+      width: '100%',
       marginRight: '14px',
       borderRadius: '2px',
     },
@@ -204,7 +204,7 @@ const ProductDetails = ({ match, history }) => {
               <ProductBreadCrumb product={productID} />
 
               <Row>
-                <Col lg={3} md={3} sm={12} xs={12}>
+                <Col lg={5} md={5} sm={12} xs={12}>
                   <div className={classes.image}>
                     <div className={classes.mainImage}>
                       <img src={productsImagesUrl(image)} alt={image} />
@@ -224,7 +224,7 @@ const ProductDetails = ({ match, history }) => {
                     </div>
                   </div>
                 </Col>
-                <Col lg={9} md={9} sm={12} xs={12}>
+                <Col lg={7} md={7} sm={12} xs={12}>
                   <div className={classes.details}>
                     <h3>{productID.name}</h3>
 
@@ -287,16 +287,6 @@ const ProductDetails = ({ match, history }) => {
                         onClick={handleAddToCart}
                       >
                         Add to cart
-                      </Button>
-                      <Button
-                        style={{
-                          border: '1px solid #2abbe8',
-                          background: '#2abbe8',
-                          color: '#fff',
-                        }}
-                        size={'large'}
-                      >
-                        Buy Now
                       </Button>
                     </div>
                   </div>

@@ -13,6 +13,7 @@ import {
   ArrowDropDown,
   ArrowRight,
   Shop,
+  ViewCarousel,
 } from '@material-ui/icons';
 import { LinkContainer } from 'react-router-bootstrap';
 
@@ -208,6 +209,22 @@ export default function GmailTreeView() {
         <LinkContainer to='/dashboard/orders/list'>
           <StyledTreeItem
             nodeId='14'
+            labelText='List'
+            labelIcon={ViewList}
+            color='#a250f5'
+            bgColor='#e6f4ea'
+          />
+        </LinkContainer>
+      </StyledTreeItem>
+
+      <StyledTreeItem
+        nodeId='15'
+        labelText='Advertisement'
+        labelIcon={ViewCarousel}
+      >
+        <LinkContainer to='/dashboard/carousel/list'>
+          <StyledTreeItem
+            nodeId='16'
             labelText='List'
             labelIcon={ViewList}
             color='#a250f5'

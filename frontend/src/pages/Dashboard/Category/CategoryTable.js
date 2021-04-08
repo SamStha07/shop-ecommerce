@@ -78,16 +78,22 @@ const AllCategoriesTable = ({ history }) => {
     }
   }, [success, dispatch, successDelete, editSuccess]);
 
+  const handleDelete = (id) => {
+    if (window.confirm(`Are you sure ${id} ?`)) {
+      dispatch(deleteCategory(id));
+    }
+  };
+
   const categoryList = () => {
     if (category) {
       return category.map((cat) => (
-        <tr>
+        <tr key={cat._id}>
           <td>{cat.name}</td>
           <td>{cat.slug}</td>
           <td>{cat.createdAt}</td>
           <td>
             <MDBIcon
-              icon="edit"
+              icon='edit'
               onClick={(e) => {
                 setEditOpen(true);
                 setName(cat.name);
@@ -95,7 +101,7 @@ const AllCategoriesTable = ({ history }) => {
               className={classes.editBtn}
             />
             <Modal
-              title="Edit Category"
+              title='Edit Category'
               visible={editOpen}
               onOk={() => {
                 dispatch(editCategory({ id: cat._id, name }));
@@ -104,15 +110,15 @@ const AllCategoriesTable = ({ history }) => {
               onCancel={() => setEditOpen(false)}
             >
               <label
-                htmlFor="editcategory"
-                className="grey-text font-weight-light h6"
+                htmlFor='editcategory'
+                className='grey-text font-weight-light h6'
               >
                 Name*
               </label>
               <input
-                type="text"
+                type='text'
                 id={uuidv4()}
-                className="form-control"
+                className='form-control'
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
@@ -120,13 +126,13 @@ const AllCategoriesTable = ({ history }) => {
           </td>
           <td>
             <MDBIcon
-              icon="trash"
+              icon='trash'
               className={classes.deleteBtn}
-              onClick={(e) => setVisible(true)}
+              onClick={() => handleDelete(cat._id)}
             />
 
             <Modal
-              title="Delete Category"
+              title='Delete Category'
               visible={visible}
               onOk={() => {
                 dispatch(deleteCategory(cat._id));
@@ -134,7 +140,7 @@ const AllCategoriesTable = ({ history }) => {
               }}
               onCancel={() => setVisible(false)}
             >
-              <p>Are you sure? You want to delete {cat.name}</p>
+              <p>Are you sure? You want to delete</p>
             </Modal>
           </td>
         </tr>
@@ -144,33 +150,33 @@ const AllCategoriesTable = ({ history }) => {
 
   return (
     <>
-      <h5 className="py-1">List of Categories</h5>
+      <h5 className='py-1'>List of Categories</h5>
       <hr />
 
       {successDelete && (
         <SuccessMessage
-          header="Success"
-          message="Category Deleted"
+          header='Success'
+          message='Category Deleted'
           reset={DELETE_CATEGORY_RESET}
         />
       )}
       {errorDelete && (
         <ErrorMessage
-          header="Error"
+          header='Error'
           message={errorDelete}
           reset={DELETE_CATEGORY_RESET}
         />
       )}
       {editSuccess && (
         <SuccessMessage
-          header="Success"
-          message="Category updated"
+          header='Success'
+          message='Category updated'
           reset={EDIT_CATEGORY_RESET}
         />
       )}
       {editError && (
         <ErrorMessage
-          header="Error"
+          header='Error'
           message={editError}
           reset={EDIT_CATEGORY_RESET}
         />

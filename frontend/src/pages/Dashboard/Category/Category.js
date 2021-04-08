@@ -13,6 +13,7 @@ import {
 import { CREATE_CATEGORY_RESET } from '../../../redux/constants/categoryConstants';
 import SuccessMessage from '../../../components/Message/successMessage';
 import ErrorMessage from '../../../components/Message/errorMessage';
+import { LinkContainer } from 'react-router-bootstrap';
 
 const CategoryCreate = () => {
   const [name, setName] = useState('');
@@ -37,49 +38,49 @@ const CategoryCreate = () => {
       <h5>Categories</h5>
 
       <Breadcrumb>
-        <Breadcrumb.Item>
-          <Link to="/dashboard">Dashboard</Link>
-        </Breadcrumb.Item>
+        <LinkContainer to='/dashboard'>
+          <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
+        </LinkContainer>
         <Breadcrumb.Item active>Category</Breadcrumb.Item>
       </Breadcrumb>
 
       {success && (
         <SuccessMessage
-          header="Success"
-          message="Category Added"
+          header='Success'
+          message='Category Added'
           reset={CREATE_CATEGORY_RESET}
         />
       )}
       {error && (
         <ErrorMessage
-          header="Error"
+          header='Error'
           message={error}
           reset={CREATE_CATEGORY_RESET}
         />
       )}
 
-      <MDBRow className="py-2">
-        <MDBCol lg="4" md="7" className="mb-4">
+      <MDBRow className='py-2'>
+        <MDBCol lg='4' md='7' className='mb-4'>
           <MDBCard>
             <MDBCardBody>
               <Form onSubmit={handleSubmit}>
-                <p className="h5 py-1">Add Main Category</p>
+                <p className='h5 py-1'>Add Main Category</p>
                 <hr />
                 <label
-                  htmlFor="defaultFormCardNameEx"
-                  className="grey-text font-weight-light h6"
+                  htmlFor='defaultFormCardNameEx'
+                  className='grey-text font-weight-light h6'
                 >
                   Name*
                 </label>
                 <input
-                  type="text"
+                  type='text'
                   id={uuidv4()}
-                  className="form-control"
+                  className='form-control'
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                 />
                 <br />
-                <Button variant="primary" type="submit">
+                <Button variant='primary' type='submit'>
                   Add New
                 </Button>
               </Form>
@@ -87,7 +88,7 @@ const CategoryCreate = () => {
           </MDBCard>
         </MDBCol>
 
-        <MDBCol lg="8" md="12">
+        <MDBCol lg='8' md='12'>
           <MDBCard>
             <MDBCardBody>
               <CategoriesTable />
