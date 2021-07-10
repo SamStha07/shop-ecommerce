@@ -1,0 +1,18 @@
+main {
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  padding: 1rem 0;
+  letter-spacing: 2px;
+  font-weight: 400;
+}
+
+label {
+  letter-spacing: 1.2px;
+  font-size: medium;
+}
+
+i {
+  font-size: 0.9rem;
+}
